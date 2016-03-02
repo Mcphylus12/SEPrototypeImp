@@ -8,19 +8,14 @@ package softwareproject.view;
 
 /**
  *
- * @author qxz14sru
+ * @author ybm14yju
  */
-public class ModuleOverview extends javax.swing.JPanel {
-    
-    public static final int WIDTH = 100;
-    public static final int HEIGHT = 100;
-    public static final int XOFFSET = 100;
+public class DashBoardPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form ModuleOverview
+     * Creates new form DashBoardPanel
      */
-    public ModuleOverview() {
-
+    public DashBoardPanel() {
         initComponents();
     }
 

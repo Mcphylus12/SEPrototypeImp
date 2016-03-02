@@ -6,10 +6,32 @@
 
 package softwareproject.controller;
 
+import softwareproject.view.*;
+
 /**
  *
  * @author qxz14sru
  */
 public class PanelController {
+    
+    Window window;
+    NavPane nav;
+
+    public PanelController(Window Window) {
+        this.window = Window;
+    }
+    
+    
+    public void setModulePanel(ModuleOverview mo){
+        window.removeAll();
+        window.add(mo);
+        window.add(nav);
+        
+    }
+    
+    public void setDashBoardPanel(DashBoardPanel dbp){
+        window.removeAll();
+        window.add(dbp);
+    }
     
 }

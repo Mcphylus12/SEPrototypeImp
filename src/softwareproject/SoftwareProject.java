@@ -6,6 +6,8 @@
 
 package softwareproject;
 
+import softwareproject.view.Window;
+
 /**
  *
  * @author ybm14yju
@@ -16,7 +18,7 @@ public class SoftwareProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Window window = new Window("Study Planner V0.0.0.0.0.0.0.1");
     }
     
 }
