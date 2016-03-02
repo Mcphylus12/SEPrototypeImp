@@ -1,4 +1,0 @@
-#specifies files and folders ignored by git
-build.xml
-manifest.mf
-nbproject/**
