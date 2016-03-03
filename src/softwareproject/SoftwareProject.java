@@ -6,6 +6,10 @@
 
 package softwareproject;
 
+import softwareproject.controller.PanelController;
+import softwareproject.view.DashBoardPanel;
+import softwareproject.view.ModuleOverview;
+import softwareproject.view.NavPane;
 import softwareproject.view.Window;
 
 /**
@@ -19,6 +23,11 @@ public class SoftwareProject {
      */
     public static void main(String[] args) {
         Window window = new Window("Study Planner V0.0.0.0.0.0.0.1");
+        NavPane nav = new NavPane();
+        ModuleOverview mo = new ModuleOverview();
+        PanelController panelController = new PanelController(window, nav);
+        DashBoardPanel dashBoardPanel = new DashBoardPanel();
+        panelController.setModulePanel(mo);
     }
     
 }
