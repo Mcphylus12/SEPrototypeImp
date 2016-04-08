@@ -3,7 +3,7 @@ package softwareproject.model;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Task {
+public class Task implements Notable{
     private String description;
     private ArrayList<Task> dependencies;
     private Date startDate;

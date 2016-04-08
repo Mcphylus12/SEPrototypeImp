@@ -2,7 +2,7 @@ package softwareproject.model;
 
 import java.util.ArrayList;
 
-public class Activity {
+public class Activity implements Notable{
     private String activityType;
     private ArrayList<Note> notes;
     private boolean isFinished;
