@@ -9,6 +9,8 @@ public class Activity {
 
     public Activity(String activityType) {
         this.activityType = activityType;
+        isFinished = false;
+        notes = new ArrayList();
     }
 
     public String getActivityType() {
@@ -19,7 +21,11 @@ public class Activity {
         return notes;
     }
 
-    public boolean isIsFinished() {
+    /**
+     * 
+     * @return whether the activity is finished
+     */
+    public boolean getIsFinished() {
         return isFinished;
     }
 
@@ -30,6 +36,16 @@ public class Activity {
     public void setNotes(ArrayList<Note> notes) {
         this.notes = notes;
     }
+    
+    public void addNote(Note note){
+        notes.add(note);
+    }
+    
+    public void removeNote(Note note){
+        notes.remove(note);
+    }
+    
+    
 
     public void setIsFinished(boolean isFinished) {
         this.isFinished = isFinished;
