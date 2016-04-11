@@ -12,11 +12,11 @@ public class Task implements Notable{
     private ArrayList<Milestone> milestones;
     private ArrayList<Note> notes;
 
-    public Task(String description, Date startDate, Date endDate, int progress) {
+    public Task(String description, Date startDate, Date endDate) {
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.progress = progress;
+        this.progress = 0;
         dependencies = new ArrayList();
         milestones = new ArrayList();
         notes = new ArrayList();

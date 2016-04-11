@@ -2,15 +2,14 @@ package softwareproject.model;
 
 import java.util.Date;
 
-public class Exam {
+public class Exam extends Assessment{
     private int duration;
     private String location;
-    private Date date;
 
-    public Exam(int duration, String location, Date date) {
+    public Exam(String name, int duration, String location, Date date, boolean isSummative, int weight) {
+        super(name, false, isSummative, weight, date);
         this.duration = duration;
         this.location = location;
-        this.date = date;
     }
 
     public int getDuration() {
@@ -29,13 +28,7 @@ public class Exam {
         this.location = location;
     }
 
-    public Date getDate() {
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
     
      
 }

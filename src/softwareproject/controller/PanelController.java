@@ -31,6 +31,16 @@ public class PanelController {
         this.nav = nav;
     }
     
+    DashBoardPanel dbp;
+
+    public void setDbp(DashBoardPanel dbp) {
+        this.dbp = dbp;
+    }
+
+    public void setOd(OverviewDash od) {
+        this.od = od;
+    }
+    OverviewDash od;
     
     public void setModulePanel(ModuleOverview mo){
         windowContentPane.removeAll();
@@ -48,7 +58,7 @@ public class PanelController {
         windowContentPane.repaint();
     }
     
-    public void setDashBoardPanel(DashBoardPanel dbp){
+    public void toDashBoardPanel(){
         windowContentPane.removeAll();
         windowContentPane.setLayout(null);
         Rectangle r = new Rectangle(xOff, yOff, windowContentPane.getWidth() - xOff*2, windowContentPane.getHeight() - yOff*2);
@@ -58,5 +68,18 @@ public class PanelController {
         windowContentPane.revalidate();
         windowContentPane.repaint();
     }
+    
+    public void toOverViewDash(){
+        windowContentPane.removeAll();
+        windowContentPane.setLayout(null);
+        Rectangle r = new Rectangle(xOff, yOff, windowContentPane.getWidth() - xOff*2, windowContentPane.getHeight() - yOff*2);
+        System.out.println("dashboard rect = " + r);
+        od.setBounds(r);
+        windowContentPane.add(od);
+        windowContentPane.revalidate();
+        windowContentPane.repaint();
+    }
+    
+
     
 }

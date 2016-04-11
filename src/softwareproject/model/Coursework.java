@@ -3,15 +3,13 @@ package softwareproject.model;
 import java.util.Date;
 
 public class Coursework extends Assessment {
-    private Date dueDate;
     private Date setDate;
     private Date returnDate;
     private String marker;
     private String submissionType;
 
-    public Coursework(Date dueDate, Date setDate, Date returnDate, String marker, String submissionType, boolean isSummative, boolean isOnline, int weight) {
-        super(isSummative, isOnline, weight);
-        this.dueDate = dueDate;
+    public Coursework(String name, Date dueDate, Date setDate, Date returnDate, String marker, String submissionType, boolean isSummative, boolean isOnline, int weight) {
+        super(name, isSummative, isOnline, weight, dueDate);
         this.setDate = setDate;
         this.returnDate = returnDate;
         this.marker = marker;
@@ -19,13 +17,6 @@ public class Coursework extends Assessment {
     }
     
     
-    public Date getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
 
     public Date getSetDate() {
         return setDate;

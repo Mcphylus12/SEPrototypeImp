@@ -4,12 +4,10 @@ import java.util.Date;
 
 public class CourseTest extends Assessment {
     private String websiteURL;
-    private Date dueDate;
 
-    public CourseTest(String websiteURL, Date dueDate, boolean isSummative, boolean isOnline, int weight) {
-        super(isSummative, isOnline, weight);
+    public CourseTest(String name, String websiteURL, Date dueDate, boolean isSummative, boolean isOnline, int weight) {
+        super(name, isSummative, isOnline, weight, dueDate);
         this.websiteURL = websiteURL;
-        this.dueDate = dueDate;
     }
 
     public String getWebsiteURL() {
@@ -19,15 +17,6 @@ public class CourseTest extends Assessment {
     public void setWebsiteURL(String websiteURL) {
         this.websiteURL = websiteURL;
     }
-
-    public Date getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-
 
     
     

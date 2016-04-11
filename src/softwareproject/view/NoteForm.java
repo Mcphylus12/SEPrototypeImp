@@ -40,7 +40,7 @@ public class NoteForm extends javax.swing.JFrame {
         lblContents = new javax.swing.JLabel();
         lblNoteFormTitle = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         noteContents.setColumns(20);
         noteContents.setRows(5);
@@ -115,10 +115,13 @@ public class NoteForm extends javax.swing.JFrame {
 
     private void btnSaveNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveNoteActionPerformed
         NoteController.attachNote(parent, NoteController.createNote(noteTitle.getText(), noteContents.getText(), new Date()));
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_btnSaveNoteActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
 

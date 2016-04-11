@@ -14,4 +14,12 @@ public class NoteController {
         parent.addNote(newNote);
     }
     
+    public static String getNoteAsString(Note n){
+        StringBuilder sb = new StringBuilder();
+        sb.append(n.getDateCreated()).append(" - ").append(n.getName())
+                .append(" - ").append(n.getContents());
+        
+        return sb.toString();
+    }
+    
 }

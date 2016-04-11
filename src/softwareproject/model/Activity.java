@@ -3,17 +3,40 @@ package softwareproject.model;
 import java.util.ArrayList;
 
 public class Activity implements Notable{
-    private String activityType;
+    private String name;
+    private ActivityType activityType;
     private ArrayList<Note> notes;
+    private ArrayList<Task> tasks;
     private boolean isFinished;
+    public enum ActivityType {
+        READING, RESEARCH, WRITING, CODING, REVISION
+    };
 
-    public Activity(String activityType) {
+    public Activity(String name, ActivityType activityType) {
+        this.name = name;
         this.activityType = activityType;
         isFinished = false;
         notes = new ArrayList();
+        tasks = new ArrayList();
     }
 
-    public String getActivityType() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public ActivityType getActivityType() {
         return activityType;
     }
 
@@ -29,7 +52,7 @@ public class Activity implements Notable{
         return isFinished;
     }
 
-    public void setActivityType(String activityType) {
+    public void setActivityType(ActivityType activityType) {
         this.activityType = activityType;
     }
 
@@ -44,8 +67,6 @@ public class Activity implements Notable{
     public void removeNote(Note note){
         notes.remove(note);
     }
-    
-    
 
     public void setIsFinished(boolean isFinished) {
         this.isFinished = isFinished;

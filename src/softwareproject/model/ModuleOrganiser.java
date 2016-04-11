@@ -5,14 +5,24 @@ import java.util.Arrays;
 
 public class ModuleOrganiser {
     private ArrayList<Module> modules;
+    private String name;
 
-    public ModuleOrganiser(ArrayList<Module> modules) {
+    public ModuleOrganiser(String name, ArrayList<Module> modules) {
         this.modules = modules;
+        this.name = name;
     }
     
     public ModuleOrganiser(Module ... modules){
         this.modules = new ArrayList(Arrays.asList(modules));
         
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public ArrayList<Module> getModules() {
