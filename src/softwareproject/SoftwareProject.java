@@ -3,7 +3,10 @@ package softwareproject;
 import java.util.Date;
 import javax.swing.JFrame;
 import softwareproject.controller.PanelController;
+import softwareproject.model.Activity;
+import softwareproject.model.Activity.ActivityType;
 import softwareproject.model.CourseTest;
+import softwareproject.model.Coursework;
 import softwareproject.model.Exam;
 import softwareproject.model.Module;
 import softwareproject.model.ModuleOrganiser;
@@ -31,14 +34,23 @@ public class SoftwareProject {
         SemesterProfile semp = new SemesterProfile(2015, new Date(), new Date());
         ModuleSchedule ms= new ModuleSchedule();
         
-        Module m = new Module(new ModuleOrganiser("llll", null), "lmoenA", "lemons", ms);
-        Module m2 = new Module(new ModuleOrganiser("llll", null), "lmoenA", "lemons", ms);
-        Module m3 = new Module(new ModuleOrganiser("llll", null), "lmoenA", "lemons", ms);
-        Module m4 = new Module(new ModuleOrganiser("llll", null), "lmoenA", "lemons", ms);
-        Module m5 = new Module(new ModuleOrganiser("llll", null), "lmoenA", "lemons", ms);
-        Module m6 = new Module(new ModuleOrganiser("llll", null), "lmoenA", "lemons", ms);
-        Module m7 = new Module(new ModuleOrganiser("llll", null), "lmoenA", "lemons", ms);
-        Module m8 = new Module(new ModuleOrganiser("llll", null), "lmoenA", "lemons", ms);
+        Module m = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
+        Module m2 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
+        Module m3 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
+        Module m4 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
+        Module m5 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
+        Module m6 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
+        Module m7 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
+        Module m8 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
+        
+        Coursework cw = new Coursework("Cw1", new Date(), new Date(), new Date(), "marker", "sub", true, true, 10);
+        Activity a = new Activity("Activity1", ActivityType.CODING);
+        Task tas = new Task("BLAH", null, null);
+        
+        cw.addTask(tas);
+        cw.addActivity(a);
+        
+        m.addAssessment(cw);
         semp.addModule(m);
         semp.addModule(m2);
         semp.addModule(m3);
@@ -56,7 +68,7 @@ public class SoftwareProject {
         
         pa.setOd(overviewDashboard);
         pa.toOverViewDash();
-//        Task tas = new Task("BLAH", null, null);
+        
 //        tas.addNote(new Note("foo", "bar", new Date()));
 //        tas.addNote(new Note("foo", "barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbar", new Date()));
 //        tas.addNote(new Note("foo", "bar", new Date()));

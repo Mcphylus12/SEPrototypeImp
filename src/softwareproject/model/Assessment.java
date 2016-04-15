@@ -30,7 +30,13 @@ public abstract class Assessment {
         this.dueDate = dueDate;
     }
     
+    public void addTask(Task t){
+        this.tasks.add(t);
+    }
     
+    public void addActivity(Activity a){
+        this.activities.add(a);
+    }
 
     public ArrayList<Activity> getActivities() {
         return activities;

@@ -1,6 +1,9 @@
 package softwareproject.model;
 
+import java.util.ArrayList;
+
 public class Module {
+    private ArrayList<Assessment> assessments;
     private ModuleOrganiser moduleOrganiser;
     private String moduleCode;
     private String moduleName;
@@ -11,8 +14,12 @@ public class Module {
         this.moduleCode = moduleCode;
         this.moduleName = moduleName;
         this.moduleSchedule = moduleSchedule;
+        this.assessments = new ArrayList();
     }
     
+    public void addAssessment(Assessment a){
+        this.assessments.add(a);
+    }
 
     public ModuleOrganiser getModuleOrganiser() {
         return moduleOrganiser;
