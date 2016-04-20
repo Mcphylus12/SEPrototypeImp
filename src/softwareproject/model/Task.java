@@ -4,22 +4,23 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Task implements Notable{
+    private String title;
     private String description;
     private ArrayList<Task> dependencies;
+    private ArrayList<Note> notes;
     private Date startDate;
     private Date endDate;
     private int progress;
-    private ArrayList<Milestone> milestones;
-    private ArrayList<Note> notes;
+    
 
-    public Task(String description, Date startDate, Date endDate) {
+    public Task(String title, String description, Date endDate, ArrayList<Task> dependencies) {
+        this.title=title;
         this.description = description;
-        this.startDate = startDate;
+        this.startDate = new Date();
         this.endDate = endDate;
         this.progress = 0;
-        dependencies = new ArrayList();
-        milestones = new ArrayList();
-        notes = new ArrayList();
+        this.dependencies = dependencies;
+        this.notes = new ArrayList();
     }
 
     public String getDescription() {
@@ -70,22 +71,6 @@ public class Task implements Notable{
         this.progress = progress;
     }
 
-    public ArrayList<Milestone> getMilestones() {
-        return milestones;
-    }
-
-    public void setMilestones(ArrayList<Milestone> milestones) {
-        this.milestones = milestones;
-    }
-    
-    public void addMilestone(Milestone t){
-        milestones.add(t);
-    }
-    
-    public void removeMilestone(Milestone t){
-       milestones.remove(t);
-    }
-
     public ArrayList<Note> getNotes() {
         return notes;
     }
@@ -102,8 +87,4 @@ public class Task implements Notable{
     public void removeNote(Note t){
        notes.remove(t);
     }
-    
-    
-    
-    
 }

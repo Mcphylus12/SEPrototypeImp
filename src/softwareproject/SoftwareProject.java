@@ -1,25 +1,21 @@
 package softwareproject;
 
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JFrame;
 import softwareproject.controller.PanelController;
 import softwareproject.model.Activity;
-import softwareproject.model.Activity.ActivityType;
+import softwareproject.model.Assessment;
 import softwareproject.model.CourseTest;
 import softwareproject.model.Coursework;
 import softwareproject.model.Exam;
 import softwareproject.model.Module;
 import softwareproject.model.ModuleOrganiser;
-import softwareproject.model.ModuleSchedule;
-import softwareproject.model.Note;
 import softwareproject.model.SemesterProfile;
-import softwareproject.model.Task;
-import softwareproject.view.DashBoardPanel;
-import softwareproject.view.ModuleOverview;
 import softwareproject.view.NavPane;
 import softwareproject.view.OverviewDash;
-import softwareproject.view.TaskWindow;
 import softwareproject.view.Window;
+
 
 /**
  *
@@ -31,53 +27,50 @@ public class SoftwareProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        SemesterProfile semp = genDummy();
+        Window window = new Window("title bar");
+        NavPane np = new NavPane(semp);
+        PanelController pc = new PanelController(window, np);
+        np.setPanelController(pc);
+        OverviewDash od = new OverviewDash(pc);
+        od.setsemP(semp);
+        pc.setOd(od);
+        pc.toOverViewDash();
+    }
+    
+    public static SemesterProfile genDummy(){
         SemesterProfile semp = new SemesterProfile(2015, new Date(), new Date());
-        ModuleSchedule ms= new ModuleSchedule();
         
-        Module m = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
-        Module m2 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
-        Module m3 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
-        Module m4 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
-        Module m5 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
-        Module m6 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
-        Module m7 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
-        Module m8 = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software", ms);
+        Module m = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software");
+        Module m2 = new Module(new ModuleOrganiser("Mr Other Guy", null), "CMP-644Y", "Progs");
         
-        Coursework cw = new Coursework("Cw1", new Date(), new Date(), new Date(), "marker", "sub", true, true, 10);
-        Activity a = new Activity("Activity1", ActivityType.CODING);
-        Task tas = new Task("BLAH", null, null);
+        Exam e = new Exam("Exam 1", 20, "ROOM1", new Date(), true, 15);
+        Exam e1 = new Exam("Exam 2", 50, "ROOM2", new Date(), false, 80);
         
-        cw.addTask(tas);
-        cw.addActivity(a);
+        Coursework cw = new Coursework("Coursework 1", new Date(), new Date(), new Date(), "Marker 1", "Hand In", true, false, 60);
+        Coursework cw1 = new Coursework("Coursework 2", new Date(), new Date(), new Date(), "Marker 2", "Bin", false, false, 90);
         
-        m.addAssessment(cw);
+        CourseTest ct = new CourseTest("CourseTest 1", "www.uea.test", new Date(), false, true, 90);
+        CourseTest ct1 = new CourseTest("CourseTest 2", "www.test.com", new Date(), false, false, 12);
+        
+        ArrayList<Assessment> as = new ArrayList();
+        ArrayList<Assessment> as2 = new ArrayList();
+        
+        as.add(e);
+        as.add(ct1);
+        as.add(e1);
+        
+        as2.add(cw);
+        as2.add(cw1);
+        as2.add(ct);
+        
+        m.setAssessments(as);
+        m2.setAssessments(as2);
+        
         semp.addModule(m);
         semp.addModule(m2);
-        semp.addModule(m3);
-        semp.addModule(m4);
-        semp.addModule(m5);
-        semp.addModule(m6);
-        semp.addModule(m7);
-        semp.addModule(m8);
-        Window window = new Window("Study Planner V0.0.0.0.0.0.0.2r90765w2.36");
-        NavPane nav = new NavPane(semp);
-        PanelController pa = new PanelController(window, nav);
-        nav.setPanelController(pa);
-        OverviewDash overviewDashboard = new OverviewDash(pa);
-        overviewDashboard.setsemP(semp);
         
-        pa.setOd(overviewDashboard);
-        pa.toOverViewDash();
-        
-//        tas.addNote(new Note("foo", "bar", new Date()));
-//        tas.addNote(new Note("foo", "barbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbarbar", new Date()));
-//        tas.addNote(new Note("foo", "bar", new Date()));
-//        tas.addNote(new Note("foo", "bar", new Date()));
-//        
-//        
-//        TaskWindow tw = new TaskWindow(tas, new Exam("name", 0, "", new Date(), false, 0));
-//        tw.setVisible(true);
-//        tw.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        return semp;
     }
     
 }

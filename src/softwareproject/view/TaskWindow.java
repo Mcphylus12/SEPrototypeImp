@@ -164,7 +164,7 @@ public class TaskWindow extends javax.swing.JFrame {
     private void btnAddNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNoteActionPerformed
         //Open noteform.
         NoteForm nf = new NoteForm(t);
-        nf.setVisible(rootPaneCheckingEnabled);
+        nf.setVisible(true);
     }//GEN-LAST:event_btnAddNoteActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed

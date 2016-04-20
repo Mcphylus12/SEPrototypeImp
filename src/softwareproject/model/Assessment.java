@@ -8,6 +8,7 @@ public abstract class Assessment {
     private boolean isSummative;
     private boolean isOnline;
     private int weight;
+    private ArrayList<Milestone> milestones;
     private ArrayList<Activity> activities;
     private ArrayList<Task> tasks;
     private Date dueDate;
@@ -20,6 +21,15 @@ public abstract class Assessment {
         this.dueDate = dueDate;
         this.activities = new ArrayList();
         this.tasks = new ArrayList();
+        this.milestones = new ArrayList();
+    }
+
+    public ArrayList<Milestone> getMilestones() {
+        return milestones;
+    }
+
+    public void setMilestones(ArrayList<Milestone> milestones) {
+        this.milestones = milestones;
     }
 
     public Date getDueDate() {
@@ -85,6 +95,13 @@ public abstract class Assessment {
     public void setWeight(int weight) {
         this.weight = weight;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+    
+    
     
     
 }

@@ -44,8 +44,8 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
                 
             }
         }
-        jList1.setCellRenderer(this);
-        jList1.setModel(lm);
+        lstNav.setCellRenderer(this);
+        lstNav.setModel(lm);
     }
 
     /**
@@ -58,7 +58,7 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        lstNav = new javax.swing.JList();
         btnSetToDash = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -66,17 +66,13 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
         setMinimumSize(new java.awt.Dimension(188, 562));
         setPreferredSize(new java.awt.Dimension(188, 562));
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+        lstNav.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstNav.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList1MouseClicked(evt);
+                lstNavMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lstNav);
 
         btnSetToDash.setText("Back to Dashboard");
         btnSetToDash.addActionListener(new java.awt.event.ActionListener() {
@@ -107,14 +103,14 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+    private void lstNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstNavMouseClicked
         JList list = (JList)evt.getSource();
         if (evt.getClickCount() == 2) {
             int index = list.locationToIndex(evt.getPoint());
-            pa.setModulePanel(new ModuleOverview((Module)jList1.getSelectedValue()));
+            pa.setModulePanel(new ModuleOverview((Module)lstNav.getSelectedValue()));
                     
         }
-    }//GEN-LAST:event_jList1MouseClicked
+    }//GEN-LAST:event_lstNavMouseClicked
 
     private void btnSetToDashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetToDashActionPerformed
         pa.toOverViewDash();
@@ -123,8 +119,8 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSetToDash;
-    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList lstNav;
     // End of variables declaration//GEN-END:variables
     @Override
     public Component getListCellRendererComponent(JList<? extends Module> jlist, Module e, int i, boolean bln, boolean bln1) {

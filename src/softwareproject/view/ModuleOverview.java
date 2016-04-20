@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package softwareproject.view;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import softwareproject.controller.ActivityController;
 import softwareproject.controller.ModuleController;
-import softwareproject.controller.NoteController;
 import softwareproject.controller.TaskController;
 import softwareproject.model.Activity;
 import softwareproject.model.Assessment;
+import softwareproject.model.CourseTest;
+import softwareproject.model.Coursework;
+import softwareproject.model.Exam;
 import softwareproject.model.Module;
-import softwareproject.model.Note;
 import softwareproject.model.Task;
 
 /**
@@ -23,32 +19,57 @@ import softwareproject.model.Task;
  */
 public class ModuleOverview extends javax.swing.JPanel {
     
-
+    Assessment selectedAssessment;
     Module m;
     /**
      * Creates new form ModuleOverview
      */
     public ModuleOverview(Module m) {
+        this.selectedAssessment = null;
         this.m = m;
         initComponents();
-        fillComponents();
+        loadAssessments();
+        lstCoursework.setSelectedIndex(0);
     }
     
-    private void fillComponents(){
-        lblModTitle.setText(m.getModuleName() + " - " + m.getModuleCode());
+    public void fillComponents(){
+        
         
         DefaultListModel<String> lmt = new DefaultListModel();
         DefaultListModel<String> lms = new DefaultListModel();
-        for(Assessment a : ModuleController.getAssessments(m)){
-            for(Task t : a.getTasks()){
-                lmt.addElement(a.getName() + " - " + TaskController.getStringFromTask(t));
+        
+            for(Task t : selectedAssessment.getTasks()){
+                lmt.addElement(selectedAssessment.getName() + " - " + TaskController.getStringFromTask(t));
             }   
-            for(Activity a1 : a.getActivities()){
-                lms.addElement(a.getName() + " - " + ActivityController.getActivityAsString(a1));
+            for(Activity a1 : selectedAssessment.getActivities()){
+                lms.addElement(selectedAssessment.getName() + " - " + ActivityController.getActivityAsString(a1));
             }
-        }
+        
         lstCurrentTasks.setModel(lmt);
         lstCurrentActivities.setModel(lms);
+    }
+    
+    public void loadAssessments(){
+        lblModTitle.setText(m.getModuleName() + " - " + m.getModuleCode());
+        DefaultListModel<Exam> lme = new DefaultListModel();
+        DefaultListModel<Coursework> lmcw = new DefaultListModel();
+        DefaultListModel<CourseTest> lmct = new DefaultListModel();
+        
+        for(Assessment a : m.getAssessments()){
+
+            if(a instanceof Exam){
+                lme.addElement((Exam)a);
+            }
+            else if(a instanceof Coursework){
+                lmcw.addElement((Coursework) a);
+            }
+            else {
+                lmct.addElement((CourseTest) a);
+            }
+        }
+        lstExam.setModel(lme);
+        lstCoursework.setModel(lmcw);
+        lstCourseTest.setModel(lmct);
     }
 
     /**
@@ -85,8 +106,18 @@ public class ModuleOverview extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(585, 562));
 
         btnAddTask.setText("Add Task");
+        btnAddTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddTaskActionPerformed(evt);
+            }
+        });
 
         btnAddMilestone.setText("Add Milestone");
+        btnAddMilestone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddMilestoneActionPerformed(evt);
+            }
+        });
 
         btnAddActivity.setText("Add Activity");
 
@@ -95,6 +126,12 @@ public class ModuleOverview extends javax.swing.JPanel {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        lstCoursework.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstCoursework.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstCourseworkValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstCoursework);
 
         lstCourseTest.setModel(new javax.swing.AbstractListModel() {
@@ -102,12 +139,24 @@ public class ModuleOverview extends javax.swing.JPanel {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        lstCourseTest.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstCourseTest.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstCourseTestValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(lstCourseTest);
 
         lstExam.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstExam.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstExam.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstExamValueChanged(evt);
+            }
         });
         jScrollPane3.setViewportView(lstExam);
 
@@ -122,6 +171,11 @@ public class ModuleOverview extends javax.swing.JPanel {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstCurrentTasks.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstCurrentTasksMouseClicked(evt);
+            }
         });
         jScrollPane5.setViewportView(lstCurrentTasks);
 
@@ -211,6 +265,46 @@ public class ModuleOverview extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddMilestoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMilestoneActionPerformed
+        MilestoneForm mf = new MilestoneForm(m);
+        mf.setVisible(true);
+    }//GEN-LAST:event_btnAddMilestoneActionPerformed
+
+    private void btnAddTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTaskActionPerformed
+        TaskForm tf = new TaskForm(m, this);
+        tf.setVisible(true);
+    }//GEN-LAST:event_btnAddTaskActionPerformed
+
+    private void lstCurrentTasksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstCurrentTasksMouseClicked
+        JList list = (JList)evt.getSource();
+        if (evt.getClickCount() == 2) {
+            int index = list.locationToIndex(evt.getPoint());
+            TaskWindow tw = new TaskWindow((Task)list.getSelectedValue(), selectedAssessment);
+            tw.setVisible(true);
+        }
+    }//GEN-LAST:event_lstCurrentTasksMouseClicked
+
+    private void lstCourseworkValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCourseworkValueChanged
+        this.selectedAssessment = (Assessment)lstCoursework.getSelectedValue();
+        lstExam.clearSelection();
+        lstCourseTest.clearSelection();
+        fillComponents();
+    }//GEN-LAST:event_lstCourseworkValueChanged
+
+    private void lstExamValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstExamValueChanged
+        this.selectedAssessment = (Assessment)lstExam.getSelectedValue();
+        lstCoursework.clearSelection();
+        lstCourseTest.clearSelection();
+        fillComponents();
+    }//GEN-LAST:event_lstExamValueChanged
+
+    private void lstCourseTestValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCourseTestValueChanged
+        this.selectedAssessment = (Assessment)lstCourseTest.getSelectedValue();
+        lstExam.clearSelection();
+        lstCoursework.clearSelection();
+        fillComponents();
+    }//GEN-LAST:event_lstCourseTestValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
