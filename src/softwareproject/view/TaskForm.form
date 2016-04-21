@@ -49,17 +49,9 @@
                                   <Component id="cmbAssessment" min="-2" pref="95" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="lblDate" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="txtDay" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" pref="14" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="txtMonth" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" pref="14" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtYear" min="-2" pref="73" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="txtHours" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblHours" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
@@ -89,15 +81,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="lblDate" min="-2" max="-2" attributes="0"/>
+              <Component id="lblHours" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtDay" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtMonth" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtYear" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="txtHours" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="25" max="32767" attributes="0"/>
               <Component id="lblDepend" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -202,29 +188,12 @@
         <Property name="text" type="java.lang.String" value="Assessment"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblDate">
+    <Component class="javax.swing.JLabel" name="lblHours">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Date"/>
+        <Property name="text" type="java.lang.String" value="Time (Hours)"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtDay">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDayActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtMonth">
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtYear">
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="/"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="/"/>
-      </Properties>
+    <Component class="javax.swing.JTextField" name="txtHours">
     </Component>
   </SubComponents>
 </Form>

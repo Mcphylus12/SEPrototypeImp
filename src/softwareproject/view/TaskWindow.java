@@ -26,7 +26,6 @@ public class TaskWindow extends javax.swing.JFrame {
         this.a = a;
         initComponents();
         fillComponents();
-  
     }
 
     /**
@@ -163,7 +162,7 @@ public class TaskWindow extends javax.swing.JFrame {
 
     private void btnAddNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNoteActionPerformed
         //Open noteform.
-        NoteForm nf = new NoteForm(t);
+        NoteForm nf = new NoteForm(t, this);
         nf.setVisible(true);
     }//GEN-LAST:event_btnAddNoteActionPerformed
 
@@ -172,7 +171,7 @@ public class TaskWindow extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
     
-    private void fillComponents(){
+    public void fillComponents(){
         DefaultListModel<String> lm = new DefaultListModel();
         for(Note n : t.getNotes()){
             lm.addElement(NoteController.getNoteAsString(n));        
@@ -190,11 +189,14 @@ public class TaskWindow extends javax.swing.JFrame {
         }
         lstAttachedActivities.setModel(lm1);
         
+        DefaultListModel<Task> lmTask = new DefaultListModel();
+        for(Task t : t.getDependencies()){
+            lmTask.addElement(t);
+        }
+        lstDependent.setModel(lmTask);
         pbTaskProgress.setMinimum(0);
         pbTaskProgress.setMaximum(100);
         pbTaskProgress.setValue((int)(actCompleteCount/actTotalCount*100));
-        
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

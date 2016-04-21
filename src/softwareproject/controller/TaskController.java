@@ -29,14 +29,9 @@ public class TaskController {
     public static Task createNewTask(
             String title, 
             String description, 
-            String day, 
-            String month, 
-            String year, 
+            int hours,
             ArrayList<Task> dependencies){
         
-        Date date = FormController.getDateFromStrings(day, month, year);
-        
-        return new Task(title, description, date, dependencies);
+        return new Task(title, description, hours, dependencies);
     }
-    
 }

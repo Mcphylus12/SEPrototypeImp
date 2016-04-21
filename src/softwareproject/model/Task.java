@@ -1,23 +1,20 @@
 package softwareproject.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Task implements Notable{
     private String title;
     private String description;
     private ArrayList<Task> dependencies;
     private ArrayList<Note> notes;
-    private Date startDate;
-    private Date endDate;
+    private int hours;
     private int progress;
     
 
-    public Task(String title, String description, Date endDate, ArrayList<Task> dependencies) {
+    public Task(String title, String description, int hours,  ArrayList<Task> dependencies) {
         this.title=title;
         this.description = description;
-        this.startDate = new Date();
-        this.endDate = endDate;
+        this.hours = hours;
         this.progress = 0;
         this.dependencies = dependencies;
         this.notes = new ArrayList();
@@ -47,20 +44,20 @@ public class Task implements Notable{
        dependencies.remove(t);
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getTitle() {
+        return title;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public int getHours() {
+        return hours;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setHours(int hours) {
+        this.hours = hours;
     }
 
     public int getProgress() {
@@ -86,5 +83,11 @@ public class Task implements Notable{
     
     public void removeNote(Note t){
        notes.remove(t);
+    }
+    
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.title).append(" - ").append(this.description);
+        return sb.toString();
     }
 }

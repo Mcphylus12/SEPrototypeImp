@@ -54,12 +54,8 @@ public class TaskForm extends javax.swing.JFrame {
         lblDepend = new javax.swing.JLabel();
         cmbAssessment = new javax.swing.JComboBox();
         lblAssessment = new javax.swing.JLabel();
-        lblDate = new javax.swing.JLabel();
-        txtDay = new javax.swing.JTextField();
-        txtMonth = new javax.swing.JTextField();
-        txtYear = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblHours = new javax.swing.JLabel();
+        txtHours = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,17 +96,7 @@ public class TaskForm extends javax.swing.JFrame {
 
         lblAssessment.setText("Assessment");
 
-        lblDate.setText("Date");
-
-        txtDay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDayActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("/");
-
-        jLabel2.setText("/");
+        lblHours.setText("Time (Hours)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,17 +124,9 @@ public class TaskForm extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblAssessment)
                                     .addComponent(cmbAssessment, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lblDate)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtDay, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtHours, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblHours, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -170,14 +148,9 @@ public class TaskForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblDate)
+                .addComponent(lblHours)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(lblDepend)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -197,28 +170,26 @@ public class TaskForm extends javax.swing.JFrame {
         FormController.closeWindow(this);
     }//GEN-LAST:event_btnCloseActionPerformed
 
-    private void cmbAssessmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAssessmentActionPerformed
-        ListPopulator<Task> lpt = new ListPopulator();
-        Assessment a = (Assessment)cmbAssessment.getSelectedItem();
-        if(a != null){
-            lpt.populateJList(
-                a.getTasks(), 
-                lstDepend);
-        }
-    }//GEN-LAST:event_cmbAssessmentActionPerformed
-
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         Task t = TaskController.createNewTask(txtTitle.getText(), txtDesc.getText(), 
-                txtDay.getText(), txtMonth.getText(), txtYear.getText(), 
+                Integer.parseInt(txtHours.getText()), 
                 new ArrayList(lstDepend.getSelectedValuesList()));
-        AssessmentController.attachTask((Assessment)cmbAssessment.getSelectedItem(), t);
+        Assessment selectedAssess = (Assessment)cmbAssessment.getSelectedItem();
+        AssessmentController.attachTask(selectedAssess, t);
+        mo.setSelectedAssignment(selectedAssess);
         mo.fillComponents();
+       
         FormController.closeWindow(this);
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void txtDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDayActionPerformed
+    private void cmbAssessmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAssessmentActionPerformed
+        lstDepend.removeAll();
+        Assessment a = (Assessment)cmbAssessment.getSelectedItem();
+        ListPopulator<Task> lp = new ListPopulator();
+        if(a != null){
+            lp.populateJList(a.getTasks(), lstDepend);
+        }
+    }//GEN-LAST:event_cmbAssessmentActionPerformed
     
     public void fillComponents(){
         ListPopulator<Assessment> lp = new ListPopulator();
@@ -229,21 +200,17 @@ public class TaskForm extends javax.swing.JFrame {
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cmbAssessment;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAssessment;
-    private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblDepend;
     private javax.swing.JLabel lblDesc;
+    private javax.swing.JLabel lblHours;
     private javax.swing.JLabel lblTaskForm;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JList lstDepend;
-    private javax.swing.JTextField txtDay;
     private javax.swing.JTextArea txtDesc;
-    private javax.swing.JTextField txtMonth;
+    private javax.swing.JTextField txtHours;
     private javax.swing.JTextField txtTitle;
-    private javax.swing.JTextField txtYear;
     // End of variables declaration//GEN-END:variables
 }

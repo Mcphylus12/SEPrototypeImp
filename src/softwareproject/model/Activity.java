@@ -4,16 +4,20 @@ import java.util.ArrayList;
 
 public class Activity implements Notable{
     private String name;
+    private String description;
     private ActivityType activityType;
     private ArrayList<Note> notes;
     private ArrayList<Task> tasks;
     private boolean isFinished;
+    private int hours;
     public enum ActivityType {
-        READING, RESEARCH, WRITING, CODING, REVISION
+        READING, RESEARCH, WRITING, CODING
     };
 
-    public Activity(String name, ActivityType activityType) {
+    public Activity(String name, String description, int hours, ActivityType activityType) {
         this.name = name;
+        this.description = description;
+        this.hours = hours;
         this.activityType = activityType;
         isFinished = false;
         notes = new ArrayList();
@@ -60,6 +64,7 @@ public class Activity implements Notable{
         this.notes = notes;
     }
     
+    @Override
     public void addNote(Note note){
         notes.add(note);
     }
