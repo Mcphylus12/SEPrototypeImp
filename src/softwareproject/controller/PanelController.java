@@ -30,12 +30,6 @@ public class PanelController {
         this.windowContentPane = Window.getContentPane();
         this.nav = nav;
     }
-    
-    DashBoardPanel dbp;
-
-    public void setDbp(DashBoardPanel dbp) {
-        this.dbp = dbp;
-    }
 
     public void setOd(OverviewDash od) {
         this.od = od;
@@ -63,8 +57,6 @@ public class PanelController {
         windowContentPane.setLayout(null);
         Rectangle r = new Rectangle(xOff, yOff, windowContentPane.getWidth() - xOff*2, windowContentPane.getHeight() - yOff*2);
         System.out.println("dashboard rect = " + r);
-        dbp.setBounds(r);
-        windowContentPane.add(dbp);
         windowContentPane.revalidate();
         windowContentPane.repaint();
     }

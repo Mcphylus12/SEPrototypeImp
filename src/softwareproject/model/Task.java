@@ -7,6 +7,7 @@ public class Task implements Notable{
     private String description;
     private ArrayList<Task> dependencies;
     private ArrayList<Note> notes;
+    private ArrayList<Activity> activities;
     private int hours;
     private int progress;
     
@@ -18,6 +19,7 @@ public class Task implements Notable{
         this.progress = 0;
         this.dependencies = dependencies;
         this.notes = new ArrayList();
+        this.activities = new ArrayList<>();
     }
 
     public String getDescription() {
@@ -75,14 +77,26 @@ public class Task implements Notable{
     public void setNotes(ArrayList<Note> notes) {
         this.notes = notes;
     }
-    
         
+    @Override
     public void addNote(Note t){
         notes.add(t);
     }
     
     public void removeNote(Note t){
        notes.remove(t);
+    }
+
+    public ArrayList<Activity> getActivities() {
+        return activities;
+    }
+    
+    public void addActivity(Activity a){
+        activities.add(a);
+    }
+    
+    public void removeActivity(Activity a){
+       activities.remove(a);
     }
     
     public String toString(){

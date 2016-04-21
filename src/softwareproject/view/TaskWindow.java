@@ -51,6 +51,16 @@ public class TaskWindow extends javax.swing.JFrame {
         lblDependent = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         lstDependent = new javax.swing.JList();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtDescription = new javax.swing.JTextArea();
+        lblTask = new javax.swing.JLabel();
+        lblAssessment = new javax.swing.JLabel();
+        lblTime = new javax.swing.JLabel();
+        btnComplete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -67,6 +77,8 @@ public class TaskWindow extends javax.swing.JFrame {
                 btnCloseActionPerformed(evt);
             }
         });
+
+        pbTaskProgress.setForeground(new java.awt.Color(51, 204, 0));
 
         lblProgress.setText("Progress");
 
@@ -102,6 +114,32 @@ public class TaskWindow extends javax.swing.JFrame {
         lstDependent.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(lstDependent);
 
+        jLabel1.setText("Task:");
+
+        jLabel2.setText("Description:");
+
+        jLabel3.setText("Time:");
+
+        jLabel4.setText("Assessment:");
+
+        txtDescription.setEditable(false);
+        txtDescription.setColumns(20);
+        txtDescription.setRows(5);
+        jScrollPane4.setViewportView(txtDescription);
+
+        lblTask.setText("TaskTitle");
+
+        lblAssessment.setText("AssessmentTitle");
+
+        lblTime.setText("TimeAllocated");
+
+        btnComplete.setText("Mark as Complete");
+        btnComplete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCompleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,22 +151,43 @@ public class TaskWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(pbTaskProgress, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAddNote)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnClose))
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane3)
+                        .addGap(10, 10, 10)
+                        .addComponent(btnComplete)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblProgress)
-                            .addComponent(lblAttachActivities)
-                            .addComponent(lblNotes)
-                            .addComponent(lblDependent))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(pbTaskProgress, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAddNote)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnClose))
+                            .addComponent(jScrollPane3)
+                            .addComponent(jScrollPane2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblTask)
+                                            .addComponent(lblAssessment)
+                                            .addComponent(lblTime))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblProgress)
+                                    .addComponent(lblDependent)
+                                    .addComponent(lblNotes)
+                                    .addComponent(lblAttachActivities))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,20 +196,38 @@ public class TaskWindow extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(lblProgress)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pbTaskProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pbTaskProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblTask))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(lblAssessment))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblTime))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblAttachActivities)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnComplete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNotes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblDependent)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose)
                     .addComponent(btnAddNote))
@@ -170,6 +247,14 @@ public class TaskWindow extends javax.swing.JFrame {
         setVisible(false);
         dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnCompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompleteActionPerformed
+        if(lstAttachedActivities.getSelectedValue() != null){
+            Activity a = (Activity)lstAttachedActivities.getSelectedValue();
+            a.setIsFinished(true);
+            fillComponents();
+        }
+    }//GEN-LAST:event_btnCompleteActionPerformed
     
     public void fillComponents(){
         DefaultListModel<String> lm = new DefaultListModel();
@@ -180,9 +265,9 @@ public class TaskWindow extends javax.swing.JFrame {
         
         double actTotalCount = 0;
         double actCompleteCount = 0;
-        DefaultListModel<String> lm1 = new DefaultListModel();
-        for(Activity act : TaskController.getsActivitesByTask(t, a)){
-            lm1.addElement(ActivityController.getActivityAsString(act));
+        DefaultListModel<Activity> lm1 = new DefaultListModel();
+        for(Activity act : t.getActivities()){
+            lm1.addElement(act);
             actTotalCount++;
             if(act.getIsFinished())
                 actCompleteCount++;
@@ -197,22 +282,37 @@ public class TaskWindow extends javax.swing.JFrame {
         pbTaskProgress.setMinimum(0);
         pbTaskProgress.setMaximum(100);
         pbTaskProgress.setValue((int)(actCompleteCount/actTotalCount*100));
+        
+        lblTask.setText(t.getTitle());
+        lblTime.setText(Integer.toString(t.getHours())+" Hr(s)");
+        txtDescription.setText(t.getDescription());
+        lblAssessment.setText(a.getName());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNote;
     private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnComplete;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel lblAssessment;
     private javax.swing.JLabel lblAttachActivities;
     private javax.swing.JLabel lblDependent;
     private javax.swing.JLabel lblNotes;
     private javax.swing.JLabel lblProgress;
+    private javax.swing.JLabel lblTask;
     private javax.swing.JLabel lblTaskWindow;
+    private javax.swing.JLabel lblTime;
     private javax.swing.JList lstAttachedActivities;
     private javax.swing.JList lstDependent;
     private javax.swing.JList lstNotes;
     private javax.swing.JProgressBar pbTaskProgress;
+    private javax.swing.JTextArea txtDescription;
     // End of variables declaration//GEN-END:variables
 }

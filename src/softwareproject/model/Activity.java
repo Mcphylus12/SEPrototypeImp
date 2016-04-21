@@ -5,23 +5,20 @@ import java.util.ArrayList;
 public class Activity implements Notable{
     private String name;
     private String description;
-    private ActivityType activityType;
     private ArrayList<Note> notes;
     private ArrayList<Task> tasks;
     private boolean isFinished;
     private int hours;
-    public enum ActivityType {
-        READING, RESEARCH, WRITING, CODING
-    };
+    private String activityType;
 
-    public Activity(String name, String description, int hours, ActivityType activityType) {
+    public Activity(String name, String description, int hours, String activityType, ArrayList<Task> tasks) {
         this.name = name;
         this.description = description;
         this.hours = hours;
         this.activityType = activityType;
         isFinished = false;
         notes = new ArrayList();
-        tasks = new ArrayList();
+        this.tasks = tasks;
     }
 
     public String getName() {
@@ -40,7 +37,7 @@ public class Activity implements Notable{
         this.tasks = tasks;
     }
 
-    public ActivityType getActivityType() {
+    public String getActivityType() {
         return activityType;
     }
 
@@ -56,7 +53,7 @@ public class Activity implements Notable{
         return isFinished;
     }
 
-    public void setActivityType(ActivityType activityType) {
+    public void setActivityType(String activityType) {
         this.activityType = activityType;
     }
 
@@ -72,10 +69,27 @@ public class Activity implements Notable{
     public void removeNote(Note note){
         notes.remove(note);
     }
-
+    
+    public void addTask(Task task){
+        tasks.add(task);
+    }
+    
+    public void removeTask(Task task){
+        tasks.remove(task);
+    }
+    
     public void setIsFinished(boolean isFinished) {
         this.isFinished = isFinished;
     }
     
-    
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.name).append(" - ").append(this.description).append(" - ");
+        if(isFinished){
+            sb.append(" Complete");
+        }else
+            sb.append(" In Progress");
+        return sb.toString();
+    }
 }

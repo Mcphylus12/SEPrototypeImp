@@ -68,7 +68,7 @@
                                   <Component id="lblAssessment" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="lblDate" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDeadline" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="txtDay" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -103,7 +103,7 @@
                   <Component id="cmbAssessment" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Component id="lblDate" min="-2" max="-2" attributes="0"/>
+              <Component id="lblDeadline" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
@@ -215,9 +215,9 @@
         <Property name="text" type="java.lang.String" value="Title"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblDate">
+    <Component class="javax.swing.JLabel" name="lblDeadline">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Date"/>
+        <Property name="text" type="java.lang.String" value="Deadline"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblDescription">

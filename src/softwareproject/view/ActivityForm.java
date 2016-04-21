@@ -1,6 +1,15 @@
 package softwareproject.view;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import softwareproject.controller.ActivityController;
+import softwareproject.controller.FormController;
+import softwareproject.controller.ListPopulator;
+import softwareproject.model.Activity;
+import softwareproject.model.Assessment;
 import softwareproject.model.Module;
+import softwareproject.model.Task;
 
 /**
  *
@@ -16,6 +25,7 @@ public class ActivityForm extends javax.swing.JFrame {
         this.m = m;
         this.mo = mo;
         initComponents();
+        fillComponents();
     }
 
     /**
@@ -27,7 +37,6 @@ public class ActivityForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cmbType = new javax.swing.JComboBox();
         lblType = new javax.swing.JLabel();
         lblTasks = new javax.swing.JLabel();
         txtTitle = new javax.swing.JTextField();
@@ -43,10 +52,9 @@ public class ActivityForm extends javax.swing.JFrame {
         lblHours = new javax.swing.JLabel();
         txtHours = new javax.swing.JTextField();
         lblHoursAvailable = new javax.swing.JLabel();
+        txtType = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        cmbType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblType.setText("Activity Type");
 
@@ -55,8 +63,18 @@ public class ActivityForm extends javax.swing.JFrame {
         lblTitle.setText("Title");
 
         btnSave.setText("Add Activity");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnClose.setText("Close");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
 
         lblActivityForm.setText("Activity Form");
 
@@ -65,7 +83,9 @@ public class ActivityForm extends javax.swing.JFrame {
         lblDesc.setText("Description");
 
         txtDesc.setColumns(20);
+        txtDesc.setLineWrap(true);
         txtDesc.setRows(5);
+        txtDesc.setWrapStyleWord(true);
         jScrollPane2.setViewportView(txtDesc);
 
         lblHours.setText("Time (Hours)");
@@ -84,30 +104,27 @@ public class ActivityForm extends javax.swing.JFrame {
                             .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblActivityForm)
                             .addComponent(lblTitle))
-                        .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblType)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(32, 32, 32)
+                                .addComponent(lblType))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(36, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSave)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btnClose)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                                    .addComponent(lblTasks)
-                                    .addComponent(lblDesc)
-                                    .addComponent(jScrollPane2)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblHours)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblHoursAvailable))
-                            .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                                .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(btnSave)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnClose)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                            .addComponent(lblTasks)
+                            .addComponent(lblDesc)
+                            .addComponent(jScrollPane2)))
+                    .addComponent(lblHours)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblHoursAvailable)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,13 +138,13 @@ public class ActivityForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblHours)
-                    .addComponent(lblHoursAvailable))
+                .addComponent(lblHours)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHoursAvailable))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblDesc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,12 +163,40 @@ public class ActivityForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_btnCloseActionPerformed
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        Activity act = ActivityController.createActivity(txtTitle.getText(), 
+                txtDesc.getText(), 
+                Integer.parseInt(txtHours.getText()), 
+                txtType.getText(),
+                new ArrayList(lstTasks.getSelectedValuesList()));
+        mo.fillComponents();
+        
+        for(Task t: act.getTasks()){
+            t.addActivity(act);
+        }
+        
+        FormController.closeWindow(this);        
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    public void fillComponents(){
+        ListPopulator<Task> lp = new ListPopulator();
+        ArrayList<Task> t = new ArrayList();
+        for(Assessment a: m.getAssessments()){
+            for(Task task: a.getTasks()){
+                t.add(task);
+            }
+        }
+        lp.populateJList(t, lstTasks);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox cmbType;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblActivityForm;
@@ -165,5 +210,6 @@ public class ActivityForm extends javax.swing.JFrame {
     private javax.swing.JTextArea txtDesc;
     private javax.swing.JTextField txtHours;
     private javax.swing.JTextField txtTitle;
+    private javax.swing.JTextField txtType;
     // End of variables declaration//GEN-END:variables
 }

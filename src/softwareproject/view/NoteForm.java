@@ -47,6 +47,7 @@ public class NoteForm extends javax.swing.JFrame {
 
         noteContents.setColumns(20);
         noteContents.setRows(5);
+        noteContents.setWrapStyleWord(true);
         jScrollPane1.setViewportView(noteContents);
 
         btnSaveNote.setText("Save Note");

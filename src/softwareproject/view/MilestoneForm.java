@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package softwareproject.view;
 
 import java.util.ArrayList;
@@ -16,7 +10,11 @@ import softwareproject.model.Module;
 import softwareproject.model.Task;
 
 /**
- *
+ * TODO
+ * - Populate milestones in module overview
+ * - Populate related tasks in milestone form based on assessment selected
+ * - Add milestone functionality
+ * - Add milestone Window similar to task window with progress bar and associated activities
  * @author ybm14yju
  */
 public class MilestoneForm extends javax.swing.JFrame {
@@ -50,7 +48,7 @@ public class MilestoneForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         lblTitle = new javax.swing.JLabel();
-        lblDate = new javax.swing.JLabel();
+        lblDeadline = new javax.swing.JLabel();
         lblDescription = new javax.swing.JLabel();
         lblAssessment = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -109,7 +107,7 @@ public class MilestoneForm extends javax.swing.JFrame {
 
         lblTitle.setText("Title");
 
-        lblDate.setText("Date");
+        lblDeadline.setText("Deadline");
 
         lblDescription.setText("Description");
 
@@ -161,7 +159,7 @@ public class MilestoneForm extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cmbAssessment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblAssessment)))
-                            .addComponent(lblDate)
+                            .addComponent(lblDeadline)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -188,7 +186,7 @@ public class MilestoneForm extends javax.swing.JFrame {
                     .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbAssessment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(lblDate)
+                .addComponent(lblDeadline)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
@@ -224,13 +222,12 @@ public class MilestoneForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-
         MilestoneController.createNewMilestone(txtTitle.getText(), 
-                txtDescription.getText(), 
-                txtDay.getText(), 
-                txtMonth.getText(), 
-                txtYear.getText(), 
-                new ArrayList<Task>(lstRelatedTasks.getSelectedValuesList()));
+            txtDescription.getText(), 
+            txtDay.getText(), 
+            txtMonth.getText(), 
+            txtYear.getText(), 
+            new ArrayList<Task>(lstRelatedTasks.getSelectedValuesList()));
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void cmbAssessmentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbAssessmentItemStateChanged
@@ -270,7 +267,7 @@ public class MilestoneForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAssessment;
-    private javax.swing.JLabel lblDate;
+    private javax.swing.JLabel lblDeadline;
     private javax.swing.JLabel lblDescription;
     private javax.swing.JLabel lblMilestoneForm;
     private javax.swing.JLabel lblRelatedTasks;

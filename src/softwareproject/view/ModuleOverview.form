@@ -47,14 +47,16 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblCurrentTasks" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane5" min="-2" pref="140" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jScrollPane5" min="-2" pref="140" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblMilestones" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane6" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="37" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" min="-2" pref="134" max="-2" attributes="0"/>
-                          <Component id="lblCurrentActivities" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      <EmptySpace min="83" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -77,14 +79,14 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblCoursework" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblCurrentTasks" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblCurrentActivities" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblMilestones" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" min="-2" pref="236" max="-2" attributes="0"/>
                           <Component id="jScrollPane5" min="-2" pref="236" max="-2" attributes="0"/>
+                          <Component id="jScrollPane6" min="-2" pref="236" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -195,24 +197,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane4">
-      <AuxValues>
-        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-      </AuxValues>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JList" name="lstCurrentActivities">
-          <Properties>
-            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="0"/>
-            </Property>
-            <Property name="selectionMode" type="int" value="0"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
     <Container class="javax.swing.JScrollPane" name="jScrollPane5">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -253,15 +237,35 @@
         <Property name="text" type="java.lang.String" value="Current Tasks"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblCurrentActivities">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Current Activities"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblModTitle">
       <Properties>
         <Property name="text" type="java.lang.String" value="MODULE TITLE"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JLabel" name="lblMilestones">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Milestones"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane6">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JList" name="lstMilestones">
+          <Properties>
+            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+              <StringArray count="0"/>
+            </Property>
+            <Property name="selectionMode" type="int" value="0"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lstMilestonesMouseClicked"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>
