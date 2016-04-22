@@ -1,30 +1,47 @@
 package softwareproject.view;
 
+import java.awt.Color;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import softwareproject.controller.AssessmentController;
 import softwareproject.controller.FormController;
 import softwareproject.controller.ListPopulator;
 import softwareproject.controller.MilestoneController;
 import softwareproject.controller.ModuleController;
 import softwareproject.model.Assessment;
+import softwareproject.model.Milestone;
 import softwareproject.model.Module;
 import softwareproject.model.Task;
 
 /**
- * TODO
- * - Populate milestones in module overview
- * - Populate related tasks in milestone form based on assessment selected
- * - Add milestone functionality
- * - Add milestone Window similar to task window with progress bar and associated activities
  * @author ybm14yju
  */
 public class MilestoneForm extends javax.swing.JFrame {
     private Module m;
+    private ModuleOverview mo;
+    private boolean validTitle;
+    private boolean validDay;
+    private boolean validMonth;
+    private boolean validYear;
+    private boolean validDate;
+    private boolean validDescription;
+    private boolean validTask;
+    
     /**
      * Creates new form MilestoneForm
      */
-    public MilestoneForm(Module m) {
+    public MilestoneForm(Module m, ModuleOverview mo) {
         this.m = m;
+        this.mo = mo;
         initComponents();
+        lblHoursError.setVisible(false);
         fillComponents();
     }
 
@@ -42,9 +59,7 @@ public class MilestoneForm extends javax.swing.JFrame {
         btnClose = new javax.swing.JButton();
         cmbAssessment = new javax.swing.JComboBox();
         txtTitle = new javax.swing.JTextField();
-        txtDay = new javax.swing.JTextField();
-        txtMonth = new javax.swing.JTextField();
-        txtYear = new javax.swing.JTextField();
+        txtDate = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         lblTitle = new javax.swing.JLabel();
@@ -54,8 +69,7 @@ public class MilestoneForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         lstRelatedTasks = new javax.swing.JList();
         lblRelatedTasks = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblHoursError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -76,50 +90,65 @@ public class MilestoneForm extends javax.swing.JFrame {
         });
 
         cmbAssessment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbAssessment.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbAssessmentItemStateChanged(evt);
-            }
-        });
         cmbAssessment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbAssessmentActionPerformed(evt);
             }
         });
-        cmbAssessment.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                cmbAssessmentPropertyChange(evt);
+
+        txtTitle.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTitleFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTitleFocusLost(evt);
             }
         });
 
-        txtTitle.setText("jTextField1");
-
-        txtDay.setText("jTextField2");
-        txtDay.setName("hghfg"); // NOI18N
-
-        txtMonth.setText("jTextField3");
-
-        txtYear.setText("jTextField4");
+        txtDate.setName("hghfg"); // NOI18N
+        txtDate.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDateFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDateFocusLost(evt);
+            }
+        });
 
         txtDescription.setColumns(20);
         txtDescription.setRows(5);
+        txtDescription.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDescriptionFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDescriptionFocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtDescription);
 
         lblTitle.setText("Title");
 
-        lblDeadline.setText("Deadline");
+        lblDeadline.setText("Deadline \"dd/mm/yyyy\"");
 
         lblDescription.setText("Description");
 
         lblAssessment.setText("Assessment");
 
+        lstRelatedTasks.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lstRelatedTasksFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lstRelatedTasksFocusLost(evt);
+            }
+        });
         jScrollPane2.setViewportView(lstRelatedTasks);
 
-        lblRelatedTasks.setText("Related Tasks");
+        lblRelatedTasks.setText("Related Task(s)");
 
-        jLabel1.setText("/");
-
-        jLabel2.setText("/");
+        lblHoursError.setText("Must Be a Valid date");
+        lblHoursError.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,7 +164,21 @@ public class MilestoneForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnClose))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblMilestoneForm)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblMilestoneForm)
+                                    .addComponent(lblDeadline)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblTitle)
+                                            .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblAssessment)
+                                            .addComponent(cmbAssessment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblHoursError, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -146,62 +189,38 @@ public class MilestoneForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblRelatedTasks)
-                                .addGap(0, 108, Short.MAX_VALUE))
+                                .addGap(0, 100, Short.MAX_VALUE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(10, 10, 10))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblTitle)
-                                    .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(44, 44, 44)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbAssessment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblAssessment)))
-                            .addComponent(lblDeadline)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(10, 10, 10))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblMilestoneForm)
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTitle)
-                    .addComponent(lblAssessment))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbAssessment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(lblDeadline)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addContainerGap()
+                        .addComponent(lblMilestoneForm)
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTitle)
+                            .addComponent(lblAssessment))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbAssessment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addComponent(lblDeadline)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblHoursError)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(165, 165, 165)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDescription)
-                            .addComponent(lblRelatedTasks)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel1)))
+                            .addComponent(lblRelatedTasks))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -213,70 +232,145 @@ public class MilestoneForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbAssessmentPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cmbAssessmentPropertyChange
-
-    }//GEN-LAST:event_cmbAssessmentPropertyChange
-
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         FormController.closeWindow(this);
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        MilestoneController.createNewMilestone(txtTitle.getText(), 
-            txtDescription.getText(), 
-            txtDay.getText(), 
-            txtMonth.getText(), 
-            txtYear.getText(), 
-            new ArrayList<Task>(lstRelatedTasks.getSelectedValuesList()));
+        if(!validDescription || !validTitle || !validDate || !validTask){
+            if(!validDescription)
+                txtDescription.setBackground(Color.RED);
+            if(!validTitle)
+                txtTitle.setBackground(Color.RED);
+            if(!validTask)
+                lstRelatedTasks.setBackground(Color.RED);
+            if(!validDate){
+                txtDate.setBackground(Color.RED);
+            }
+            JOptionPane.showMessageDialog(new JFrame(), "Please Correct Errors in Red.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Milestone m = MilestoneController.createNewMilestone(txtTitle.getText(), 
+                txtDescription.getText(), 
+                txtDate.getText(), 
+                new ArrayList<Task>(lstRelatedTasks.getSelectedValuesList()));
+            Assessment selectedAssess = (Assessment)cmbAssessment.getSelectedItem();
+            AssessmentController.attachMilestone(selectedAssess, m);
+            mo.setSelectedAssignment(selectedAssess);
+            mo.fillComponents();
+
+            FormController.closeWindow(this);
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void cmbAssessmentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbAssessmentItemStateChanged
-
-    }//GEN-LAST:event_cmbAssessmentItemStateChanged
-
     private void cmbAssessmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAssessmentActionPerformed
-//        ListPopulator<Task> lpt = new ListPopulator();
-//        Assessment a = (Assessment)evt.get();
-//        lpt.populateJList(a.getTasks(), lstRelatedTasks);
-        ListPopulator<Task> lpt = new ListPopulator();
-        Assessment a = (Assessment)lstRelatedTasks.getSelectedValue();
+        lstRelatedTasks.removeAll();
+        Assessment a = (Assessment)cmbAssessment.getSelectedItem();
+        ListPopulator<Task> lp = new ListPopulator();
         if(a != null){
-            lpt.populateJList(
-                a.getTasks(), 
-                lstRelatedTasks);
+            lp.populateJList(a.getTasks(), lstRelatedTasks);
         }
-
-        
     }//GEN-LAST:event_cmbAssessmentActionPerformed
 
+    private void txtTitleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusGained
+        resetColour(evt);
+    }//GEN-LAST:event_txtTitleFocusGained
+
+    private void txtTitleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusLost
+        //Title Empty Validation
+        if(txtTitle.getText().trim().equals("")){
+            txtTitle.setBackground(Color.RED);
+            validTitle = false;
+        }else{
+            txtTitle.setBackground(UIManager.getColor("TextField.background"));
+            validTitle = true;
+        }
+    }//GEN-LAST:event_txtTitleFocusLost
+
+    private void txtDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusGained
+        resetColour(evt);
+    }//GEN-LAST:event_txtDateFocusGained
+
+    private void txtDateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusLost
+        Date date = null;
+        String inputDate = txtDate.getText();
+        validDate = true;
+        try {
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            formatter.setLenient(false);
+            date = formatter.parse(inputDate);
+            Calendar cal = Calendar.getInstance();
+            cal.setLenient(false);
+            cal.setTime(date);
+            try {
+                cal.getTime();
+            }
+            catch (Exception e) {
+                validDate = false;
+                txtDate.setBackground(Color.RED);
+                System.out.println("Invalid date - Calendar");
+            }
+        } catch (ParseException e) { 
+            validDate = false;
+            txtDate.setBackground(Color.RED);
+            System.out.println("Invalid date");
+        }
+    }//GEN-LAST:event_txtDateFocusLost
+
+    private void txtDescriptionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescriptionFocusGained
+        resetColour(evt);
+    }//GEN-LAST:event_txtDescriptionFocusGained
+
+    private void txtDescriptionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescriptionFocusLost
+        //Description Empty Validation
+        if(txtDescription.getText().trim().equals("")){
+            txtDescription.setBackground(Color.RED);
+            validDescription = false;
+        }else{
+            txtDescription.setBackground(UIManager.getColor("TextField.background"));
+            validDescription = true;
+        }
+    }//GEN-LAST:event_txtDescriptionFocusLost
+
+    private void lstRelatedTasksFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lstRelatedTasksFocusGained
+        resetColour(evt);
+    }//GEN-LAST:event_lstRelatedTasksFocusGained
+
+    private void lstRelatedTasksFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lstRelatedTasksFocusLost
+        //TaskList Empty Validation
+        if(lstRelatedTasks.getSelectedValuesList().size()<=0){
+            lstRelatedTasks.setBackground(Color.RED);
+            validTask = false;
+        }else{
+            lstRelatedTasks.setBackground(UIManager.getColor("TextField.background"));
+            validTask = true;
+        }
+    }//GEN-LAST:event_lstRelatedTasksFocusLost
+    
+    public void resetColour(java.awt.event.FocusEvent evt){
+        evt.getComponent().setBackground(UIManager.getColor("TextField.background"));
+    }
+    
     public void fillComponents(){
         ListPopulator<Assessment> lp = new ListPopulator();
         lp.populateComboBox(m.getAssessments(), cmbAssessment);
-    }
-    
-    public static void main(String[] args) {
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cmbAssessment;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAssessment;
     private javax.swing.JLabel lblDeadline;
     private javax.swing.JLabel lblDescription;
+    private javax.swing.JLabel lblHoursError;
     private javax.swing.JLabel lblMilestoneForm;
     private javax.swing.JLabel lblRelatedTasks;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JList lstRelatedTasks;
-    private javax.swing.JTextField txtDay;
+    private javax.swing.JTextField txtDate;
     private javax.swing.JTextArea txtDescription;
-    private javax.swing.JTextField txtMonth;
     private javax.swing.JTextField txtTitle;
-    private javax.swing.JTextField txtYear;
     // End of variables declaration//GEN-END:variables
 }

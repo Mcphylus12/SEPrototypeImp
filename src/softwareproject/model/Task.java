@@ -10,9 +10,11 @@ public class Task implements Notable{
     private ArrayList<Activity> activities;
     private int hours;
     private int progress;
+    private boolean isComplete;
     
 
     public Task(String title, String description, int hours,  ArrayList<Task> dependencies) {
+        this.isComplete = false;
         this.title=title;
         this.description = description;
         this.hours = hours;
@@ -20,6 +22,14 @@ public class Task implements Notable{
         this.dependencies = dependencies;
         this.notes = new ArrayList();
         this.activities = new ArrayList<>();
+    }
+
+    public boolean getIsComplete() {
+        return isComplete;
+    }
+
+    public void setIsComplete(boolean isComplete) {
+        this.isComplete = isComplete;
     }
 
     public String getDescription() {

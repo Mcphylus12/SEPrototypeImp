@@ -58,5 +58,10 @@ public class Milestone {
         this.relatedTasks = relatedTasks;
     }
     
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.title).append(" - ").append(this.description);
+        return sb.toString();
+    }
     
 }

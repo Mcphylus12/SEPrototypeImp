@@ -47,6 +47,10 @@ public abstract class Assessment {
     public void addActivity(Activity a){
         this.activities.add(a);
     }
+    
+    public void addMilestone(Milestone m){
+        this.milestones.add(m);
+    }
 
     public ArrayList<Activity> getActivities() {
         return activities;

@@ -105,7 +105,7 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
 
     private void lstNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstNavMouseClicked
         JList list = (JList)evt.getSource();
-        if (evt.getClickCount() == 2) {
+        if (evt.getClickCount() == 1) {
             int index = list.locationToIndex(evt.getPoint());
             pa.setModulePanel(new ModuleOverview((Module)lstNav.getSelectedValue()));
                     

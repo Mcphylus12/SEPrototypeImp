@@ -5,7 +5,11 @@
  */
 package softwareproject.view;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import softwareproject.controller.AssessmentController;
 import softwareproject.controller.FormController;
 import softwareproject.controller.ListPopulator;
@@ -21,14 +25,22 @@ import softwareproject.model.Task;
 public class TaskForm extends javax.swing.JFrame {
     private Module m;
     private ModuleOverview mo;
+    private boolean validTitle;
+    private boolean validDescription;
+    private boolean validHours;
     
     /**
      * Creates new form TaskForm
      */
     public TaskForm(Module m, ModuleOverview mo) {
+        validTitle = false;
+        validDescription = false;
+        validHours = false;
+        
         this.m = m;
         this.mo = mo;
         initComponents();
+        lblHoursError.setVisible(false);
         fillComponents();
     }
 
@@ -56,6 +68,8 @@ public class TaskForm extends javax.swing.JFrame {
         lblAssessment = new javax.swing.JLabel();
         lblHours = new javax.swing.JLabel();
         txtHours = new javax.swing.JTextField();
+        lblHoursError = new javax.swing.JLabel();
+        lblReq = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -75,12 +89,29 @@ public class TaskForm extends javax.swing.JFrame {
 
         lblTaskForm.setText("Task Form");
 
-        lblTitle.setText("Title");
+        lblTitle.setText("Title*");
 
-        lblDesc.setText("Description");
+        txtTitle.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTitleFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTitleFocusLost(evt);
+            }
+        });
+
+        lblDesc.setText("Description*");
 
         txtDesc.setColumns(20);
         txtDesc.setRows(5);
+        txtDesc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDescFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDescFocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtDesc);
 
         jScrollPane2.setViewportView(lstDepend);
@@ -96,7 +127,22 @@ public class TaskForm extends javax.swing.JFrame {
 
         lblAssessment.setText("Assessment");
 
-        lblHours.setText("Time (Hours)");
+        lblHours.setText("Time (Hours)*");
+
+        txtHours.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtHoursFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtHoursFocusLost(evt);
+            }
+        });
+
+        lblHoursError.setText("Must Be a positive number.");
+        lblHoursError.setEnabled(false);
+
+        lblReq.setText("Fields Marked with * are required");
+        lblReq.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,6 +153,8 @@ public class TaskForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblReq, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnClose))
                     .addGroup(layout.createSequentialGroup()
@@ -124,9 +172,12 @@ public class TaskForm extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblAssessment)
                                     .addComponent(cmbAssessment, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtHours, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblHours, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtHours, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblHours, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblHoursError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -150,7 +201,9 @@ public class TaskForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblHours)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHoursError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(lblDepend)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -158,7 +211,8 @@ public class TaskForm extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
-                    .addComponent(btnClose))
+                    .addComponent(btnClose)
+                    .addComponent(lblReq))
                 .addContainerGap())
         );
 
@@ -171,6 +225,17 @@ public class TaskForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        if(!validDescription || !validTitle || !validHours){
+            if(!validDescription)
+                txtDesc.setBackground(Color.RED);
+            if(!validTitle)
+                txtTitle.setBackground(Color.RED);
+            if(!validHours){
+                lblHoursError.setVisible(true);
+                txtHours.setBackground(Color.RED);
+            }
+            JOptionPane.showMessageDialog(new JFrame(), "Please Correct Errors in Red.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }else{
         Task t = TaskController.createNewTask(txtTitle.getText(), txtDesc.getText(), 
                 Integer.parseInt(txtHours.getText()), 
                 new ArrayList(lstDepend.getSelectedValuesList()));
@@ -180,6 +245,7 @@ public class TaskForm extends javax.swing.JFrame {
         mo.fillComponents();
        
         FormController.closeWindow(this);
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void cmbAssessmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAssessmentActionPerformed
@@ -190,6 +256,68 @@ public class TaskForm extends javax.swing.JFrame {
             lp.populateJList(a.getTasks(), lstDepend);
         }
     }//GEN-LAST:event_cmbAssessmentActionPerformed
+
+    private void txtTitleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusLost
+        //Title Empty Validation
+        if(txtTitle.getText().trim().equals("")){
+            txtTitle.setBackground(Color.RED);
+            validTitle = false;
+        }else{
+            txtTitle.setBackground(UIManager.getColor("TextField.background"));
+            validTitle = true;
+        }
+    }//GEN-LAST:event_txtTitleFocusLost
+
+    private void txtTitleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusGained
+        resetColour(evt);
+    }//GEN-LAST:event_txtTitleFocusGained
+
+    private void txtDescFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescFocusLost
+        //Description Empty Validation
+        if(txtDesc.getText().trim().equals("")){
+            txtDesc.setBackground(Color.RED);
+            validDescription = false;
+        }else{
+            txtDesc.setBackground(UIManager.getColor("TextField.background"));
+            validDescription = true;
+        }
+    }//GEN-LAST:event_txtDescFocusLost
+
+    private void txtDescFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescFocusGained
+        resetColour(evt);
+    }//GEN-LAST:event_txtDescFocusGained
+
+    private void txtHoursFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoursFocusLost
+        //Hours positive int validation
+        boolean success = true;
+        try {
+            Integer.parseInt(txtHours.getText());
+        }catch(NumberFormatException exc){
+            success = false;
+        }
+        if(success){
+            if(Integer.parseInt(txtHours.getText()) > 0){
+                txtHours.setBackground(UIManager.getColor("TextField.background"));
+                validHours = true;
+            }else{
+                lblHoursError.setVisible(true);
+                txtHours.setBackground(Color.RED);
+                validHours = false;
+            }
+        }else{
+            lblHoursError.setVisible(true);
+            txtHours.setBackground(Color.RED);
+            validHours = false;
+        }
+    }//GEN-LAST:event_txtHoursFocusLost
+
+    private void txtHoursFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoursFocusGained
+        resetColour(evt);
+    }//GEN-LAST:event_txtHoursFocusGained
+    
+    public void resetColour(java.awt.event.FocusEvent evt){
+        evt.getComponent().setBackground(UIManager.getColor("TextField.background"));
+    }
     
     public void fillComponents(){
         ListPopulator<Assessment> lp = new ListPopulator();
@@ -206,6 +334,8 @@ public class TaskForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblDepend;
     private javax.swing.JLabel lblDesc;
     private javax.swing.JLabel lblHours;
+    private javax.swing.JLabel lblHoursError;
+    private javax.swing.JLabel lblReq;
     private javax.swing.JLabel lblTaskForm;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JList lstDepend;

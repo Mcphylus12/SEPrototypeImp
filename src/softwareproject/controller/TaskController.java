@@ -22,7 +22,7 @@ public class TaskController {
     
     public static String getStringFromTask(Task t){
         StringBuilder sb = new StringBuilder();
-        sb.append(t.getDescription());
+        sb.append(t.getTitle());
         return sb.toString();
     }
     

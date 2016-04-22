@@ -11,11 +11,9 @@ public class ListPopulator<T> {
     
     public void populateJList(ArrayList<T> src, JList jl){
         DefaultListModel<T> lm = new DefaultListModel();
-        
-            for(T o :src){
-                lm.addElement(o);  
-                
-            }
+        for(T o :src){
+            lm.addElement(o);
+        }
         jl.setModel(lm);
     }
     

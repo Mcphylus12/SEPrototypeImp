@@ -11,9 +11,9 @@ public class FormController {
         jf.dispose();
     }
     
-    public static Date getDateFromStrings(String day, String month, String year){
-        String dateStr = day + ":" + month + ":" + year;
-        SimpleDateFormat sd = new SimpleDateFormat("DD:mm:YYYY");
+    public static Date getDateFromStrings(String dateString){
+        String dateStr = dateString;
+        SimpleDateFormat sd = new SimpleDateFormat("DD/mm/YYYY");
         Date date = new Date();
         try {
             date = sd.parse(dateStr);

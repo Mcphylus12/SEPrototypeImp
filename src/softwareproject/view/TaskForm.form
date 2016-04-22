@@ -28,6 +28,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="btnSave" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblReq" min="-2" pref="197" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnClose" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -49,9 +51,13 @@
                                   <Component id="cmbAssessment" min="-2" pref="95" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtHours" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lblHours" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="txtHours" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblHours" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblHoursError" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
@@ -83,7 +89,10 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="lblHours" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtHours" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtHours" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblHoursError" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="25" max="32767" attributes="0"/>
               <Component id="lblDepend" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -92,6 +101,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnSave" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnClose" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblReq" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -122,14 +132,18 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblTitle">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Title"/>
+        <Property name="text" type="java.lang.String" value="Title*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtTitle">
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTitleFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTitleFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblDesc">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Description"/>
+        <Property name="text" type="java.lang.String" value="Description*"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -144,6 +158,10 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtDescFocusGained"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtDescFocusLost"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -190,10 +208,26 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblHours">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Time (Hours)"/>
+        <Property name="text" type="java.lang.String" value="Time (Hours)*"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtHours">
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtHoursFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtHoursFocusLost"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblHoursError">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Must Be a positive number."/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblReq">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fields Marked with * are required"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

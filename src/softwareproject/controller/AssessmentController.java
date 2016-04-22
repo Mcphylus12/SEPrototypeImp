@@ -5,6 +5,7 @@ import softwareproject.model.Assessment;
 import softwareproject.model.CourseTest;
 import softwareproject.model.Coursework;
 import softwareproject.model.Exam;
+import softwareproject.model.Milestone;
 import softwareproject.model.Task;
 
 
@@ -20,6 +21,11 @@ public class AssessmentController {
     public static void attachTask(Assessment a, Task t){
         a.addTask(t);
     }
+    public static void attachMilestone(Assessment a, Milestone m){
+        a.addMilestone(m);
+    }
+    
+    
     
 
 }

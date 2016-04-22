@@ -21,6 +21,22 @@ public class Activity implements Notable{
         this.tasks = tasks;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
     public String getName() {
         return name;
     }

@@ -9,13 +9,16 @@ public class MilestoneController {
     public static Milestone createNewMilestone(
             String title, 
             String description, 
-            String day, 
-            String month,
-            String year, 
-            ArrayList<Task> relatedTasks)
-    {
-        Date date = FormController.getDateFromStrings(day, month, year);
-        
+            String dateString, 
+            ArrayList<Task> relatedTasks){
+        Date date = FormController.getDateFromStrings(dateString);
         return new Milestone(title, description, date, relatedTasks);
     }
+    
+    public static String getStringFromTask(Milestone m){
+        StringBuilder sb = new StringBuilder();
+        sb.append(m.getTitle());
+        return sb.toString();
+    }
+    
 }
