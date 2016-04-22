@@ -21,5 +21,4 @@ public class NoteController {
         
         return sb.toString();
     }
-    
 }

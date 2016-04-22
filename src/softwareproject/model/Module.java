@@ -50,7 +50,4 @@ public class Module {
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
     }
-
-    
-    
 }

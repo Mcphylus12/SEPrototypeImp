@@ -2,8 +2,6 @@ package softwareproject.view;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;

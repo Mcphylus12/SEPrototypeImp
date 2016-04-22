@@ -27,8 +27,4 @@ public class Exam extends Assessment{
     public void setLocation(String location) {
         this.location = location;
     }
-
-
-    
-     
 }

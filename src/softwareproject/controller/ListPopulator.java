@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
-import softwareproject.model.Assessment;
-import softwareproject.model.Module;
 
 public class ListPopulator<T> {
     

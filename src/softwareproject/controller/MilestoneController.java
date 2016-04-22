@@ -20,5 +20,4 @@ public class MilestoneController {
         sb.append(m.getTitle());
         return sb.toString();
     }
-    
 }

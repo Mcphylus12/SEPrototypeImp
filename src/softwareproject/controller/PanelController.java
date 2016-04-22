@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package softwareproject.controller;
 
 
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Rectangle;
 import softwareproject.view.*;
 
@@ -71,7 +63,4 @@ public class PanelController {
         windowContentPane.revalidate();
         windowContentPane.repaint();
     }
-    
-
-    
 }

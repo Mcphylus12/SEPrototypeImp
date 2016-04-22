@@ -16,8 +16,6 @@ public class Coursework extends Assessment {
         this.submissionType = submissionType;
     }
     
-    
-
     public Date getSetDate() {
         return setDate;
     }
@@ -49,6 +47,4 @@ public class Coursework extends Assessment {
     public void setSubmissionType(String submissionType) {
         this.submissionType = submissionType;
     }
-    
-    
 }

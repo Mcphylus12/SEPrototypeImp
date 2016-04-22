@@ -24,6 +24,4 @@ public class Student {
     public void setStudySemProfile(SemesterProfile studySemProfile) {
         this.studySemProfile = studySemProfile;
     }
-    
-    
 }

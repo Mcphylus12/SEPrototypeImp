@@ -36,6 +36,4 @@ public class Note {
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
-    
-    
 }
