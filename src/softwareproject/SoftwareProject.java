@@ -19,7 +19,7 @@ import softwareproject.view.Window;
 
 /**
  * TODO
- * - Populate Completed Tasks list in Module Overview with completed tasks
+ * - 
  * @author ybm14yju
  */
 public class SoftwareProject {

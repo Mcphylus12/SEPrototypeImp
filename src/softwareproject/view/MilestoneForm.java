@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import softwareproject.controller.AssessmentController;
+import softwareproject.controller.ErrorController;
 import softwareproject.controller.FormController;
 import softwareproject.controller.ListPopulator;
 import softwareproject.controller.MilestoneController;
@@ -27,9 +28,6 @@ public class MilestoneForm extends javax.swing.JFrame {
     private Module m;
     private ModuleOverview mo;
     private boolean validTitle;
-    private boolean validDay;
-    private boolean validMonth;
-    private boolean validYear;
     private boolean validDate;
     private boolean validDescription;
     private boolean validTask;
@@ -238,26 +236,26 @@ public class MilestoneForm extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if(!validDescription || !validTitle || !validDate || !validTask){
-            if(!validDescription)
-                txtDescription.setBackground(Color.RED);
-            if(!validTitle)
-                txtTitle.setBackground(Color.RED);
-            if(!validTask)
-                lstRelatedTasks.setBackground(Color.RED);
-            if(!validDate){
-                txtDate.setBackground(Color.RED);
-            }
+            ErrorController.setErrorBackground(validDescription, txtDescription);
+            ErrorController.setErrorBackground(validTitle, txtTitle);
+            ErrorController.setErrorBackground(validTask, lstRelatedTasks);
+            ErrorController.setErrorBackground(validDate, txtDate);
             JOptionPane.showMessageDialog(new JFrame(), "Please Correct Errors in Red.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }else{
+            ArrayList<Task> tasks = new ArrayList<Task>(lstRelatedTasks.getSelectedValuesList());
+            
             Milestone m = MilestoneController.createNewMilestone(txtTitle.getText(), 
                 txtDescription.getText(), 
                 txtDate.getText(), 
-                new ArrayList<Task>(lstRelatedTasks.getSelectedValuesList()));
+                tasks);
+            
             Assessment selectedAssess = (Assessment)cmbAssessment.getSelectedItem();
             AssessmentController.attachMilestone(selectedAssess, m);
             mo.setSelectedAssignment(selectedAssess);
             mo.fillComponents();
-
+            for(Task t: tasks){
+                t.addRelatedMilestones(m);
+            }
             FormController.closeWindow(this);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -272,83 +270,43 @@ public class MilestoneForm extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbAssessmentActionPerformed
 
     private void txtTitleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtTitleFocusGained
 
     private void txtTitleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusLost
         //Title Empty Validation
-        if(txtTitle.getText().trim().equals("")){
-            txtTitle.setBackground(Color.RED);
-            validTitle = false;
-        }else{
-            txtTitle.setBackground(UIManager.getColor("TextField.background"));
-            validTitle = true;
-        }
+        validTitle = ErrorController.txtEmptyValidation(txtTitle.getText());
+        ErrorController.setErrorBackground(validTitle, txtTitle);
     }//GEN-LAST:event_txtTitleFocusLost
 
     private void txtDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtDateFocusGained
 
     private void txtDateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusLost
-        Date date = null;
-        String inputDate = txtDate.getText();
-        validDate = true;
-        try {
-            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            formatter.setLenient(false);
-            date = formatter.parse(inputDate);
-            Calendar cal = Calendar.getInstance();
-            cal.setLenient(false);
-            cal.setTime(date);
-            try {
-                cal.getTime();
-            }
-            catch (Exception e) {
-                validDate = false;
-                txtDate.setBackground(Color.RED);
-                System.out.println("Invalid date - Calendar");
-            }
-        } catch (ParseException e) { 
-            validDate = false;
-            txtDate.setBackground(Color.RED);
-            System.out.println("Invalid date");
-        }
+        validDate = ErrorController.dateValidation(txtDate.getText());
+        ErrorController.setErrorBackground(validDate, txtDate);
     }//GEN-LAST:event_txtDateFocusLost
 
     private void txtDescriptionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescriptionFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtDescriptionFocusGained
 
     private void txtDescriptionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescriptionFocusLost
         //Description Empty Validation
-        if(txtDescription.getText().trim().equals("")){
-            txtDescription.setBackground(Color.RED);
-            validDescription = false;
-        }else{
-            txtDescription.setBackground(UIManager.getColor("TextField.background"));
-            validDescription = true;
-        }
+        validDescription = ErrorController.txtEmptyValidation(txtDescription.getText());
+        ErrorController.setErrorBackground(validDescription, txtDescription);
     }//GEN-LAST:event_txtDescriptionFocusLost
 
     private void lstRelatedTasksFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lstRelatedTasksFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_lstRelatedTasksFocusGained
 
     private void lstRelatedTasksFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lstRelatedTasksFocusLost
         //TaskList Empty Validation
-        if(lstRelatedTasks.getSelectedValuesList().size()<=0){
-            lstRelatedTasks.setBackground(Color.RED);
-            validTask = false;
-        }else{
-            lstRelatedTasks.setBackground(UIManager.getColor("TextField.background"));
-            validTask = true;
-        }
+        validTask = ErrorController.listSelectionValidation(lstRelatedTasks);
+        ErrorController.setErrorBackground(validTask, lstRelatedTasks);
     }//GEN-LAST:event_lstRelatedTasksFocusLost
-    
-    public void resetColour(java.awt.event.FocusEvent evt){
-        evt.getComponent().setBackground(UIManager.getColor("TextField.background"));
-    }
     
     public void fillComponents(){
         ListPopulator<Assessment> lp = new ListPopulator();

@@ -1,11 +1,13 @@
 package softwareproject.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import softwareproject.controller.ActivityController;
+import softwareproject.controller.ErrorController;
 import softwareproject.controller.FormController;
 import softwareproject.controller.ListPopulator;
 import softwareproject.model.Activity;
@@ -262,18 +264,13 @@ public class ActivityForm extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if(!validDescription || !validTitle || !validType || !validTask || !validTime){
-            if(!validDescription)
-                txtDesc.setBackground(Color.RED);
-            if(!validTitle)
-                txtTitle.setBackground(Color.RED);
-            if(!validType)
-                txtType.setBackground(Color.RED);
-            if(!validTask)
-                lstTasks.setBackground(Color.RED);
-            if(!validTime){
+            ErrorController.setErrorBackground(validDescription, txtDesc);
+            ErrorController.setErrorBackground(validTitle, txtTitle);
+            ErrorController.setErrorBackground(validType, txtType);
+            ErrorController.setErrorBackground(validTask, lstTasks);
+            ErrorController.setErrorBackground(validTime, txtHours);
+            if(!validTime)
                 lblHoursError.setVisible(true);
-                txtHours.setBackground(Color.RED);
-            }
             JOptionPane.showMessageDialog(new JFrame(), "Please Correct Errors in Red.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }else{
             Activity act = ActivityController.createActivity(txtTitle.getText(), 
@@ -307,96 +304,59 @@ public class ActivityForm extends javax.swing.JFrame {
     }//GEN-LAST:event_lstTasksValueChanged
 
     private void txtTitleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtTitleFocusGained
 
     private void txtTitleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusLost
         //Title Empty Validation
-        if(txtTitle.getText().trim().equals("")){
-            txtTitle.setBackground(Color.RED);
-            validTitle = false;
-        }else{
-            txtTitle.setBackground(UIManager.getColor("TextField.background"));
-            validTitle = true;
-        }
+        validTitle = ErrorController.txtEmptyValidation(txtTitle.getText());
+        ErrorController.setErrorBackground(validTitle, txtTitle);
     }//GEN-LAST:event_txtTitleFocusLost
 
     private void txtTypeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTypeFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtTypeFocusGained
 
     private void txtTypeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTypeFocusLost
         //Type Empty Validation
-        if(txtType.getText().trim().equals("")){
-            txtType.setBackground(Color.RED);
-            validType = false;
-        }else{
-            txtType.setBackground(UIManager.getColor("TextField.background"));
-            validType = true;
-        }
+        validType = ErrorController.txtEmptyValidation(txtType.getText());
+        ErrorController.setErrorBackground(validType, txtType);
     }//GEN-LAST:event_txtTypeFocusLost
 
     private void txtDescFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtDescFocusGained
 
     private void txtDescFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescFocusLost
         //Description Empty Validation
-        if(txtDesc.getText().trim().equals("")){
-            txtDesc.setBackground(Color.RED);
-            validDescription = false;
-        }else{
-            txtDesc.setBackground(UIManager.getColor("TextField.background"));
-            validDescription = true;
-        }
+        validDescription = ErrorController.txtEmptyValidation(txtDesc.getText());
+        ErrorController.setErrorBackground(validDescription, txtDesc);
     }//GEN-LAST:event_txtDescFocusLost
 
     private void lstTasksFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lstTasksFocusLost
         //TaskList Empty Validation
-        if(lstTasks.getSelectedValuesList().size()<=0){
-            lstTasks.setBackground(Color.RED);
-            validTask = false;
-        }else{
-            lstTasks.setBackground(UIManager.getColor("TextField.background"));
-            validTask = true;
-        }
+        validTask = ErrorController.listSelectionValidation(lstTasks);
+        ErrorController.setErrorBackground(validTask, lstTasks);
     }//GEN-LAST:event_lstTasksFocusLost
 
     private void lstTasksFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lstTasksFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_lstTasksFocusGained
 
     private void txtHoursFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoursFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtHoursFocusGained
 
     private void txtHoursFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoursFocusLost
         //Hours positive int validation
-        boolean success = true;
-        try {
-            Integer.parseInt(txtHours.getText());
-        }catch(NumberFormatException exc){
-            success = false;
+        validTime = ErrorController.intValidation(txtHours);
+        if(validTime){
+            validTime = Integer.parseInt(txtHours.getText()) <= timeAvailable;
         }
-        if(success){
-            if(Integer.parseInt(txtHours.getText()) > 0){
-                txtHours.setBackground(UIManager.getColor("TextField.background"));
-                validTime = true;
-            }else{
-                lblHoursError.setVisible(true);
-                txtHours.setBackground(Color.RED);
-                validTime = false;
-            }
-        }else{
-            lblHoursError.setVisible(true);
-            txtHours.setBackground(Color.RED);
-            validTime = false;
-        }
+        
+        ErrorController.setErrorBackground(validTime, txtHours);
+        lblHoursError.setVisible(!validTime);
     }//GEN-LAST:event_txtHoursFocusLost
-    
-    public void resetColour(java.awt.event.FocusEvent evt){
-        evt.getComponent().setBackground(UIManager.getColor("TextField.background"));
-    }
     
     public void fillComponents(){
         ListPopulator<Task> lp = new ListPopulator();

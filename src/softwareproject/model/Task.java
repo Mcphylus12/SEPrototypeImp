@@ -8,6 +8,7 @@ public class Task implements Notable{
     private ArrayList<Task> dependencies;
     private ArrayList<Note> notes;
     private ArrayList<Activity> activities;
+    private ArrayList<Milestone> relatedMilestones;
     private int hours;
     private int progress;
     private boolean isComplete;
@@ -22,7 +23,25 @@ public class Task implements Notable{
         this.dependencies = dependencies;
         this.notes = new ArrayList();
         this.activities = new ArrayList<>();
+        this.relatedMilestones = new ArrayList<>();
     }
+
+    public ArrayList<Milestone> getRelatedMilestones() {
+        return relatedMilestones;
+    }
+
+    public void setRelatedMilestones(ArrayList<Milestone> relatedMilestones) {
+        this.relatedMilestones = relatedMilestones;
+    }
+    
+    public void addRelatedMilestones(Milestone m){
+        relatedMilestones.add(m);
+    }
+    
+    public void removeRelatedMilestones(Milestone m){
+       relatedMilestones.remove(m);
+    }
+    
 
     public boolean getIsComplete() {
         return isComplete;

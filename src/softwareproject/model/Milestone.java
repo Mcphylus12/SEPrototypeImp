@@ -62,6 +62,10 @@ public class Milestone {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(this.title).append(" - ").append(this.description);
+        if(isComplete){
+            sb.append(" - Complete");
+        }else
+            sb.append(" - In Progress");
         return sb.toString();
     }
 }

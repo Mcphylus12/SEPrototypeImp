@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import softwareproject.controller.AssessmentController;
+import softwareproject.controller.ErrorController;
 import softwareproject.controller.FormController;
 import softwareproject.controller.ListPopulator;
 import softwareproject.controller.TaskController;
@@ -226,25 +227,22 @@ public class TaskForm extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if(!validDescription || !validTitle || !validHours){
-            if(!validDescription)
-                txtDesc.setBackground(Color.RED);
-            if(!validTitle)
-                txtTitle.setBackground(Color.RED);
-            if(!validHours){
+            ErrorController.setErrorBackground(validDescription, txtDesc);
+            ErrorController.setErrorBackground(validTitle, txtTitle);
+            ErrorController.setErrorBackground(validHours, txtHours);
+            if(!validHours)
                 lblHoursError.setVisible(true);
-                txtHours.setBackground(Color.RED);
-            }
             JOptionPane.showMessageDialog(new JFrame(), "Please Correct Errors in Red.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }else{
-        Task t = TaskController.createNewTask(txtTitle.getText(), txtDesc.getText(), 
-                Integer.parseInt(txtHours.getText()), 
-                new ArrayList(lstDepend.getSelectedValuesList()));
-        Assessment selectedAssess = (Assessment)cmbAssessment.getSelectedItem();
-        AssessmentController.attachTask(selectedAssess, t);
-        mo.setSelectedAssignment(selectedAssess);
-        mo.fillComponents();
-       
-        FormController.closeWindow(this);
+            Task t = TaskController.createNewTask(txtTitle.getText(), txtDesc.getText(), 
+                    Integer.parseInt(txtHours.getText()), 
+                    new ArrayList(lstDepend.getSelectedValuesList()));
+            Assessment selectedAssess = (Assessment)cmbAssessment.getSelectedItem();
+            AssessmentController.attachTask(selectedAssess, t);
+            mo.setSelectedAssignment(selectedAssess);
+            mo.fillComponents();
+
+            FormController.closeWindow(this);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -259,65 +257,41 @@ public class TaskForm extends javax.swing.JFrame {
 
     private void txtTitleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusLost
         //Title Empty Validation
-        if(txtTitle.getText().trim().equals("")){
+        validTitle = ErrorController.txtEmptyValidation(txtTitle.getText());
+        if(!validTitle){
             txtTitle.setBackground(Color.RED);
-            validTitle = false;
         }else{
             txtTitle.setBackground(UIManager.getColor("TextField.background"));
-            validTitle = true;
         }
     }//GEN-LAST:event_txtTitleFocusLost
 
     private void txtTitleFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtTitleFocusGained
 
     private void txtDescFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescFocusLost
         //Description Empty Validation
-        if(txtDesc.getText().trim().equals("")){
+        validDescription = ErrorController.txtEmptyValidation(txtDesc.getText());
+        if(!validDescription){
             txtDesc.setBackground(Color.RED);
-            validDescription = false;
         }else{
             txtDesc.setBackground(UIManager.getColor("TextField.background"));
-            validDescription = true;
         }
     }//GEN-LAST:event_txtDescFocusLost
 
     private void txtDescFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtDescFocusGained
 
     private void txtHoursFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoursFocusLost
         //Hours positive int validation
-        boolean success = true;
-        try {
-            Integer.parseInt(txtHours.getText());
-        }catch(NumberFormatException exc){
-            success = false;
-        }
-        if(success){
-            if(Integer.parseInt(txtHours.getText()) > 0){
-                txtHours.setBackground(UIManager.getColor("TextField.background"));
-                validHours = true;
-            }else{
-                lblHoursError.setVisible(true);
-                txtHours.setBackground(Color.RED);
-                validHours = false;
-            }
-        }else{
-            lblHoursError.setVisible(true);
-            txtHours.setBackground(Color.RED);
-            validHours = false;
-        }
+        validHours = ErrorController.intValidation(txtHours);
+        lblHoursError.setVisible(!validHours);
     }//GEN-LAST:event_txtHoursFocusLost
 
     private void txtHoursFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoursFocusGained
-        resetColour(evt);
+        ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtHoursFocusGained
-    
-    public void resetColour(java.awt.event.FocusEvent evt){
-        evt.getComponent().setBackground(UIManager.getColor("TextField.background"));
-    }
     
     public void fillComponents(){
         ListPopulator<Assessment> lp = new ListPopulator();

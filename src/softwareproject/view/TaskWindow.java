@@ -1,12 +1,14 @@
 package softwareproject.view;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.ListModel;
 import softwareproject.controller.ActivityController;
 import softwareproject.controller.NoteController;
 import softwareproject.controller.TaskController;
 import softwareproject.model.Activity;
 import softwareproject.model.Assessment;
+import softwareproject.model.Milestone;
 import softwareproject.model.Note;
 import softwareproject.model.Task;
 
@@ -17,13 +19,15 @@ import softwareproject.model.Task;
 public class TaskWindow extends javax.swing.JFrame {
     private Task t;
     private Assessment a;
+    private ModuleOverview mo;
 
     /**
      * Creates new form TaskWindow
      */
-    public TaskWindow(Task t, Assessment a) {
+    public TaskWindow(Task t, Assessment a, ModuleOverview mo) {
         this.t = t;
         this.a = a;
+        this.mo = mo;
         initComponents();
         fillComponents();
     }
@@ -63,6 +67,9 @@ public class TaskWindow extends javax.swing.JFrame {
         btnComplete = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        lstMilestones = new javax.swing.JList();
+        lblDependent1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -146,6 +153,21 @@ public class TaskWindow extends javax.swing.JFrame {
 
         jLabel5.setText("Status:");
 
+        lstMilestones.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstMilestones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstMilestones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstMilestonesMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(lstMilestones);
+
+        lblDependent1.setText("Associated Milestone");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -175,6 +197,7 @@ public class TaskWindow extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane4))
                             .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane5)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -195,7 +218,8 @@ public class TaskWindow extends javax.swing.JFrame {
                                         .addGap(27, 27, 27)
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblStatus)))
+                                        .addComponent(lblStatus))
+                                    .addComponent(lblDependent1))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
@@ -223,7 +247,7 @@ public class TaskWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(lblStatus))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -242,6 +266,10 @@ public class TaskWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblDependent1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose)
                     .addComponent(btnAddNote))
@@ -260,6 +288,7 @@ public class TaskWindow extends javax.swing.JFrame {
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         setVisible(false);
         dispose();
+        mo.fillComponents();
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnCompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompleteActionPerformed
@@ -267,8 +296,18 @@ public class TaskWindow extends javax.swing.JFrame {
             Activity a = (Activity)lstAttachedActivities.getSelectedValue();
             a.setIsFinished(true);
             fillComponents();
+            mo.fillComponents();
         }
     }//GEN-LAST:event_btnCompleteActionPerformed
+
+    private void lstMilestonesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstMilestonesMouseClicked
+        JList list = (JList)evt.getSource();
+        if (evt.getClickCount() == 2) {
+            int index = list.locationToIndex(evt.getPoint());
+            MilestoneWindow mw = new MilestoneWindow((Milestone)list.getSelectedValue(), a, mo);
+            mw.setVisible(true);
+        }
+    }//GEN-LAST:event_lstMilestonesMouseClicked
     
     public void fillComponents(){
         DefaultListModel<String> lm = new DefaultListModel();
@@ -305,6 +344,12 @@ public class TaskWindow extends javax.swing.JFrame {
             lblStatus.setText("In Progress");
         }
         
+        DefaultListModel<Milestone> lmile = new DefaultListModel();
+        for(Milestone m : t.getRelatedMilestones()){
+            lmile.addElement(m);
+        }
+        lstMilestones.setModel(lmile);
+        
         lblTask.setText(t.getTitle());
         lblTime.setText(Integer.toString(t.getHours())+" Hr(s)");
         txtDescription.setText(t.getDescription());
@@ -324,9 +369,11 @@ public class TaskWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblAssessment;
     private javax.swing.JLabel lblAttachActivities;
     private javax.swing.JLabel lblDependent;
+    private javax.swing.JLabel lblDependent1;
     private javax.swing.JLabel lblNotes;
     private javax.swing.JLabel lblProgress;
     private javax.swing.JLabel lblStatus;
@@ -335,6 +382,7 @@ public class TaskWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblTime;
     private javax.swing.JList lstAttachedActivities;
     private javax.swing.JList lstDependent;
+    private javax.swing.JList lstMilestones;
     private javax.swing.JList lstNotes;
     private javax.swing.JProgressBar pbTaskProgress;
     private javax.swing.JTextArea txtDescription;
