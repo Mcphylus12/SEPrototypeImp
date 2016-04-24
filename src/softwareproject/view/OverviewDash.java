@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package softwareproject.view;
 
 import java.awt.Color;
@@ -11,6 +5,7 @@ import java.awt.Component;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import softwareproject.controller.ListPopulator;
 import softwareproject.controller.ModuleController;
 import softwareproject.controller.PanelController;
 import softwareproject.model.Module;
@@ -22,11 +17,8 @@ import softwareproject.model.SemesterProfile;
  */
 public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer<Module>{
 
-    /**
-     * Creates new form OverviewDash
-     */
-    SemesterProfile sp;
-    PanelController pa;
+    private SemesterProfile sp;
+    private PanelController pa;
     
     /**
      * Creates new form OverviewDashboard
@@ -130,15 +122,9 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
 
     private void fillComponents(){
         DefaultListModel<Module> lm = new DefaultListModel();
-        
-        if(sp != null){
-            for(Module m :sp.getModules()){
-                lm.addElement(m);  
-                
-            }
-        }
+        ListPopulator<Module> lp = new ListPopulator();
+        lp.populateJList(sp.getModules(), lstModules);
         lstModules.setCellRenderer(this);
-        lstModules.setModel(lm);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

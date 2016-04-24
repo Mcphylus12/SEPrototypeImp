@@ -1,21 +1,13 @@
 package softwareproject.view;
 
-import java.awt.Color;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import softwareproject.controller.AssessmentController;
 import softwareproject.controller.ErrorController;
 import softwareproject.controller.FormController;
 import softwareproject.controller.ListPopulator;
 import softwareproject.controller.MilestoneController;
-import softwareproject.controller.ModuleController;
 import softwareproject.model.Assessment;
 import softwareproject.model.Milestone;
 import softwareproject.model.Module;

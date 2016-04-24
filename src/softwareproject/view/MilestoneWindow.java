@@ -45,14 +45,14 @@ public class MilestoneWindow extends javax.swing.JFrame {
         lblTaskWindow = new javax.swing.JLabel();
         pbMilestoneProgress = new javax.swing.JProgressBar();
         lblTitle = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblTitlePre = new javax.swing.JLabel();
+        lblAssessmentPre = new javax.swing.JLabel();
         lblAssessment = new javax.swing.JLabel();
         lblDeadline = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblDeadlinePre = new javax.swing.JLabel();
+        lblStatusPre = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblDescPre = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         lblTasks = new javax.swing.JLabel();
@@ -70,21 +70,21 @@ public class MilestoneWindow extends javax.swing.JFrame {
 
         lblTitle.setText("MilestoneTitle");
 
-        jLabel1.setText("Title:");
+        lblTitlePre.setText("Title:");
 
-        jLabel4.setText("Assessment:");
+        lblAssessmentPre.setText("Assessment:");
 
         lblAssessment.setText("AssessmentTitle");
 
         lblDeadline.setText("Deadline");
 
-        jLabel3.setText("Deadline:");
+        lblDeadlinePre.setText("Deadline:");
 
-        jLabel5.setText("Status:");
+        lblStatusPre.setText("Status:");
 
         lblStatus.setText("STATUS");
 
-        jLabel2.setText("Description:");
+        lblDescPre.setText("Description:");
 
         txtDescription.setEditable(false);
         txtDescription.setColumns(20);
@@ -130,7 +130,7 @@ public class MilestoneWindow extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addComponent(lblDescPre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane4))
                             .addGroup(layout.createSequentialGroup()
@@ -138,9 +138,9 @@ public class MilestoneWindow extends javax.swing.JFrame {
                                     .addComponent(lblProgress)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel1))
+                                            .addComponent(lblDeadlinePre)
+                                            .addComponent(lblAssessmentPre)
+                                            .addComponent(lblTitlePre))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblTitle)
@@ -148,7 +148,7 @@ public class MilestoneWindow extends javax.swing.JFrame {
                                             .addComponent(lblDeadline)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(27, 27, 27)
-                                        .addComponent(jLabel5)
+                                        .addComponent(lblStatusPre)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lblStatus)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -175,23 +175,23 @@ public class MilestoneWindow extends javax.swing.JFrame {
                 .addComponent(pbMilestoneProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblTitlePre)
                     .addComponent(lblTitle))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(lblAssessmentPre)
                     .addComponent(lblAssessment))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(lblDeadlinePre)
                     .addComponent(lblDeadline))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                    .addComponent(lblStatusPre)
                     .addComponent(lblStatus))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                    .addComponent(lblDescPre)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTasks)
@@ -247,27 +247,24 @@ public class MilestoneWindow extends javax.swing.JFrame {
             m.setIsComplete(false);
             lblStatus.setText("In Progress");
         }
-        
-        
-        
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel lblAssessment;
+    private javax.swing.JLabel lblAssessmentPre;
     private javax.swing.JLabel lblDeadline;
+    private javax.swing.JLabel lblDeadlinePre;
+    private javax.swing.JLabel lblDescPre;
     private javax.swing.JLabel lblProgress;
     private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblStatusPre;
     private javax.swing.JLabel lblTaskWindow;
     private javax.swing.JLabel lblTasks;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JLabel lblTitlePre;
     private javax.swing.JList lstTasks;
     private javax.swing.JProgressBar pbMilestoneProgress;
     private javax.swing.JTextArea txtDescription;

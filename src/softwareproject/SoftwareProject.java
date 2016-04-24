@@ -2,9 +2,7 @@ package softwareproject;
 
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JFrame;
 import softwareproject.controller.PanelController;
-import softwareproject.model.Activity;
 import softwareproject.model.Assessment;
 import softwareproject.model.CourseTest;
 import softwareproject.model.Coursework;
@@ -43,7 +41,7 @@ public class SoftwareProject {
         SemesterProfile semp = new SemesterProfile(2015, new Date(), new Date());
         
         Module m = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software");
-        Module m2 = new Module(new ModuleOrganiser("Mr Other Guy", null), "CMP-644Y", "Progs");
+        Module m2 = new Module(new ModuleOrganiser("Mr Other Guy", null), "CMP-644B", "Progs");
         
         Exam e = new Exam("Exam 1", 20, "ROOM1", new Date(), true, 15);
         Exam e1 = new Exam("Exam 2", 50, "ROOM2", new Date(), false, 80);

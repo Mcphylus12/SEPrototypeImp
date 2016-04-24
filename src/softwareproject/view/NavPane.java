@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package softwareproject.view;
 
 import java.awt.Color;
@@ -11,6 +5,7 @@ import java.awt.Component;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import softwareproject.controller.ListPopulator;
 import softwareproject.controller.ModuleController;
 import softwareproject.controller.PanelController;
 import softwareproject.model.Module;
@@ -27,25 +22,19 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
     
     /**
      * Creates new form NavPane
+     * @param sp
      */
     public NavPane(SemesterProfile sp) {
         this.sp = sp;
         initComponents();
         fillComponents();
-
     }
     
     private void fillComponents(){
         DefaultListModel<Module> lm = new DefaultListModel();
-        
-        if(sp != null){
-            for(Module m :sp.getModules()){
-                lm.addElement(m);  
-                
-            }
-        }
+        ListPopulator<Module> lp = new ListPopulator();
+        lp.populateJList(sp.getModules(), lstNav);
         lstNav.setCellRenderer(this);
-        lstNav.setModel(lm);
     }
 
     /**
@@ -115,7 +104,6 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
     private void btnSetToDashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetToDashActionPerformed
         pa.toOverViewDash();
     }//GEN-LAST:event_btnSetToDashActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSetToDash;

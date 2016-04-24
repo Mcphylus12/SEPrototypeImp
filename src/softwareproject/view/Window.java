@@ -6,15 +6,11 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
-
-
 public class Window extends JFrame{
     
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     
-    
-
     public Window(String string) throws HeadlessException {
         super(string);
         this.setResizable(false);
@@ -26,11 +22,5 @@ public class Window extends JFrame{
         
         this.setVisible(true);
         this.getContentPane().setBackground(Color.WHITE);
-        
-        
     }
-    
-    
-    
-    
 }

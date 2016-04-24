@@ -2,10 +2,8 @@ package softwareproject.view;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.ListModel;
-import softwareproject.controller.ActivityController;
+import softwareproject.controller.ListPopulator;
 import softwareproject.controller.NoteController;
-import softwareproject.controller.TaskController;
 import softwareproject.model.Activity;
 import softwareproject.model.Assessment;
 import softwareproject.model.Milestone;
@@ -55,10 +53,10 @@ public class TaskWindow extends javax.swing.JFrame {
         lblDependent = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         lstDependent = new javax.swing.JList();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblTaskPre = new javax.swing.JLabel();
+        lblDescPre = new javax.swing.JLabel();
+        lblTimePre = new javax.swing.JLabel();
+        lblAssessmentPre = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         lblTask = new javax.swing.JLabel();
@@ -66,7 +64,7 @@ public class TaskWindow extends javax.swing.JFrame {
         lblTime = new javax.swing.JLabel();
         btnComplete = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblStatusPre = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         lstMilestones = new javax.swing.JList();
         lblDependent1 = new javax.swing.JLabel();
@@ -123,13 +121,13 @@ public class TaskWindow extends javax.swing.JFrame {
         lstDependent.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(lstDependent);
 
-        jLabel1.setText("Task:");
+        lblTaskPre.setText("Task:");
 
-        jLabel2.setText("Description:");
+        lblDescPre.setText("Description:");
 
-        jLabel3.setText("Time:");
+        lblTimePre.setText("Time:");
 
-        jLabel4.setText("Assessment:");
+        lblAssessmentPre.setText("Assessment:");
 
         txtDescription.setEditable(false);
         txtDescription.setColumns(20);
@@ -151,7 +149,7 @@ public class TaskWindow extends javax.swing.JFrame {
 
         lblStatus.setText("STATUS");
 
-        jLabel5.setText("Status:");
+        lblStatusPre.setText("Status:");
 
         lstMilestones.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -193,7 +191,7 @@ public class TaskWindow extends javax.swing.JFrame {
                             .addComponent(jScrollPane3)
                             .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addComponent(lblDescPre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane4))
                             .addComponent(jScrollPane1)
@@ -202,9 +200,9 @@ public class TaskWindow extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel1))
+                                            .addComponent(lblTimePre)
+                                            .addComponent(lblAssessmentPre)
+                                            .addComponent(lblTaskPre))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblTask)
@@ -216,7 +214,7 @@ public class TaskWindow extends javax.swing.JFrame {
                                     .addComponent(lblAttachActivities)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(27, 27, 27)
-                                        .addComponent(jLabel5)
+                                        .addComponent(lblStatusPre)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lblStatus))
                                     .addComponent(lblDependent1))
@@ -233,23 +231,23 @@ public class TaskWindow extends javax.swing.JFrame {
                 .addComponent(pbTaskProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblTaskPre)
                     .addComponent(lblTask))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(lblAssessmentPre)
                     .addComponent(lblAssessment))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(lblTimePre)
                     .addComponent(lblTime))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                    .addComponent(lblStatusPre)
                     .addComponent(lblStatus))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                    .addComponent(lblDescPre)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblAttachActivities)
@@ -310,6 +308,8 @@ public class TaskWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_lstMilestonesMouseClicked
     
     public void fillComponents(){
+        ListPopulator<String> lpNote = new ListPopulator();
+        //TODO
         DefaultListModel<String> lm = new DefaultListModel();
         for(Note n : t.getNotes()){
             lm.addElement(NoteController.getNoteAsString(n));        
@@ -328,10 +328,9 @@ public class TaskWindow extends javax.swing.JFrame {
         lstAttachedActivities.setModel(lm1);
         
         DefaultListModel<Task> lmTask = new DefaultListModel();
-        for(Task t : t.getDependencies()){
-            lmTask.addElement(t);
-        }
-        lstDependent.setModel(lmTask);
+        ListPopulator<Task> lpTask = new ListPopulator();
+        lpTask.populateJList(t.getDependencies(), lstDependent);
+
         pbTaskProgress.setMinimum(0);
         pbTaskProgress.setMaximum(100);
         int progress = (int)(actCompleteCount/actTotalCount*100);
@@ -345,10 +344,8 @@ public class TaskWindow extends javax.swing.JFrame {
         }
         
         DefaultListModel<Milestone> lmile = new DefaultListModel();
-        for(Milestone m : t.getRelatedMilestones()){
-            lmile.addElement(m);
-        }
-        lstMilestones.setModel(lmile);
+        ListPopulator<Milestone> lpMile = new ListPopulator();
+        lpMile.populateJList(t.getRelatedMilestones(), lstMilestones);
         
         lblTask.setText(t.getTitle());
         lblTime.setText(Integer.toString(t.getHours())+" Hr(s)");
@@ -360,26 +357,26 @@ public class TaskWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnAddNote;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnComplete;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblAssessment;
+    private javax.swing.JLabel lblAssessmentPre;
     private javax.swing.JLabel lblAttachActivities;
     private javax.swing.JLabel lblDependent;
     private javax.swing.JLabel lblDependent1;
+    private javax.swing.JLabel lblDescPre;
     private javax.swing.JLabel lblNotes;
     private javax.swing.JLabel lblProgress;
     private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblStatusPre;
     private javax.swing.JLabel lblTask;
+    private javax.swing.JLabel lblTaskPre;
     private javax.swing.JLabel lblTaskWindow;
     private javax.swing.JLabel lblTime;
+    private javax.swing.JLabel lblTimePre;
     private javax.swing.JList lstAttachedActivities;
     private javax.swing.JList lstDependent;
     private javax.swing.JList lstMilestones;

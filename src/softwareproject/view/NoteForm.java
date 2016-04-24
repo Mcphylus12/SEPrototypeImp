@@ -1,8 +1,6 @@
 package softwareproject.view;
 
-import java.awt.event.WindowEvent;
 import java.util.Date;
-import javax.swing.JComponent;
 import softwareproject.controller.NoteController;
 import softwareproject.model.Notable;
 
@@ -128,8 +126,6 @@ public class NoteForm extends javax.swing.JFrame {
         setVisible(false);
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
-
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
