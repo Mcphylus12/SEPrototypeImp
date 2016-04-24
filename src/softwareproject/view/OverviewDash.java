@@ -123,8 +123,10 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
     private void fillComponents(){
         DefaultListModel<Module> lm = new DefaultListModel();
         ListPopulator<Module> lp = new ListPopulator();
-        lp.populateJList(sp.getModules(), lstModules);
-        lstModules.setCellRenderer(this);
+        if(sp != null){
+            lp.populateJList(sp.getModules(), lstModules);
+            lstModules.setCellRenderer(this);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
