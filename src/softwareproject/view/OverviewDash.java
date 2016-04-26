@@ -2,9 +2,16 @@ package softwareproject.view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import softwareproject.controller.FileController;
 import softwareproject.controller.ListPopulator;
 import softwareproject.controller.ModuleController;
 import softwareproject.controller.PanelController;
@@ -39,12 +46,14 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         btnNewSemProf = new javax.swing.JButton();
         lblWelcome = new javax.swing.JLabel();
-        btnOpenSem = new javax.swing.JButton();
         btnUpdateDeadlines = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstModules = new javax.swing.JList();
+        btnSaveSemp = new javax.swing.JButton();
+        btnLoadSemp = new javax.swing.JButton();
 
         btnNewSemProf.setText("New Semester Profile");
         btnNewSemProf.addActionListener(new java.awt.event.ActionListener() {
@@ -55,21 +64,29 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
 
         lblWelcome.setText("Welcome - Overview Dashboard");
 
-        btnOpenSem.setText("Open Semester Profile");
-
         btnUpdateDeadlines.setText("Update Deadlines");
 
-        lstModules.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        lstModules.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstModules.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lstModulesMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(lstModules);
+
+        btnSaveSemp.setText("Save");
+        btnSaveSemp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveSempActionPerformed(evt);
+            }
+        });
+
+        btnLoadSemp.setText("Open Semester Profile");
+        btnLoadSemp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadSempActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -81,34 +98,51 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
                     .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblWelcome)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnNewSemProf)
-                                .addGap(38, 38, 38)
-                                .addComponent(btnOpenSem)
-                                .addGap(42, 42, 42)
-                                .addComponent(btnUpdateDeadlines)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(lblWelcome)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSaveSemp))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnNewSemProf, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnLoadSemp, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnUpdateDeadlines, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblWelcome)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblWelcome)
+                    .addComponent(btnSaveSemp))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNewSemProf)
-                    .addComponent(btnOpenSem)
+                    .addComponent(btnLoadSemp)
                     .addComponent(btnUpdateDeadlines))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewSemProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewSemProfActionPerformed
-        // TODO add your handling code here:
+        SemesterProfile semp = null;
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "CSV files", "csv");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+           System.out.println("You chose to open this file: " +
+                chooser.getSelectedFile().getName());
+           semp = FileController.readSemesterFile(chooser.getSelectedFile().getName());
+           this.setsemP(semp);
+           fillComponents();
+           pa.setSemesterProfile(semp);
+        }
+
     }//GEN-LAST:event_btnNewSemProfActionPerformed
 
     private void lstModulesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstModulesMouseClicked
@@ -120,6 +154,27 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         }
     }//GEN-LAST:event_lstModulesMouseClicked
 
+    private void btnLoadSempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadSempActionPerformed
+        SemesterProfile semp = FileController.readFromSer("semesterProfile.ser");
+        if(semp != null){
+            this.setsemP(semp);
+            fillComponents();
+            pa.setSemesterProfile(semp);
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "No previous semester profile found. Please import a New semester profile", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnLoadSempActionPerformed
+
+    private void btnSaveSempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveSempActionPerformed
+        if(FileController.writeToFile(sp)){
+            JOptionPane.showMessageDialog(new JFrame(), "Semester profile saved", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else {
+            JOptionPane.showMessageDialog(new JFrame(), "Error while saving. Semester profile is not saved", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSaveSempActionPerformed
+
     private void fillComponents(){
         DefaultListModel<Module> lm = new DefaultListModel();
         ListPopulator<Module> lp = new ListPopulator();
@@ -128,11 +183,14 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
             lstModules.setCellRenderer(this);
         }
     }
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLoadSemp;
     private javax.swing.JButton btnNewSemProf;
-    private javax.swing.JButton btnOpenSem;
+    private javax.swing.JButton btnSaveSemp;
     private javax.swing.JButton btnUpdateDeadlines;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblWelcome;
     private javax.swing.JList lstModules;
@@ -156,6 +214,4 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         sp = p;
         fillComponents();
     }
-
-
 }

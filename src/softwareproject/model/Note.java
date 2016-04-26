@@ -1,8 +1,10 @@
 package softwareproject.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Note {
+public class Note implements Serializable{
+    private static final long serialVersionUID = 7863262235394617257L;
     private String name;
     private String contents;
     private Date dateCreated;

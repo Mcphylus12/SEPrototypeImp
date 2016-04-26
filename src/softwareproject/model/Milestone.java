@@ -1,9 +1,11 @@
 package softwareproject.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Milestone {
+public class Milestone implements Serializable {
+    private static final long serialVersionUID = 7363262235394607247L;
     private String title;
     private String description;
     private boolean isComplete;

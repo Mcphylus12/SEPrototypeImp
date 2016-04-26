@@ -22,10 +22,10 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
     
     /**
      * Creates new form NavPane
-     * @param sp
+     *
      */
-    public NavPane(SemesterProfile sp) {
-        this.sp = sp;
+    public NavPane() {
+        this.sp = null;
         initComponents();
         fillComponents();
     }
@@ -33,7 +33,9 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
     private void fillComponents(){
         DefaultListModel<Module> lm = new DefaultListModel();
         ListPopulator<Module> lp = new ListPopulator();
-        lp.populateJList(sp.getModules(), lstNav);
+        if(sp != null){
+            lp.populateJList(sp.getModules(), lstNav);
+        }
         lstNav.setCellRenderer(this);
     }
 
@@ -77,8 +79,8 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(btnSetToDash, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                    .addComponent(btnSetToDash, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -100,7 +102,16 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
                     
         }
     }//GEN-LAST:event_lstNavMouseClicked
-
+    
+    public void setSemesterProfile(SemesterProfile semp){
+        this.sp = semp;
+        fillComponents();
+    }
+    
+    public SemesterProfile getSemesterProfile(){
+        return this.sp;
+    }
+    
     private void btnSetToDashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetToDashActionPerformed
         pa.toOverViewDash();
     }//GEN-LAST:event_btnSetToDashActionPerformed

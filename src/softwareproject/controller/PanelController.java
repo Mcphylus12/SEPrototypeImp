@@ -3,24 +3,28 @@ package softwareproject.controller;
 
 import java.awt.Container;
 import java.awt.Rectangle;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import softwareproject.model.SemesterProfile;
 import softwareproject.view.*;
 
 /**
  *
  * @author qxz14sru
  */
-public class PanelController {
+public class PanelController implements WindowListener {
     
     private static final int xOff = 5;
     private static final int yOff = 5;
-    private static final double navPanePercentage = 0.25;
+    private static final double navPanePercentage = 0.30;
     
     Container windowContentPane;
     NavPane nav;
 
-    public PanelController(Window Window, NavPane nav) {
-        this.windowContentPane = Window.getContentPane();
+    public PanelController(Window window, NavPane nav) {
+        this.windowContentPane = window.getContentPane();
         this.nav = nav;
+        window.addWindowListener(this);
     }
 
     public void setOd(OverviewDash od) {
@@ -62,5 +66,44 @@ public class PanelController {
         windowContentPane.add(od);
         windowContentPane.revalidate();
         windowContentPane.repaint();
+    }
+    
+    public void setSemesterProfile(SemesterProfile sp){
+        nav.setSemesterProfile(sp);
+    }
+
+    @Override
+    public void windowOpened(WindowEvent we) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowClosing(WindowEvent we) {
+        FileController.writeToFile(nav.getSemesterProfile());
+    }
+
+    @Override
+    public void windowClosed(WindowEvent we) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowIconified(WindowEvent we) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent we) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowActivated(WindowEvent we) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent we) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

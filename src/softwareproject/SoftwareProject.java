@@ -2,7 +2,6 @@ package softwareproject;
 
 import java.util.ArrayList;
 import java.util.Date;
-import softwareproject.controller.FileController;
 import softwareproject.controller.PanelController;
 import softwareproject.model.Assessment;
 import softwareproject.model.CourseTest;
@@ -26,18 +25,17 @@ public class SoftwareProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SemesterProfile sempF = FileController.readSemesterFile("example.csv");
 //        SemesterProfile semp = genDummy();
-        Window window = new Window("title bar");
-        NavPane np = new NavPane(sempF);
+        Window window = new Window("Study Planner (ALPHA BUILD 1.0)");
+        NavPane np = new NavPane();
         PanelController pc = new PanelController(window, np);
         np.setPanelController(pc);
         OverviewDash od = new OverviewDash(pc);
-        od.setsemP(sempF);
         pc.setOd(od);
         pc.toOverViewDash();
     }
     
+    //FOR TESTING WITHOUT FILE
     public static SemesterProfile genDummy(){
         SemesterProfile semp = new SemesterProfile(2015, new Date(), new Date());
         
