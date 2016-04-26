@@ -140,7 +140,11 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
     
     @Override
     public Component getListCellRendererComponent(JList<? extends Module> jlist, Module e, int i, boolean bln, boolean bln1) {
-        moduleListCell cellPane = new moduleListCell(e.getModuleName(), e.getModuleCode(), e.getModuleOrganiser(), ModuleController.getAssessments(e));
+        moduleListCell cellPane = new moduleListCell(
+                e.getModuleName(),
+                e.getModuleCode(), 
+                e.getModuleOrganiser(), 
+                ModuleController.getAssessments(e));
         if(bln){
             cellPane.setBackground(Color.gray);
         }

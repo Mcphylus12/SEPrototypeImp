@@ -1,22 +1,22 @@
 package softwareproject.controller;
 
 import java.util.ArrayList;
-import softwareproject.model.Task;
+import softwareproject.model.StudyTask;
 
 public class TaskController {
     
-    public static String getStringFromTask(Task t){
+    public static String getStringFromTask(StudyTask t){
         StringBuilder sb = new StringBuilder();
         sb.append(t.getTitle());
         return sb.toString();
     }
     
-    public static Task createNewTask(
+    public static StudyTask createNewTask(
             String title, 
             String description, 
             int hours,
-            ArrayList<Task> dependencies){
+            ArrayList<StudyTask> dependencies){
         
-        return new Task(title, description, hours, dependencies);
+        return new StudyTask(title, description, hours, dependencies);
     }
 }

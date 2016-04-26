@@ -8,9 +8,9 @@ public class Milestone {
     private String description;
     private boolean isComplete;
     private Date deadline;
-    private ArrayList<Task> relatedTasks;
+    private ArrayList<StudyTask> relatedTasks;
 
-    public Milestone(String title, String description, Date deadline, ArrayList<Task> relatedTasks) {
+    public Milestone(String title, String description, Date deadline, ArrayList<StudyTask> relatedTasks) {
         this.title = title;
         this.description = description;
         this.isComplete = false;
@@ -50,11 +50,11 @@ public class Milestone {
         this.deadline = deadline;
     }
 
-    public ArrayList<Task> getRelatedTasks() {
+    public ArrayList<StudyTask> getRelatedTasks() {
         return relatedTasks;
     }
 
-    public void setRelatedTasks(ArrayList<Task> relatedTasks) {
+    public void setRelatedTasks(ArrayList<StudyTask> relatedTasks) {
         this.relatedTasks = relatedTasks;
     }
     

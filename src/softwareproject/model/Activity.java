@@ -6,12 +6,12 @@ public class Activity implements Notable{
     private String name;
     private String description;
     private ArrayList<Note> notes;
-    private ArrayList<Task> tasks;
+    private ArrayList<StudyTask> tasks;
     private boolean isFinished;
     private int hours;
     private String activityType;
 
-    public Activity(String name, String description, int hours, String activityType, ArrayList<Task> tasks) {
+    public Activity(String name, String description, int hours, String activityType, ArrayList<StudyTask> tasks) {
         this.name = name;
         this.description = description;
         this.hours = hours;
@@ -45,11 +45,11 @@ public class Activity implements Notable{
         this.name = name;
     }
 
-    public ArrayList<Task> getTasks() {
+    public ArrayList<StudyTask> getTasks() {
         return tasks;
     }
 
-    public void setTasks(ArrayList<Task> tasks) {
+    public void setTasks(ArrayList<StudyTask> tasks) {
         this.tasks = tasks;
     }
 
@@ -86,11 +86,11 @@ public class Activity implements Notable{
         notes.remove(note);
     }
     
-    public void addTask(Task task){
+    public void addTask(StudyTask task){
         tasks.add(task);
     }
     
-    public void removeTask(Task task){
+    public void removeTask(StudyTask task){
         tasks.remove(task);
     }
     

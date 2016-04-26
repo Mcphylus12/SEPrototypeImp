@@ -12,7 +12,7 @@ import softwareproject.model.Coursework;
 import softwareproject.model.Exam;
 import softwareproject.model.Milestone;
 import softwareproject.model.Module;
-import softwareproject.model.Task;
+import softwareproject.model.StudyTask;
 
 /**
  *
@@ -38,14 +38,14 @@ public class ModuleOverview extends javax.swing.JPanel {
     }
     
     public void fillComponents(){
-        DefaultListModel<Task> lmtComp = new DefaultListModel();
-        DefaultListModel<Task> lmt = new DefaultListModel();
+        DefaultListModel<StudyTask> lmtComp = new DefaultListModel();
+        DefaultListModel<StudyTask> lmt = new DefaultListModel();
         DefaultListModel<Activity> lms = new DefaultListModel();
         ListPopulator<Activity> lpAct = new ListPopulator();
-        ListPopulator<Task> lpTask = new ListPopulator();
+        ListPopulator<StudyTask> lpTask = new ListPopulator();
         ListPopulator<Milestone> lpMile = new ListPopulator();
         
-        for(Task t: this.selectedAssessment.getTasks()){
+        for(StudyTask t: this.selectedAssessment.getTasks()){
             if(t.getIsComplete()){
                 lmtComp.addElement(t);
             }else{
@@ -297,7 +297,7 @@ public class ModuleOverview extends javax.swing.JPanel {
         JList list = (JList)evt.getSource();
         if (evt.getClickCount() == 2) {
             int index = list.locationToIndex(evt.getPoint());
-            TaskWindow tw = new TaskWindow((Task)list.getSelectedValue(), selectedAssessment, this);
+            TaskWindow tw = new TaskWindow((StudyTask)list.getSelectedValue(), selectedAssessment, this);
             tw.setVisible(true);
         }
     }//GEN-LAST:event_lstCurrentTasksMouseClicked
@@ -351,7 +351,7 @@ public class ModuleOverview extends javax.swing.JPanel {
         JList list = (JList)evt.getSource();
         if (evt.getClickCount() == 2) {
             int index = list.locationToIndex(evt.getPoint());
-            TaskWindow tw = new TaskWindow((Task)list.getSelectedValue(), selectedAssessment, this);
+            TaskWindow tw = new TaskWindow((StudyTask)list.getSelectedValue(), selectedAssessment, this);
             tw.setVisible(true);
         }
     }//GEN-LAST:event_lstCompletedTasksMouseClicked

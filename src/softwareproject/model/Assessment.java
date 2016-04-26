@@ -10,7 +10,7 @@ public abstract class Assessment {
     private int weight;
     private ArrayList<Milestone> milestones;
     private ArrayList<Activity> activities;
-    private ArrayList<Task> tasks;
+    private ArrayList<StudyTask> tasks;
     private Date dueDate;
 
     public Assessment(String name, boolean isSummative, boolean isOnline, int weight, Date dueDate) {
@@ -40,7 +40,7 @@ public abstract class Assessment {
         this.dueDate = dueDate;
     }
     
-    public void addTask(Task t){
+    public void addTask(StudyTask t){
         this.tasks.add(t);
     }
     
@@ -64,7 +64,7 @@ public abstract class Assessment {
         this.name = name;
     }
     
-    public ArrayList<Task> getTasks() {
+    public ArrayList<StudyTask> getTasks() {
         return tasks;
     }
 
@@ -72,7 +72,7 @@ public abstract class Assessment {
         this.activities = activities;
     }
 
-    public void setTasks(ArrayList<Task> tasks) {
+    public void setTasks(ArrayList<StudyTask> tasks) {
         this.tasks = tasks;
     }
     

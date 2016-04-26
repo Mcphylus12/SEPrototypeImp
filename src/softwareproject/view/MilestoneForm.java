@@ -11,7 +11,7 @@ import softwareproject.controller.MilestoneController;
 import softwareproject.model.Assessment;
 import softwareproject.model.Milestone;
 import softwareproject.model.Module;
-import softwareproject.model.Task;
+import softwareproject.model.StudyTask;
 
 /**
  * @author ybm14yju
@@ -234,7 +234,7 @@ public class MilestoneForm extends javax.swing.JFrame {
             ErrorController.setErrorBackground(validDate, txtDate);
             JOptionPane.showMessageDialog(new JFrame(), "Please Correct Errors in Red.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }else{
-            ArrayList<Task> tasks = new ArrayList<Task>(lstRelatedTasks.getSelectedValuesList());
+            ArrayList<StudyTask> tasks = new ArrayList<StudyTask>(lstRelatedTasks.getSelectedValuesList());
             
             Milestone m = MilestoneController.createNewMilestone(txtTitle.getText(), 
                 txtDescription.getText(), 
@@ -245,7 +245,7 @@ public class MilestoneForm extends javax.swing.JFrame {
             AssessmentController.attachMilestone(selectedAssess, m);
             mo.setSelectedAssignment(selectedAssess);
             mo.fillComponents();
-            for(Task t: tasks){
+            for(StudyTask t: tasks){
                 t.addRelatedMilestones(m);
             }
             FormController.closeWindow(this);
@@ -255,7 +255,7 @@ public class MilestoneForm extends javax.swing.JFrame {
     private void cmbAssessmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAssessmentActionPerformed
         lstRelatedTasks.removeAll();
         Assessment a = (Assessment)cmbAssessment.getSelectedItem();
-        ListPopulator<Task> lp = new ListPopulator();
+        ListPopulator<StudyTask> lp = new ListPopulator();
         if(a != null){
             lp.populateJList(a.getTasks(), lstRelatedTasks);
         }

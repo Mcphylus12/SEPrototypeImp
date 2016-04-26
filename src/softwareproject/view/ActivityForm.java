@@ -13,7 +13,7 @@ import softwareproject.controller.ListPopulator;
 import softwareproject.model.Activity;
 import softwareproject.model.Assessment;
 import softwareproject.model.Module;
-import softwareproject.model.Task;
+import softwareproject.model.StudyTask;
 
 /**
  *
@@ -22,7 +22,7 @@ import softwareproject.model.Task;
 public class ActivityForm extends javax.swing.JFrame {
     private Module m;
     private ModuleOverview mo;
-    private ArrayList<Task> t;
+    private ArrayList<StudyTask> t;
     private int timeAvailable;
     private boolean validTitle;
     private boolean validDescription;
@@ -280,7 +280,7 @@ public class ActivityForm extends javax.swing.JFrame {
                     new ArrayList(lstTasks.getSelectedValuesList()));
             mo.fillComponents();
 
-            for(Task t: act.getTasks()){
+            for(StudyTask t: act.getTasks()){
                 t.addActivity(act);
             }
 
@@ -290,8 +290,8 @@ public class ActivityForm extends javax.swing.JFrame {
 
     private void lstTasksValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstTasksValueChanged
         timeAvailable = 0;
-        ArrayList<Task> tasks = new ArrayList<>(lstTasks.getSelectedValuesList());
-        for(Task t: tasks){
+        ArrayList<StudyTask> tasks = new ArrayList<>(lstTasks.getSelectedValuesList());
+        for(StudyTask t: tasks){
             if(timeAvailable == 0 || t.getHours() < timeAvailable){
                 timeAvailable = t.getHours();
                 for(Activity a: t.getActivities()){
@@ -359,9 +359,9 @@ public class ActivityForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtHoursFocusLost
     
     public void fillComponents(){
-        ListPopulator<Task> lp = new ListPopulator();
+        ListPopulator<StudyTask> lp = new ListPopulator();
         for(Assessment a: m.getAssessments()){
-            for(Task task: a.getTasks()){
+            for(StudyTask task: a.getTasks()){
                 t.add(task);
             }
         }

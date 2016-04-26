@@ -10,7 +10,7 @@ import javax.swing.JList;
 import softwareproject.model.Activity;
 import softwareproject.model.Assessment;
 import softwareproject.model.Milestone;
-import softwareproject.model.Task;
+import softwareproject.model.StudyTask;
 
 /**
  *
@@ -215,7 +215,7 @@ public class MilestoneWindow extends javax.swing.JFrame {
         JList list = (JList)evt.getSource();
         if (evt.getClickCount() == 2) {
             int index = list.locationToIndex(evt.getPoint());
-            TaskWindow tw = new TaskWindow((Task)list.getSelectedValue(), a, mo);
+            TaskWindow tw = new TaskWindow((StudyTask)list.getSelectedValue(), a, mo);
             tw.setVisible(true);
         }
     }//GEN-LAST:event_lstTasksMouseClicked
@@ -228,8 +228,8 @@ public class MilestoneWindow extends javax.swing.JFrame {
         
         double taskTotalCount = 0;
         double taskCompleteCount = 0;
-        DefaultListModel<Task> lmTask = new DefaultListModel();
-        for(Task t: m.getRelatedTasks()){
+        DefaultListModel<StudyTask> lmTask = new DefaultListModel();
+        for(StudyTask t: m.getRelatedTasks()){
             taskTotalCount++;
             lmTask.addElement(t);
             if(t.getIsComplete())

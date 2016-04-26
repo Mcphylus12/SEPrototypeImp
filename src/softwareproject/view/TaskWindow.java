@@ -8,21 +8,21 @@ import softwareproject.model.Activity;
 import softwareproject.model.Assessment;
 import softwareproject.model.Milestone;
 import softwareproject.model.Note;
-import softwareproject.model.Task;
+import softwareproject.model.StudyTask;
 
 /**
  *
  * @author qxz14sru
  */
 public class TaskWindow extends javax.swing.JFrame {
-    private Task t;
+    private StudyTask t;
     private Assessment a;
     private ModuleOverview mo;
 
     /**
      * Creates new form TaskWindow
      */
-    public TaskWindow(Task t, Assessment a, ModuleOverview mo) {
+    public TaskWindow(StudyTask t, Assessment a, ModuleOverview mo) {
         this.t = t;
         this.a = a;
         this.mo = mo;
@@ -327,8 +327,8 @@ public class TaskWindow extends javax.swing.JFrame {
         }
         lstAttachedActivities.setModel(lm1);
         
-        DefaultListModel<Task> lmTask = new DefaultListModel();
-        ListPopulator<Task> lpTask = new ListPopulator();
+        DefaultListModel<StudyTask> lmTask = new DefaultListModel();
+        ListPopulator<StudyTask> lpTask = new ListPopulator();
         lpTask.populateJList(t.getDependencies(), lstDependent);
 
         pbTaskProgress.setMinimum(0);

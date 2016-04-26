@@ -2,11 +2,11 @@ package softwareproject.controller;
 
 import java.util.ArrayList;
 import softwareproject.model.Activity;
-import softwareproject.model.Task;
+import softwareproject.model.StudyTask;
 
 public class ActivityController {
     
-    public static Activity createActivity(String name, String description, int hours, String activityType, ArrayList<Task> tasks){
+    public static Activity createActivity(String name, String description, int hours, String activityType, ArrayList<StudyTask> tasks){
         return new Activity(name, description, hours,activityType, tasks);
     }
     

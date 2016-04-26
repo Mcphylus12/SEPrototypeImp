@@ -12,7 +12,7 @@ import softwareproject.controller.ListPopulator;
 import softwareproject.controller.TaskController;
 import softwareproject.model.Assessment;
 import softwareproject.model.Module;
-import softwareproject.model.Task;
+import softwareproject.model.StudyTask;
 
 /**
  *
@@ -229,7 +229,7 @@ public class TaskForm extends javax.swing.JFrame {
                 lblHoursError.setVisible(true);
             JOptionPane.showMessageDialog(new JFrame(), "Please Correct Errors in Red.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }else{
-            Task t = TaskController.createNewTask(txtTitle.getText(), txtDesc.getText(), 
+            StudyTask t = TaskController.createNewTask(txtTitle.getText(), txtDesc.getText(), 
                     Integer.parseInt(txtHours.getText()), 
                     new ArrayList(lstDepend.getSelectedValuesList()));
             Assessment selectedAssess = (Assessment)cmbAssessment.getSelectedItem();
@@ -244,7 +244,7 @@ public class TaskForm extends javax.swing.JFrame {
     private void cmbAssessmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAssessmentActionPerformed
         lstDepend.removeAll();
         Assessment a = (Assessment)cmbAssessment.getSelectedItem();
-        ListPopulator<Task> lp = new ListPopulator();
+        ListPopulator<StudyTask> lp = new ListPopulator();
         if(a != null){
             lp.populateJList(a.getTasks(), lstDepend);
         }

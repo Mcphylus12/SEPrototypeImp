@@ -2,7 +2,7 @@ package softwareproject.controller;
 
 import softwareproject.model.Assessment;
 import softwareproject.model.Milestone;
-import softwareproject.model.Task;
+import softwareproject.model.StudyTask;
 
 
 public class AssessmentController {
@@ -14,7 +14,7 @@ public class AssessmentController {
         
     }
     
-    public static void attachTask(Assessment a, Task t){
+    public static void attachTask(Assessment a, StudyTask t){
         a.addTask(t);
     }
     public static void attachMilestone(Assessment a, Milestone m){

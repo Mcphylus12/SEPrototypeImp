@@ -112,7 +112,11 @@ public class NavPane extends javax.swing.JPanel implements ListCellRenderer<Modu
     // End of variables declaration//GEN-END:variables
     @Override
     public Component getListCellRendererComponent(JList<? extends Module> jlist, Module e, int i, boolean bln, boolean bln1) {
-        moduleListCellNav cellPane = new moduleListCellNav(e.getModuleName(), e.getModuleCode(), e.getModuleOrganiser(), ModuleController.getAssessments(e));
+        moduleListCellNav cellPane = new moduleListCellNav(
+                e.getModuleName(), 
+                e.getModuleCode(),
+                e.getModuleOrganiser(), 
+                ModuleController.getAssessments(e));
         if(bln){
             cellPane.setBackground(Color.gray);
         }

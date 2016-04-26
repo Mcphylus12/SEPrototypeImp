@@ -2,10 +2,10 @@ package softwareproject.model;
 
 import java.util.ArrayList;
 
-public class Task implements Notable{
+public class StudyTask implements Notable{
     private String title;
     private String description;
-    private ArrayList<Task> dependencies;
+    private ArrayList<StudyTask> dependencies;
     private ArrayList<Note> notes;
     private ArrayList<Activity> activities;
     private ArrayList<Milestone> relatedMilestones;
@@ -14,7 +14,7 @@ public class Task implements Notable{
     private boolean isComplete;
     
 
-    public Task(String title, String description, int hours,  ArrayList<Task> dependencies) {
+    public StudyTask(String title, String description, int hours,  ArrayList<StudyTask> dependencies) {
         this.isComplete = false;
         this.title=title;
         this.description = description;
@@ -59,19 +59,19 @@ public class Task implements Notable{
         this.description = description;
     }
 
-    public ArrayList<Task> getDependencies() {
+    public ArrayList<StudyTask> getDependencies() {
         return dependencies;
     }
 
-    public void setDependencies(ArrayList<Task> dependencies) {
+    public void setDependencies(ArrayList<StudyTask> dependencies) {
         this.dependencies = dependencies;
     }
     
-    public void addDependency(Task t){
+    public void addDependency(StudyTask t){
         dependencies.add(t);
     }
     
-    public void removeDependency(Task t){
+    public void removeDependency(StudyTask t){
        dependencies.remove(t);
     }
 
