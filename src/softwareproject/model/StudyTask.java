@@ -1,8 +1,10 @@
 package softwareproject.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class StudyTask implements Notable{
+public class StudyTask implements Notable, Serializable{
+    private static final long serialVersionUID = 7863862235394607247L;
     private String title;
     private String description;
     private ArrayList<StudyTask> dependencies;

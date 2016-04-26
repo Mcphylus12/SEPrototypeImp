@@ -1,9 +1,11 @@
 package softwareproject.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public abstract class Assessment {
+public abstract class Assessment implements Serializable{
+    private static final long serialVersionUID = 7863232235394607247L;
     private String name;
     private boolean isSummative;
     private boolean isOnline;

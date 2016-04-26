@@ -60,7 +60,7 @@ public class MilestoneWindow extends javax.swing.JFrame {
         lstTasks = new javax.swing.JList();
         btnClose = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblProgress.setText("Progress");
 

@@ -1,9 +1,11 @@
 package softwareproject.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class SemesterProfile {
+public class SemesterProfile implements Serializable {
+    private static final long serialVersionUID = 7863262235394607247L;
     private int year;
     private ArrayList<Module> modules;
     private Date startDate;

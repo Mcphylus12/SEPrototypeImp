@@ -1,11 +1,18 @@
 package softwareproject.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import softwareproject.model.CourseTest;
 import softwareproject.model.Coursework;
 import softwareproject.model.Exam;
@@ -29,7 +36,7 @@ public class FileController {
             System.out.println("File not found.");
         }
         
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         
         String[] semester = scan.nextLine().split(",");
         int semYear = Integer.parseInt(semester[0]);
@@ -154,5 +161,38 @@ public class FileController {
             }
         }
         return semp;
+    }
+    
+    public static boolean writeToFile(SemesterProfile semp) {
+        if(semp != null){
+            try {
+                FileOutputStream fout = new FileOutputStream("semesterProfile.ser");
+                ObjectOutputStream oos = new ObjectOutputStream(fout);
+                oos.writeObject(semp);
+                oos.close();
+                return true;
+            } catch(IOException ex){
+                System.out.println("Error writing semp to file");
+            }
+        }
+        else {
+            System.out.println("SEMP IS NULL. NOT WRITTEN");
+            return false;
+        }
+        return false;
+    }
+    
+    public static SemesterProfile readFromSer(String fileName){
+        SemesterProfile semp = null;
+        try {
+            FileInputStream fin = new FileInputStream(fileName);
+            ObjectInputStream ois = new ObjectInputStream(fin);
+            semp = (SemesterProfile) ois.readObject();
+            ois.close();
+            return semp;
+        } catch(IOException | ClassNotFoundException ex){
+            System.out.println("Error reading from ser");
+            return null;
+        }
     }
 }
