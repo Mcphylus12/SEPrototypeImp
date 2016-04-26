@@ -13,7 +13,7 @@ public class moduleListCellNav extends javax.swing.JPanel {
     /**
      * Creates new form moduleListCell
      */
-    public moduleListCellNav(String moduleName, String moduleCode, ModuleOrganiser modOrg, ArrayList<Assessment> assessments) {
+    public moduleListCellNav(String moduleName, String moduleCode, String modOrg, ArrayList<Assessment> assessments) {
         initComponents();
         fillComponents(moduleName, moduleCode, modOrg, assessments);
     }
@@ -64,9 +64,9 @@ public class moduleListCellNav extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fillComponents(String moduleName, String moduleCode, ModuleOrganiser modOrg, ArrayList<Assessment> assessments){
+    private void fillComponents(String moduleName, String moduleCode, String modOrg, ArrayList<Assessment> assessments){
         lblModuleInfo.setText(moduleName + " - " + moduleCode);
-        lblModOrg.setText(modOrg.getName());
+        lblModOrg.setText(modOrg);
         if(moduleCode.endsWith("A")){
             lblSemester.setText("Semester 1");
         } else if(moduleCode.endsWith("Y")){

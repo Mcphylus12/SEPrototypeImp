@@ -2,13 +2,13 @@ package softwareproject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import softwareproject.controller.FileController;
 import softwareproject.controller.PanelController;
 import softwareproject.model.Assessment;
 import softwareproject.model.CourseTest;
 import softwareproject.model.Coursework;
 import softwareproject.model.Exam;
 import softwareproject.model.Module;
-import softwareproject.model.ModuleOrganiser;
 import softwareproject.model.SemesterProfile;
 import softwareproject.view.NavPane;
 import softwareproject.view.OverviewDash;
@@ -26,13 +26,14 @@ public class SoftwareProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SemesterProfile semp = genDummy();
+        SemesterProfile sempF = FileController.readSemesterFile("example.csv");
+//        SemesterProfile semp = genDummy();
         Window window = new Window("title bar");
-        NavPane np = new NavPane(semp);
+        NavPane np = new NavPane(sempF);
         PanelController pc = new PanelController(window, np);
         np.setPanelController(pc);
         OverviewDash od = new OverviewDash(pc);
-        od.setsemP(semp);
+        od.setsemP(sempF);
         pc.setOd(od);
         pc.toOverViewDash();
     }
@@ -40,8 +41,8 @@ public class SoftwareProject {
     public static SemesterProfile genDummy(){
         SemesterProfile semp = new SemesterProfile(2015, new Date(), new Date());
         
-        Module m = new Module(new ModuleOrganiser("Mr Organiser", null), "CMP-555Y", "Software");
-        Module m2 = new Module(new ModuleOrganiser("Mr Other Guy", null), "CMP-644B", "Progs");
+        Module m = new Module("Mr Organiser", "CMP-555Y", "Software");
+        Module m2 = new Module("Mr Other Guy", "CMP-644B", "Progs");
         
         Exam e = new Exam("Exam 1", 20, "ROOM1", new Date(), true, 15);
         Exam e1 = new Exam("Exam 2", 50, "ROOM2", new Date(), false, 80);

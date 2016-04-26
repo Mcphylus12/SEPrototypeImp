@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import softwareproject.controller.AssessmentController;
 import softwareproject.model.Assessment;
-import softwareproject.model.ModuleOrganiser;
 
 /**
  *
@@ -15,7 +14,7 @@ public class moduleListCell extends javax.swing.JPanel {
     /**
      * Creates new form moduleListCell
      */
-    public moduleListCell(String moduleName, String moduleCode, ModuleOrganiser modOrg, ArrayList<Assessment> assessments) {
+    public moduleListCell(String moduleName, String moduleCode, String modOrg, ArrayList<Assessment> assessments) {
         initComponents();
         fillComponents(moduleName, moduleCode, modOrg, assessments);
     }
@@ -94,9 +93,9 @@ public class moduleListCell extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fillComponents(String moduleName, String moduleCode, ModuleOrganiser modOrg, ArrayList<Assessment> assessments){
+    private void fillComponents(String moduleName, String moduleCode, String modOrg, ArrayList<Assessment> assessments){
         lblModuleInfo.setText(moduleName + " - " + moduleCode);
-        lblModOrg.setText(modOrg.getName());
+        lblModOrg.setText(modOrg);
         if(moduleCode.endsWith("A")){
             lblSemester.setText("Semester 1");
         } else if(moduleCode.endsWith("Y")){
