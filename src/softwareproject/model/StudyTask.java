@@ -1,6 +1,7 @@
 package softwareproject.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class StudyTask implements Notable{
     private String title;
@@ -12,9 +13,11 @@ public class StudyTask implements Notable{
     private int hours;
     private int progress;
     private boolean isComplete;
+    private Date startDate;
+    private Date endDate;
     
 
-    public StudyTask(String title, String description, int hours,  ArrayList<StudyTask> dependencies) {
+    public StudyTask(String title, String description, int hours, Date endDate, ArrayList<StudyTask> dependencies) {
         this.isComplete = false;
         this.title=title;
         this.description = description;
@@ -24,6 +27,24 @@ public class StudyTask implements Notable{
         this.notes = new ArrayList();
         this.activities = new ArrayList<>();
         this.relatedMilestones = new ArrayList<>();
+        this.startDate = new Date();
+        this.endDate = endDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public ArrayList<Milestone> getRelatedMilestones() {

@@ -29,7 +29,7 @@ public class FileController {
             System.out.println("File not found.");
         }
         
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy:HH:mm");
         
         String[] semester = scan.nextLine().split(",");
         int semYear = Integer.parseInt(semester[0]);

@@ -19,11 +19,14 @@ public abstract class Assessment {
         this.isOnline = isOnline;
         this.weight = weight;
         this.dueDate = dueDate;
+        
         this.activities = new ArrayList();
         this.tasks = new ArrayList();
         this.milestones = new ArrayList();
     }
-
+    
+    abstract public Date getSetDate();
+    
     public ArrayList<Milestone> getMilestones() {
         return milestones;
     }

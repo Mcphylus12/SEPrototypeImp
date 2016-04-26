@@ -8,14 +8,24 @@ public class Milestone {
     private String description;
     private boolean isComplete;
     private Date deadline;
+    private Date startDate;
     private ArrayList<StudyTask> relatedTasks;
 
     public Milestone(String title, String description, Date deadline, ArrayList<StudyTask> relatedTasks) {
         this.title = title;
         this.description = description;
         this.isComplete = false;
+        this.startDate = new Date();
         this.deadline = deadline;
         this.relatedTasks = relatedTasks;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public String getTitle() {

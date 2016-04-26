@@ -115,7 +115,7 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         JList list = (JList)evt.getSource();
         if (evt.getClickCount() == 2) {
             int index = list.locationToIndex(evt.getPoint());
-            pa.setModulePanel(new ModuleOverview((Module)lstModules.getSelectedValue()));
+            pa.setModulePanel(new ModuleOverview(sp, (Module)lstModules.getSelectedValue()));
                     
         }
     }//GEN-LAST:event_lstModulesMouseClicked
