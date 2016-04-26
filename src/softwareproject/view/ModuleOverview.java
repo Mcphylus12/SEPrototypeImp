@@ -12,6 +12,7 @@ import softwareproject.model.Coursework;
 import softwareproject.model.Exam;
 import softwareproject.model.Milestone;
 import softwareproject.model.Module;
+import softwareproject.model.SemesterProfile;
 import softwareproject.model.StudyTask;
 
 /**
@@ -22,12 +23,14 @@ public class ModuleOverview extends javax.swing.JPanel {
     
     Assessment selectedAssessment;
     Module m;
+    SemesterProfile sp;
     /**
      * Creates new form ModuleOverview
      */
-    public ModuleOverview(Module m) {
+    public ModuleOverview(SemesterProfile sp, Module m) {
         this.selectedAssessment = null;
         this.m = m;
+        this.sp = sp;
         initComponents();
         loadAssessments();
         lstCoursework.setSelectedIndex(0);
@@ -112,6 +115,7 @@ public class ModuleOverview extends javax.swing.JPanel {
         lblCompletedTasks = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         lstCompletedTasks = new javax.swing.JList();
+        jButton1 = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setMaximumSize(new java.awt.Dimension(585, 562));
@@ -200,6 +204,13 @@ public class ModuleOverview extends javax.swing.JPanel {
         });
         jScrollPane7.setViewportView(lstCompletedTasks);
 
+        jButton1.setText("View Gantt Chart");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -238,8 +249,10 @@ public class ModuleOverview extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnAddMilestone)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAddActivity)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(btnAddActivity)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
+                .addGap(0, 135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,11 +283,12 @@ public class ModuleOverview extends javax.swing.JPanel {
                         .addComponent(lblCourseTest)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddTask)
                     .addComponent(btnAddMilestone)
-                    .addComponent(btnAddActivity))
+                    .addComponent(btnAddActivity)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -356,11 +370,17 @@ public class ModuleOverview extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_lstCompletedTasksMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        GanttChartWindow gantt = new GanttChartWindow(sp.getStartDate(), sp.getEndDate(), m);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddActivity;
     private javax.swing.JButton btnAddMilestone;
     private javax.swing.JButton btnAddTask;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

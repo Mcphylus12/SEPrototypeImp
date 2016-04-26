@@ -27,4 +27,11 @@ public class Exam extends Assessment{
     public void setLocation(String location) {
         this.location = location;
     }
+    
+    @Override
+    public Date getSetDate() {
+        Date a = new Date(super.getDueDate().getTime()+(duration*60000));
+        return a;
+    }
+    
 }

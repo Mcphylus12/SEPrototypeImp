@@ -16,6 +16,7 @@ public class Coursework extends Assessment {
         this.submissionType = submissionType;
     }
     
+    @Override
     public Date getSetDate() {
         return setDate;
     }

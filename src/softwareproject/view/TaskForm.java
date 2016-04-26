@@ -24,6 +24,7 @@ public class TaskForm extends javax.swing.JFrame {
     private boolean validTitle;
     private boolean validDescription;
     private boolean validHours;
+    private boolean validDate;
     
     /**
      * Creates new form TaskForm
@@ -32,6 +33,7 @@ public class TaskForm extends javax.swing.JFrame {
         validTitle = false;
         validDescription = false;
         validHours = false;
+        validDate = false;
         
         this.m = m;
         this.mo = mo;
@@ -66,6 +68,9 @@ public class TaskForm extends javax.swing.JFrame {
         txtHours = new javax.swing.JTextField();
         lblHoursError = new javax.swing.JLabel();
         lblReq = new javax.swing.JLabel();
+        txtDate = new javax.swing.JTextField();
+        lblDeadline = new javax.swing.JLabel();
+        lblDateError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -140,6 +145,21 @@ public class TaskForm extends javax.swing.JFrame {
         lblReq.setText("Fields Marked with * are required");
         lblReq.setEnabled(false);
 
+        txtDate.setName("hghfg"); // NOI18N
+        txtDate.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDateFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDateFocusLost(evt);
+            }
+        });
+
+        lblDeadline.setText("Deadline \"dd/mm/yyyy\"");
+
+        lblDateError.setText("Must Be a Valid date");
+        lblDateError.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,7 +194,15 @@ public class TaskForm extends javax.swing.JFrame {
                                     .addComponent(lblHours, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblHoursError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 10, Short.MAX_VALUE)))
+                        .addGap(0, 10, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDeadline)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblDateError, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -194,17 +222,22 @@ public class TaskForm extends javax.swing.JFrame {
                 .addComponent(lblDesc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblHours)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblHoursError))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblDeadline)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDateError))
+                .addGap(18, 18, 18)
                 .addComponent(lblDepend)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnClose)
@@ -225,12 +258,14 @@ public class TaskForm extends javax.swing.JFrame {
             ErrorController.setErrorBackground(validDescription, txtDesc);
             ErrorController.setErrorBackground(validTitle, txtTitle);
             ErrorController.setErrorBackground(validHours, txtHours);
+            ErrorController.setErrorBackground(validDate, txtDate);
             if(!validHours)
                 lblHoursError.setVisible(true);
             JOptionPane.showMessageDialog(new JFrame(), "Please Correct Errors in Red.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }else{
             StudyTask t = TaskController.createNewTask(txtTitle.getText(), txtDesc.getText(), 
-                    Integer.parseInt(txtHours.getText()), 
+                    Integer.parseInt(txtHours.getText()),
+                    txtDate.getText(), 
                     new ArrayList(lstDepend.getSelectedValuesList()));
             Assessment selectedAssess = (Assessment)cmbAssessment.getSelectedItem();
             AssessmentController.attachTask(selectedAssess, t);
@@ -287,6 +322,15 @@ public class TaskForm extends javax.swing.JFrame {
     private void txtHoursFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoursFocusGained
         ErrorController.resetColour(evt);
     }//GEN-LAST:event_txtHoursFocusGained
+
+    private void txtDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusGained
+        ErrorController.resetColour(evt);
+    }//GEN-LAST:event_txtDateFocusGained
+
+    private void txtDateFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusLost
+        validDate = ErrorController.dateValidation(txtDate.getText());
+        ErrorController.setErrorBackground(validDate, txtDate);
+    }//GEN-LAST:event_txtDateFocusLost
     
     public void fillComponents(){
         ListPopulator<Assessment> lp = new ListPopulator();
@@ -300,6 +344,8 @@ public class TaskForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAssessment;
+    private javax.swing.JLabel lblDateError;
+    private javax.swing.JLabel lblDeadline;
     private javax.swing.JLabel lblDepend;
     private javax.swing.JLabel lblDesc;
     private javax.swing.JLabel lblHours;
@@ -308,6 +354,7 @@ public class TaskForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblTaskForm;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JList lstDepend;
+    private javax.swing.JTextField txtDate;
     private javax.swing.JTextArea txtDesc;
     private javax.swing.JTextField txtHours;
     private javax.swing.JTextField txtTitle;

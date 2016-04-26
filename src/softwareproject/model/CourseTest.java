@@ -17,4 +17,10 @@ public class CourseTest extends Assessment {
     public void setWebsiteURL(String websiteURL) {
         this.websiteURL = websiteURL;
     }
+
+    @Override
+    public Date getSetDate() {
+        return this.getDueDate();
+    }
+
 }

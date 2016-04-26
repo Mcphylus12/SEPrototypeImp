@@ -13,7 +13,7 @@ public class FormController {
     
     public static Date getDateFromStrings(String dateString){
         String dateStr = dateString;
-        SimpleDateFormat sd = new SimpleDateFormat("DD/mm/YYYY");
+        SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         try {
             date = sd.parse(dateStr);

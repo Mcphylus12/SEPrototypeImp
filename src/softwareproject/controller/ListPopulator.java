@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import org.jfree.data.gantt.Task;
+import softwareproject.model.StudyTask;
 
 public class ListPopulator<T> {
     
@@ -21,5 +23,23 @@ public class ListPopulator<T> {
             jcb.addItem(o);
         } 
         jcb.setSelectedIndex(0);
+    }
+    
+    public static void populateDependencyList(ArrayList<StudyTask> src, JList jl){
+        DefaultListModel<StudyTask> lm = new DefaultListModel();
+        for(StudyTask o :src){
+            boolean add = true;
+            for(StudyTask o1 : o.getDependencies()){
+                if(!o1.getIsComplete()){
+                    add = false;
+                    break;
+                }
+            }
+            if(add){
+                lm.addElement(o);  
+            }
+            
+        }
+        jl.setModel(lm);
     }
 }
