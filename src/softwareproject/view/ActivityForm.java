@@ -21,6 +21,7 @@ import softwareproject.model.StudyTask;
  */
 public class ActivityForm extends javax.swing.JFrame {
     private Module m;
+    private Assessment a;
     private ModuleOverview mo;
     private ArrayList<StudyTask> t;
     private int timeAvailable;
@@ -32,13 +33,14 @@ public class ActivityForm extends javax.swing.JFrame {
     /**
      * Creates new form ActivityForm
      */
-    public ActivityForm(Module m, ModuleOverview mo) {
+    public ActivityForm(Assessment a, Module m, ModuleOverview mo) {
         validTitle = false;
         validDescription = false;
         validType = false;
         validTask = false;
         validTime = false;
         
+        this.a = a;
         this.m = m;
         this.mo = mo;
         t = new ArrayList();
@@ -278,6 +280,7 @@ public class ActivityForm extends javax.swing.JFrame {
                     Integer.parseInt(txtHours.getText()), 
                     txtType.getText(),
                     new ArrayList(lstTasks.getSelectedValuesList()));
+            a.addActivity(act);
             mo.fillComponents();
 
             for(StudyTask t: act.getTasks()){

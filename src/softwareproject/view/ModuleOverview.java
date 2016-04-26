@@ -60,6 +60,7 @@ public class ModuleOverview extends javax.swing.JPanel {
         
         //lpTask.populateJList(this.selectedAssessment.getTasks(), lstCurrentTasks);
         lpMile.populateJList(this.selectedAssessment.getMilestones(), lstMilestones);
+        lpAct.populateJList(this.selectedAssessment.getActivities(), lstActivities);
     }
     
     public void loadAssessments(){
@@ -116,6 +117,9 @@ public class ModuleOverview extends javax.swing.JPanel {
         jScrollPane7 = new javax.swing.JScrollPane();
         lstCompletedTasks = new javax.swing.JList();
         jButton1 = new javax.swing.JButton();
+        lblCompletedTasks1 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        lstActivities = new javax.swing.JList();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setMaximumSize(new java.awt.Dimension(585, 562));
@@ -211,6 +215,16 @@ public class ModuleOverview extends javax.swing.JPanel {
             }
         });
 
+        lblCompletedTasks1.setText("Activities");
+
+        lstActivities.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstActivities.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstActivitiesMouseClicked(evt);
+            }
+        });
+        jScrollPane8.setViewportView(lstActivities);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -218,28 +232,30 @@ public class ModuleOverview extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCurrentTasks)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCompletedTasks)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblCurrentTasks)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblMilestones)
-                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCourseTest)
-                            .addComponent(lblExam)
-                            .addComponent(lblCoursework)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20))))
+                            .addComponent(lblMilestones)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCompletedTasks)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCompletedTasks1)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCourseTest)
+                    .addComponent(lblExam)
+                    .addComponent(lblCoursework)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblModTitle)
@@ -266,13 +282,19 @@ public class ModuleOverview extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                            .addComponent(jScrollPane6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblCompletedTasks)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCompletedTasks)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCompletedTasks1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -345,7 +367,7 @@ public class ModuleOverview extends javax.swing.JPanel {
 
     private void btnAddActivityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActivityActionPerformed
         if(lstCurrentTasks.getModel().getSize() > 0){
-            ActivityForm af = new ActivityForm(m, this);
+            ActivityForm af = new ActivityForm(selectedAssessment, m, this);
             af.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(new JFrame(), "No Tasks available to add an activity to.", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -375,6 +397,10 @@ public class ModuleOverview extends javax.swing.JPanel {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void lstActivitiesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstActivitiesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lstActivitiesMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddActivity;
@@ -387,13 +413,16 @@ public class ModuleOverview extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JLabel lblCompletedTasks;
+    private javax.swing.JLabel lblCompletedTasks1;
     private javax.swing.JLabel lblCourseTest;
     private javax.swing.JLabel lblCoursework;
     private javax.swing.JLabel lblCurrentTasks;
     private javax.swing.JLabel lblExam;
     private javax.swing.JLabel lblMilestones;
     private javax.swing.JLabel lblModTitle;
+    private javax.swing.JList lstActivities;
     private javax.swing.JList lstCompletedTasks;
     private javax.swing.JList lstCourseTest;
     private javax.swing.JList lstCoursework;

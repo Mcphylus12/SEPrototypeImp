@@ -249,7 +249,6 @@ public class TaskForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-
         FormController.closeWindow(this);
     }//GEN-LAST:event_btnCloseActionPerformed
 
@@ -261,12 +260,16 @@ public class TaskForm extends javax.swing.JFrame {
             ErrorController.setErrorBackground(validDate, txtDate);
             if(!validHours)
                 lblHoursError.setVisible(true);
+            
             JOptionPane.showMessageDialog(new JFrame(), "Please Correct Errors in Red.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }else{
-            StudyTask t = TaskController.createNewTask(txtTitle.getText(), txtDesc.getText(), 
+            StudyTask t = TaskController.createNewTask(
+                    txtTitle.getText(), 
+                    txtDesc.getText(), 
                     Integer.parseInt(txtHours.getText()),
                     txtDate.getText(), 
                     new ArrayList(lstDepend.getSelectedValuesList()));
+            
             Assessment selectedAssess = (Assessment)cmbAssessment.getSelectedItem();
             AssessmentController.attachTask(selectedAssess, t);
             mo.setSelectedAssignment(selectedAssess);
@@ -281,8 +284,11 @@ public class TaskForm extends javax.swing.JFrame {
         Assessment a = (Assessment)cmbAssessment.getSelectedItem();
         ListPopulator<StudyTask> lp = new ListPopulator();
         if(a != null){
-            lp.populateJList(a.getTasks(), lstDepend);
+            lp.populateDependencyList(a.getTasks(), lstDepend);
         }
+        
+        
+        
     }//GEN-LAST:event_cmbAssessmentActionPerformed
 
     private void txtTitleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusLost

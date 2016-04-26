@@ -41,6 +41,8 @@
                           <Component id="pbTaskProgress" pref="647" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="btnAddNote" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                              <Component id="btnCompleteTask" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnClose" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -144,6 +146,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnClose" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnAddNote" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCompleteTask" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -176,7 +179,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblProgress">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Progress"/>
+        <Property name="text" type="java.lang.String" value="Activity Progress"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -242,7 +245,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblDependent">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Dependencies"/>
+        <Property name="text" type="java.lang.String" value="Task Dependencies"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane3">
@@ -321,7 +324,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnComplete">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mark as Complete"/>
+        <Property name="text" type="java.lang.String" value="Complete Selected Activity"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCompleteActionPerformed"/>
@@ -367,6 +370,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Associated Milestone"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCompleteTask">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Complete Task"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCompleteTaskActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

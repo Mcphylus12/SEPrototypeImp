@@ -25,21 +25,26 @@ public class ListPopulator<T> {
         jcb.setSelectedIndex(0);
     }
     
-    public static void populateDependencyList(ArrayList<StudyTask> src, JList jl){
+    public void populateDependencyList(ArrayList<StudyTask> src, JList jl){
         DefaultListModel<StudyTask> lm = new DefaultListModel();
         for(StudyTask o :src){
-            boolean add = true;
-            for(StudyTask o1 : o.getDependencies()){
-                if(!o1.getIsComplete()){
-                    add = false;
-                    break;
-                }
+            if(!o.getIsComplete()){
+                lm.addElement(o);
             }
-            if(add){
-                lm.addElement(o);  
-            }
-            
         }
+//        for(StudyTask o :src){
+//            boolean add = true;
+//            for(StudyTask o1 : o.getDependencies()){
+//                if(o1.getIsComplete()){
+//                    add = false;
+//                    break;
+//                }
+//            }
+//            if(add){
+//                lm.addElement(o);  
+//            }
+//            
+//        }
         jl.setModel(lm);
     }
 }

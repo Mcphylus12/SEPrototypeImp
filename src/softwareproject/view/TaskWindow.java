@@ -1,7 +1,9 @@
 package softwareproject.view;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import softwareproject.controller.ListPopulator;
 import softwareproject.controller.NoteController;
 import softwareproject.model.Activity;
@@ -18,6 +20,7 @@ public class TaskWindow extends javax.swing.JFrame {
     private StudyTask t;
     private Assessment a;
     private ModuleOverview mo;
+    private int progress;
 
     /**
      * Creates new form TaskWindow
@@ -68,6 +71,7 @@ public class TaskWindow extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         lstMilestones = new javax.swing.JList();
         lblDependent1 = new javax.swing.JLabel();
+        btnCompleteTask = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -87,7 +91,7 @@ public class TaskWindow extends javax.swing.JFrame {
 
         pbTaskProgress.setForeground(new java.awt.Color(51, 204, 0));
 
-        lblProgress.setText("Progress");
+        lblProgress.setText("Activity Progress");
 
         lstAttachedActivities.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -111,7 +115,7 @@ public class TaskWindow extends javax.swing.JFrame {
 
         lblTaskWindow.setText("Task Window");
 
-        lblDependent.setText("Dependencies");
+        lblDependent.setText("Task Dependencies");
 
         lstDependent.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -140,7 +144,7 @@ public class TaskWindow extends javax.swing.JFrame {
 
         lblTime.setText("TimeAllocated");
 
-        btnComplete.setText("Mark as Complete");
+        btnComplete.setText("Complete Selected Activity");
         btnComplete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCompleteActionPerformed(evt);
@@ -166,6 +170,13 @@ public class TaskWindow extends javax.swing.JFrame {
 
         lblDependent1.setText("Associated Milestone");
 
+        btnCompleteTask.setText("Complete Task");
+        btnCompleteTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCompleteTaskActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -186,6 +197,8 @@ public class TaskWindow extends javax.swing.JFrame {
                             .addComponent(pbTaskProgress, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnAddNote)
+                                .addGap(47, 47, 47)
+                                .addComponent(btnCompleteTask)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnClose))
                             .addComponent(jScrollPane3)
@@ -270,7 +283,8 @@ public class TaskWindow extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose)
-                    .addComponent(btnAddNote))
+                    .addComponent(btnAddNote)
+                    .addComponent(btnCompleteTask))
                 .addContainerGap())
         );
 
@@ -294,7 +308,6 @@ public class TaskWindow extends javax.swing.JFrame {
             Activity a = (Activity)lstAttachedActivities.getSelectedValue();
             a.setIsFinished(true);
             fillComponents();
-            mo.fillComponents();
         }
     }//GEN-LAST:event_btnCompleteActionPerformed
 
@@ -306,6 +319,23 @@ public class TaskWindow extends javax.swing.JFrame {
             mw.setVisible(true);
         }
     }//GEN-LAST:event_lstMilestonesMouseClicked
+
+    private void btnCompleteTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompleteTaskActionPerformed
+        boolean dependComplete = true;
+        for(StudyTask t: t.getDependencies()){
+            if(!t.getIsComplete()){
+                dependComplete = false;
+            }
+        }
+        if(progress == 100 && dependComplete){
+            t.setIsComplete(true);
+            lblStatus.setText("Complete");
+            mo.fillComponents();
+            fillComponents();
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(), "All activities and dependant Tasks must be completed.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCompleteTaskActionPerformed
     
     public void fillComponents(){
         ListPopulator<String> lpNote = new ListPopulator();
@@ -333,13 +363,15 @@ public class TaskWindow extends javax.swing.JFrame {
 
         pbTaskProgress.setMinimum(0);
         pbTaskProgress.setMaximum(100);
-        int progress = (int)(actCompleteCount/actTotalCount*100);
+        if(actTotalCount == 0 && actCompleteCount == 0){
+           progress = 100; 
+        }else{
+            progress = (int)(actCompleteCount/actTotalCount*100);
+        }
         pbTaskProgress.setValue(progress);
-        if(progress == 100){
-            t.setIsComplete(true);
+        if(t.getIsComplete()){
             lblStatus.setText("Complete");
         }else{
-            t.setIsComplete(false);
             lblStatus.setText("In Progress");
         }
         
@@ -357,6 +389,7 @@ public class TaskWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnAddNote;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnComplete;
+    private javax.swing.JButton btnCompleteTask;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
