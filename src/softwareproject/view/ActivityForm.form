@@ -26,22 +26,10 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtTitle" min="-2" pref="157" max="-2" attributes="0"/>
-                          <Component id="lblActivityForm" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTitle" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="lblType" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txtType" min="-2" pref="157" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="txtTitle" min="-2" pref="157" max="-2" attributes="0"/>
+                      <Component id="lblActivityForm" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblTitle" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                       <Component id="jScrollPane1" alignment="0" pref="368" max="32767" attributes="0"/>
@@ -81,15 +69,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lblActivityForm" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblType" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="lblTitle" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtType" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="txtTitle" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lblDesc" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -123,11 +105,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="lblType">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Activity Type"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblTasks">
       <Properties>
         <Property name="text" type="java.lang.String" value="Attach Task"/>
@@ -230,12 +207,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Select Task(s)"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtType">
-      <Events>
-        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTypeFocusGained"/>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtTypeFocusLost"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>

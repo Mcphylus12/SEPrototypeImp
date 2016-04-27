@@ -32,19 +32,26 @@ public class ListPopulator<T> {
                 lm.addElement(o);
             }
         }
-//        for(StudyTask o :src){
-//            boolean add = true;
-//            for(StudyTask o1 : o.getDependencies()){
-//                if(o1.getIsComplete()){
-//                    add = false;
-//                    break;
-//                }
-//            }
-//            if(add){
-//                lm.addElement(o);  
-//            }
-//            
-//        }
+        jl.setModel(lm);
+    }
+
+    public void populateActivityDependencyList(ArrayList<StudyTask> src, JList jl){
+        DefaultListModel<StudyTask> lm = new DefaultListModel();
+        for(StudyTask o :src){
+            boolean add = true;
+            for(StudyTask o1 : o.getDependencies()){
+                if(!o1.getIsComplete()){
+                    add = false;
+                    break;
+                }
+            }
+            if(o.getIsComplete()){
+                add = false;
+            }
+            if(add){
+                lm.addElement(o);  
+            }
+        }
         jl.setModel(lm);
     }
 }

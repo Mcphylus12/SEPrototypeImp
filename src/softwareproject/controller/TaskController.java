@@ -3,6 +3,7 @@ package softwareproject.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import softwareproject.model.StudyTask;
+import softwareproject.model.TaskActivityType;
 
 public class TaskController {
     
@@ -16,9 +17,10 @@ public class TaskController {
             String title, 
             String description, 
             int hours,
+            TaskActivityType type,
             String endDate,
             ArrayList<StudyTask> dependencies){
         Date date = FormController.getDateFromStrings(endDate);
-        return new StudyTask(title, description, hours, date, dependencies);
+        return new StudyTask(title, description, hours, type, date, dependencies);
     }
 }

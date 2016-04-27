@@ -12,6 +12,7 @@ public class NoteForm extends javax.swing.JFrame {
 
     private Notable parent;
     private TaskWindow tw;
+    private ActivityWindow aw;
     /**
      * 
      * @param parent item to add note to
@@ -20,6 +21,11 @@ public class NoteForm extends javax.swing.JFrame {
     public NoteForm(Notable parent, TaskWindow tw) {
         this.parent = parent;
         this.tw = tw;
+        initComponents();
+    }
+    public NoteForm(Notable parent, ActivityWindow aw) {
+        this.parent = parent;
+        this.aw = aw;
         initComponents();
     }
 
@@ -117,7 +123,11 @@ public class NoteForm extends javax.swing.JFrame {
 
     private void btnSaveNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveNoteActionPerformed
         NoteController.attachNote(parent, NoteController.createNote(noteTitle.getText(), noteContents.getText(), new Date()));
-        tw.fillComponents();
+        if(tw != null){
+            tw.fillComponents();
+        }else{
+            aw.fillComponents();
+        }
         setVisible(false);
         dispose();
     }//GEN-LAST:event_btnSaveNoteActionPerformed

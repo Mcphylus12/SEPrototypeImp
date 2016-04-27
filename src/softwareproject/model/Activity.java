@@ -12,7 +12,6 @@ public class Activity implements Notable, Serializable{
     private ArrayList<StudyTask> tasks;
     private boolean isFinished;
     private int hours;
-    private String activityType;
     private Date startDate;
 
     public Date getStartDate() {
@@ -23,11 +22,10 @@ public class Activity implements Notable, Serializable{
         this.startDate = startDate;
     }
 
-    public Activity(String name, String description, int hours, String activityType, ArrayList<StudyTask> tasks) {
+    public Activity(String name, String description, int hours, ArrayList<StudyTask> tasks) {
         this.name = name;
         this.description = description;
         this.hours = hours;
-        this.activityType = activityType;
         isFinished = false;
         notes = new ArrayList();
         this.tasks = tasks;
@@ -66,10 +64,6 @@ public class Activity implements Notable, Serializable{
         this.tasks = tasks;
     }
 
-    public String getActivityType() {
-        return activityType;
-    }
-
     public ArrayList<Note> getNotes() {
         return notes;
     }
@@ -80,10 +74,6 @@ public class Activity implements Notable, Serializable{
      */
     public boolean getIsFinished() {
         return isFinished;
-    }
-
-    public void setActivityType(String activityType) {
-        this.activityType = activityType;
     }
 
     public void setNotes(ArrayList<Note> notes) {
@@ -114,7 +104,7 @@ public class Activity implements Notable, Serializable{
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.name).append(" - ").append(this.description).append(" - ");
+        sb.append(this.name).append(" - ").append(this.description).append(" - ").append(this.hours).append("Hr(s)");
         if(isFinished){
             sb.append(" Complete");
         }else

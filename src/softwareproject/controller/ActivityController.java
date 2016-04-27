@@ -3,16 +3,17 @@ package softwareproject.controller;
 import java.util.ArrayList;
 import softwareproject.model.Activity;
 import softwareproject.model.StudyTask;
+import softwareproject.model.TaskActivityType;
 
 public class ActivityController {
     
-    public static Activity createActivity(String name, String description, int hours, String activityType, ArrayList<StudyTask> tasks){
-        return new Activity(name, description, hours,activityType, tasks);
+    public static Activity createActivity(String name, String description, int hours, ArrayList<StudyTask> tasks){
+        return new Activity(name, description, hours, tasks);
     }
     
     public static String getActivityAsString(Activity act){
         StringBuilder sb = new StringBuilder();
-        sb.append(act.getName()).append(". Type: ").append(act.getActivityType())
+        sb.append(act.getName())
                 .append(" - ");
         if(act.getIsFinished())
             sb.append("Complete");

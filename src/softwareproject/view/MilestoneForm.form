@@ -38,6 +38,11 @@
                                   <Component id="lblMilestoneForm" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblDeadline" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
+                                      <Component id="txtDate" min="-2" pref="117" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblHoursError" min="-2" pref="105" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblTitle" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtTitle" min="-2" pref="54" max="-2" attributes="0"/>
@@ -45,13 +50,8 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblAssessment" min="-2" max="-2" attributes="0"/>
-                                          <Component id="cmbAssessment" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cmbAssessment" min="-2" pref="186" max="-2" attributes="0"/>
                                       </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="txtDate" min="-2" pref="117" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblHoursError" min="-2" pref="105" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>

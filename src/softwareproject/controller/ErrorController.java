@@ -60,6 +60,10 @@ public class ErrorController {
             System.out.println("Invalid date");
         }
         
+        if(validDate && date.before(new Date())){
+            validDate = false;
+        }
+        
         return validDate;
     }
     

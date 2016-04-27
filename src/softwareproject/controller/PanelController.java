@@ -5,6 +5,9 @@ import java.awt.Container;
 import java.awt.Rectangle;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import org.jfree.chart.imagemap.OverLIBToolTipTagFragmentGenerator;
 import softwareproject.model.SemesterProfile;
 import softwareproject.view.*;
 
@@ -79,7 +82,25 @@ public class PanelController implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent we) {
-        FileController.writeToFile(nav.getSemesterProfile());
+        String path = "";
+        if(od.openFileName.isEmpty()){
+            path = JOptionPane.showInputDialog("Semester Profile not Saved, Enter file name to save:");
+            if(path == null){
+                path = "";
+            }
+            if(path.trim().isEmpty()){
+                path = "defaultSemesterProfile.ser";
+            }else{
+                if(!path.endsWith(".ser")){
+                    path += ".ser";
+                }
+            }
+        }else{
+            path = od.openFileName;
+        }
+        if(FileController.writeToFile(nav.getSemesterProfile(), path)){
+            JOptionPane.showMessageDialog(new JFrame(), "Semester profile saved to "+path, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     @Override

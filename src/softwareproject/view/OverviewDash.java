@@ -15,6 +15,7 @@ import softwareproject.controller.FileController;
 import softwareproject.controller.ListPopulator;
 import softwareproject.controller.ModuleController;
 import softwareproject.controller.PanelController;
+import softwareproject.model.Assessment;
 import softwareproject.model.Module;
 import softwareproject.model.SemesterProfile;
 
@@ -26,6 +27,7 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
 
     private SemesterProfile sp;
     private PanelController pa;
+    public String openFileName = "";
     
     /**
      * Creates new form OverviewDashboard
@@ -54,6 +56,7 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         lstModules = new javax.swing.JList();
         btnSaveSemp = new javax.swing.JButton();
         btnLoadSemp = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         btnNewSemProf.setText("New Semester Profile");
         btnNewSemProf.addActionListener(new java.awt.event.ActionListener() {
@@ -65,6 +68,11 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         lblWelcome.setText("Welcome - Overview Dashboard");
 
         btnUpdateDeadlines.setText("Update Deadlines");
+        btnUpdateDeadlines.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateDeadlinesActionPerformed(evt);
+            }
+        });
 
         lstModules.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstModules.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -88,6 +96,13 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
             }
         });
 
+        jButton1.setText("View Deadlines");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,13 +116,16 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblWelcome)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSaveSemp))
+                                .addComponent(btnSaveSemp)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnNewSemProf, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnLoadSemp, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnUpdateDeadlines, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnUpdateDeadlines, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -116,7 +134,8 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblWelcome)
-                    .addComponent(btnSaveSemp))
+                    .addComponent(btnSaveSemp)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNewSemProf)
@@ -128,6 +147,7 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewSemProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewSemProfActionPerformed
+        openFileName = "";
         SemesterProfile semp = null;
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -155,7 +175,19 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
     }//GEN-LAST:event_lstModulesMouseClicked
 
     private void btnLoadSempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadSempActionPerformed
-        SemesterProfile semp = FileController.readFromSer("semesterProfile.ser");
+        SemesterProfile semp = null;
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "SER files", "ser");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+           System.out.println("You chose to open this file: " +
+                chooser.getSelectedFile().getName());
+           openFileName = chooser.getSelectedFile().getName();
+           semp = FileController.readFromSer(openFileName);
+           this.setsemP(semp);
+        }
         if(semp != null){
             this.setsemP(semp);
             fillComponents();
@@ -167,13 +199,71 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
     }//GEN-LAST:event_btnLoadSempActionPerformed
 
     private void btnSaveSempActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveSempActionPerformed
-        if(FileController.writeToFile(sp)){
-            JOptionPane.showMessageDialog(new JFrame(), "Semester profile saved", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+        String path = JOptionPane.showInputDialog("Enter File Name:");
+        if(path.trim().isEmpty()){
+            if(openFileName.isEmpty()){
+                path = "newSemesterProfile.ser";
+            }else{
+                path = openFileName;            
+            }
+        }else{
+            if(!path.endsWith(".ser")){
+                path += ".ser";
+            }
+            openFileName = path;
+        }
+        if(FileController.writeToFile(sp, path)){
+            JOptionPane.showMessageDialog(new JFrame(), "Semester profile saved to "+path, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
         }
         else {
             JOptionPane.showMessageDialog(new JFrame(), "Error while saving. Semester profile is not saved", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveSempActionPerformed
+
+    private void btnUpdateDeadlinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDeadlinesActionPerformed
+        openFileName = "";
+        SemesterProfile semp = null;
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "CSV files", "csv");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println("You chose to open this file: " +
+                 chooser.getSelectedFile().getName());
+            semp = FileController.readSemesterFile(chooser.getSelectedFile().getName());
+        }
+        
+        for(Module m: semp.getModules()){
+            for(Module thisM: sp.getModules()){
+                if(m.getModuleCode().equals(thisM.getModuleCode())){
+                    for(Assessment a: m.getAssessments()){
+                        for(Assessment thisA: thisM.getAssessments()){
+                            if(a.getName().equals(thisA.getName())){
+                                if(!thisA.getDueDate().toString().equals(a.getDueDate().toString())){
+                                    JOptionPane.showMessageDialog(new JFrame(), 
+                                        "Updated Deadline for "+
+                                                m.getModuleName()+
+                                                " - "+a.getName()+
+                                                " From: "+thisA.getDueDate()+
+                                                " To: "+a.getDueDate()
+                                            , "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                                    thisA.setDueDate(a.getDueDate());
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        fillComponents();
+    }//GEN-LAST:event_btnUpdateDeadlinesActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new DeadlineOverview(sp.getModules()).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void fillComponents(){
         DefaultListModel<Module> lm = new DefaultListModel();
@@ -190,6 +280,7 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
     private javax.swing.JButton btnNewSemProf;
     private javax.swing.JButton btnSaveSemp;
     private javax.swing.JButton btnUpdateDeadlines;
+    private javax.swing.JButton jButton1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblWelcome;

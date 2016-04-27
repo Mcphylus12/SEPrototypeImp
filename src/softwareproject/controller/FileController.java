@@ -163,10 +163,10 @@ public class FileController {
         return semp;
     }
     
-    public static boolean writeToFile(SemesterProfile semp) {
+    public static boolean writeToFile(SemesterProfile semp, String path) {
         if(semp != null){
             try {
-                FileOutputStream fout = new FileOutputStream("semesterProfile.ser");
+                FileOutputStream fout = new FileOutputStream(path);
                 ObjectOutputStream oos = new ObjectOutputStream(fout);
                 oos.writeObject(semp);
                 oos.close();
@@ -176,7 +176,7 @@ public class FileController {
             }
         }
         else {
-            System.out.println("SEMP IS NULL. NOT WRITTEN");
+            JOptionPane.showMessageDialog(new JFrame(), "Semester Profile is Empty, Not Written to File.", "ERROR", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return false;

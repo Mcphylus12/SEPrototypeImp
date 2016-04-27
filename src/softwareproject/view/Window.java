@@ -8,8 +8,8 @@ import javax.swing.JFrame;
 
 public class Window extends JFrame{
     
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 750;
     
     public Window(String string) throws HeadlessException {
         super(string);

@@ -13,6 +13,7 @@ import softwareproject.controller.TaskController;
 import softwareproject.model.Assessment;
 import softwareproject.model.Module;
 import softwareproject.model.StudyTask;
+import softwareproject.model.TaskActivityType;
 
 /**
  *
@@ -38,7 +39,6 @@ public class TaskForm extends javax.swing.JFrame {
         this.m = m;
         this.mo = mo;
         initComponents();
-        lblHoursError.setVisible(false);
         fillComponents();
     }
 
@@ -66,11 +66,12 @@ public class TaskForm extends javax.swing.JFrame {
         lblAssessment = new javax.swing.JLabel();
         lblHours = new javax.swing.JLabel();
         txtHours = new javax.swing.JTextField();
-        lblHoursError = new javax.swing.JLabel();
         lblReq = new javax.swing.JLabel();
         txtDate = new javax.swing.JTextField();
         lblDeadline = new javax.swing.JLabel();
         lblDateError = new javax.swing.JLabel();
+        cmbType = new javax.swing.JComboBox();
+        lblAssessment1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -139,9 +140,6 @@ public class TaskForm extends javax.swing.JFrame {
             }
         });
 
-        lblHoursError.setText("Must Be a positive number.");
-        lblHoursError.setEnabled(false);
-
         lblReq.setText("Fields Marked with * are required");
         lblReq.setEnabled(false);
 
@@ -160,6 +158,15 @@ public class TaskForm extends javax.swing.JFrame {
         lblDateError.setText("Must Be a Valid date");
         lblDateError.setEnabled(false);
 
+        cmbType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTypeActionPerformed(evt);
+            }
+        });
+
+        lblAssessment1.setText("Task Type");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -175,11 +182,6 @@ public class TaskForm extends javax.swing.JFrame {
                         .addComponent(btnClose))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblTaskForm)
-                            .addComponent(lblDesc)
-                            .addComponent(lblDepend)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,21 +189,29 @@ public class TaskForm extends javax.swing.JFrame {
                                 .addGap(45, 45, 45)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblAssessment)
-                                    .addComponent(cmbAssessment, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(cmbAssessment, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtHours, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblHours, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblHoursError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 10, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblTaskForm)
+                                .addComponent(lblDesc)
+                                .addComponent(lblDepend)))
+                        .addGap(10, 10, 10))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblDeadline)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblDateError, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblAssessment1)
+                                    .addComponent(lblDateError, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -223,11 +233,13 @@ public class TaskForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblHours)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHours)
+                    .addComponent(lblAssessment1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblHoursError))
+                    .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblDeadline)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -253,13 +265,11 @@ public class TaskForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        if(!validDescription || !validTitle || !validHours){
+        if(!validDescription || !validTitle || !validHours || !validDate){
             ErrorController.setErrorBackground(validDescription, txtDesc);
             ErrorController.setErrorBackground(validTitle, txtTitle);
             ErrorController.setErrorBackground(validHours, txtHours);
             ErrorController.setErrorBackground(validDate, txtDate);
-            if(!validHours)
-                lblHoursError.setVisible(true);
             
             JOptionPane.showMessageDialog(new JFrame(), "Please Correct Errors in Red.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }else{
@@ -267,6 +277,7 @@ public class TaskForm extends javax.swing.JFrame {
                     txtTitle.getText(), 
                     txtDesc.getText(), 
                     Integer.parseInt(txtHours.getText()),
+                    (TaskActivityType)cmbType.getSelectedItem(),
                     txtDate.getText(), 
                     new ArrayList(lstDepend.getSelectedValuesList()));
             
@@ -286,9 +297,6 @@ public class TaskForm extends javax.swing.JFrame {
         if(a != null){
             lp.populateDependencyList(a.getTasks(), lstDepend);
         }
-        
-        
-        
     }//GEN-LAST:event_cmbAssessmentActionPerformed
 
     private void txtTitleFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTitleFocusLost
@@ -322,7 +330,6 @@ public class TaskForm extends javax.swing.JFrame {
     private void txtHoursFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoursFocusLost
         //Hours positive int validation
         validHours = ErrorController.intValidation(txtHours);
-        lblHoursError.setVisible(!validHours);
     }//GEN-LAST:event_txtHoursFocusLost
 
     private void txtHoursFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHoursFocusGained
@@ -337,25 +344,34 @@ public class TaskForm extends javax.swing.JFrame {
         validDate = ErrorController.dateValidation(txtDate.getText());
         ErrorController.setErrorBackground(validDate, txtDate);
     }//GEN-LAST:event_txtDateFocusLost
+
+    private void cmbTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbTypeActionPerformed
     
     public void fillComponents(){
         ListPopulator<Assessment> lp = new ListPopulator();
         lp.populateComboBox(m.getAssessments(), cmbAssessment);
+        cmbType.removeAllItems();
+        for(TaskActivityType act: TaskActivityType.values()){
+            cmbType.addItem(act);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox cmbAssessment;
+    private javax.swing.JComboBox cmbType;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAssessment;
+    private javax.swing.JLabel lblAssessment1;
     private javax.swing.JLabel lblDateError;
     private javax.swing.JLabel lblDeadline;
     private javax.swing.JLabel lblDepend;
     private javax.swing.JLabel lblDesc;
     private javax.swing.JLabel lblHours;
-    private javax.swing.JLabel lblHoursError;
     private javax.swing.JLabel lblReq;
     private javax.swing.JLabel lblTaskForm;
     private javax.swing.JLabel lblTitle;

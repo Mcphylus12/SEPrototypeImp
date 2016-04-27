@@ -74,8 +74,6 @@ public class GanttChartWindow extends JFrame{
                 Task mile = new Task(milestone.getTitle(), new SimpleTimePeriod(milestone.getStartDate(), milestone.getDeadline()));
                 series.add(mile);
             }
-            
-            
         }
         coll.add(series);
         return coll;

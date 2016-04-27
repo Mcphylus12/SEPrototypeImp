@@ -1,6 +1,7 @@
 package softwareproject.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,6 +15,7 @@ public abstract class Assessment implements Serializable{
     private ArrayList<Activity> activities;
     private ArrayList<StudyTask> tasks;
     private Date dueDate;
+    private int progress;
 
     public Assessment(String name, boolean isSummative, boolean isOnline, int weight, Date dueDate) {
         this.name = name;
@@ -21,10 +23,19 @@ public abstract class Assessment implements Serializable{
         this.isOnline = isOnline;
         this.weight = weight;
         this.dueDate = dueDate;
+        progress = 0;
         
         this.activities = new ArrayList();
         this.tasks = new ArrayList();
         this.milestones = new ArrayList();
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
     
     abstract public Date getSetDate();
@@ -107,7 +118,10 @@ public abstract class Assessment implements Serializable{
 
     @Override
     public String toString() {
-        return name;
+        StringBuilder sb = new StringBuilder();
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        sb.append(this.name).append(" - ").append(fmt.format(dueDate)).append(" - ").append(this.weight).append("%");
+        return sb.toString();
     }
     
     

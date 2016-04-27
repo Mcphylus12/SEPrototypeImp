@@ -17,13 +17,14 @@ public class StudyTask implements Notable, Serializable{
     private boolean isComplete;
     private Date startDate;
     private Date endDate;
-    
+    private TaskActivityType type;    
 
-    public StudyTask(String title, String description, int hours, Date endDate, ArrayList<StudyTask> dependencies) {
+    public StudyTask(String title, String description, int hours, TaskActivityType type, Date endDate, ArrayList<StudyTask> dependencies) {
         this.isComplete = false;
         this.title=title;
         this.description = description;
         this.hours = hours;
+        this.type = type;
         this.progress = 0;
         this.dependencies = dependencies;
         this.notes = new ArrayList();
@@ -32,7 +33,15 @@ public class StudyTask implements Notable, Serializable{
         this.startDate = new Date();
         this.endDate = endDate;
     }
+    
+    public TaskActivityType getType() {
+        return type;
+    }
 
+    public void setType(TaskActivityType type) {
+        this.type = type;
+    }
+    
     public Date getStartDate() {
         return startDate;
     }
