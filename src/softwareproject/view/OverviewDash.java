@@ -56,7 +56,7 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         lstModules = new javax.swing.JList();
         btnSaveSemp = new javax.swing.JButton();
         btnLoadSemp = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnDeadline = new javax.swing.JButton();
 
         btnNewSemProf.setText("New Semester Profile");
         btnNewSemProf.addActionListener(new java.awt.event.ActionListener() {
@@ -96,10 +96,10 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
             }
         });
 
-        jButton1.setText("View Deadlines");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDeadline.setText("View Deadlines");
+        btnDeadline.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnDeadlineActionPerformed(evt);
             }
         });
 
@@ -111,22 +111,21 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblWelcome)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSaveSemp)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnNewSemProf, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnLoadSemp, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnUpdateDeadlines, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblWelcome)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnSaveSemp)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDeadline))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnNewSemProf, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnLoadSemp, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnUpdateDeadlines, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,14 +134,15 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblWelcome)
                     .addComponent(btnSaveSemp)
-                    .addComponent(jButton1))
+                    .addComponent(btnDeadline))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNewSemProf)
                     .addComponent(btnLoadSemp)
                     .addComponent(btnUpdateDeadlines))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -156,8 +156,8 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         int returnVal = chooser.showOpenDialog(this);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
            System.out.println("You chose to open this file: " +
-                chooser.getSelectedFile().getName());
-           semp = FileController.readSemesterFile(chooser.getSelectedFile().getName());
+                chooser.getSelectedFile().getAbsolutePath());
+           semp = FileController.readSemesterFile(chooser.getSelectedFile().getAbsolutePath());
            this.setsemP(semp);
            fillComponents();
            pa.setSemesterProfile(semp);
@@ -184,7 +184,7 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         if(returnVal == JFileChooser.APPROVE_OPTION) {
            System.out.println("You chose to open this file: " +
                 chooser.getSelectedFile().getName());
-           openFileName = chooser.getSelectedFile().getName();
+           openFileName = chooser.getSelectedFile().getAbsolutePath();
            semp = FileController.readFromSer(openFileName);
            this.setsemP(semp);
         }
@@ -231,7 +231,7 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             System.out.println("You chose to open this file: " +
                  chooser.getSelectedFile().getName());
-            semp = FileController.readSemesterFile(chooser.getSelectedFile().getName());
+            semp = FileController.readSemesterFile(chooser.getSelectedFile().getAbsolutePath());
         }
         
         for(Module m: semp.getModules()){
@@ -261,9 +261,13 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         fillComponents();
     }//GEN-LAST:event_btnUpdateDeadlinesActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new DeadlineOverview(sp.getModules()).setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnDeadlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeadlineActionPerformed
+        if(sp != null){
+            new DeadlineOverview(sp.getModules()).setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(new JFrame(), "Must Load a Semester Profile to View Deadlines", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDeadlineActionPerformed
 
     private void fillComponents(){
         DefaultListModel<Module> lm = new DefaultListModel();
@@ -276,11 +280,11 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeadline;
     private javax.swing.JButton btnLoadSemp;
     private javax.swing.JButton btnNewSemProf;
     private javax.swing.JButton btnSaveSemp;
     private javax.swing.JButton btnUpdateDeadlines;
-    private javax.swing.JButton jButton1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblWelcome;

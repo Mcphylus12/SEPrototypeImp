@@ -11,6 +11,13 @@ public class FormController {
         jf.dispose();
     }
     
+    public static String dateToString(Date date){
+        StringBuilder sb = new StringBuilder();
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        sb.append(fmt.format(date));
+        return sb.toString();
+    }
+    
     public static Date getDateFromStrings(String dateString){
         String dateStr = dateString;
         SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy");

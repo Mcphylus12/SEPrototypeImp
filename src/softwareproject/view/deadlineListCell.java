@@ -3,6 +3,7 @@ package softwareproject.view;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import softwareproject.controller.AssessmentController;
+import softwareproject.controller.FormController;
 import softwareproject.controller.ListPopulator;
 import softwareproject.model.Assessment;
 import softwareproject.model.StudyTask;
@@ -35,20 +36,40 @@ public class deadlineListCell extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblAssessmentName1 = new javax.swing.JLabel();
         lblAssessmentName = new javax.swing.JLabel();
         pbProgress = new javax.swing.JProgressBar();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstTask = new javax.swing.JList();
         lblProgress = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblAssessmentName2 = new javax.swing.JLabel();
+        lblAssessmentName3 = new javax.swing.JLabel();
+        lblDeadline = new javax.swing.JLabel();
+
+        lblAssessmentName1.setText("Assessment Name");
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblAssessmentName.setText("Assessment Name");
 
+        pbProgress.setForeground(new java.awt.Color(51, 204, 0));
+
         lstTask.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(lstTask);
 
         lblProgress.setText("Progress");
+
+        jLabel1.setText("Associated Tasks");
+
+        jLabel2.setText("Progress");
+
+        lblAssessmentName2.setText("Deadline:");
+
+        lblAssessmentName3.setText("Assessment:");
+
+        lblDeadline.setText("DEADLINE");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -57,33 +78,57 @@ public class deadlineListCell extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                    .addComponent(pbProgress, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblAssessmentName)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblProgress)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(pbProgress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(lblAssessmentName2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblDeadline))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblProgress))
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblAssessmentName3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblAssessmentName)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAssessmentName)
-                    .addComponent(lblProgress))
+                    .addComponent(lblAssessmentName3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAssessmentName2)
+                    .addComponent(lblDeadline))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblProgress))
+                .addGap(5, 5, 5)
                 .addComponent(pbProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void fillComponents(){
         lblAssessmentName.setText(assessment.getName());
         lblProgress.setText(Integer.toString(progress)+"%");
+        lblDeadline.setText(FormController.dateToString(assessment.getDueDate()));
+        
         
         ListPopulator<StudyTask> tsk = new ListPopulator();
         tsk.populateJList(assessment.getTasks(), lstTask);
@@ -94,8 +139,14 @@ public class deadlineListCell extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAssessmentName;
+    private javax.swing.JLabel lblAssessmentName1;
+    private javax.swing.JLabel lblAssessmentName2;
+    private javax.swing.JLabel lblAssessmentName3;
+    private javax.swing.JLabel lblDeadline;
     private javax.swing.JLabel lblProgress;
     private javax.swing.JList lstTask;
     private javax.swing.JProgressBar pbProgress;
