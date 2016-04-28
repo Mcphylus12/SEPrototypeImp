@@ -2,11 +2,15 @@ package softwareproject.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Paint;
 import java.util.Date;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.DefaultDrawingSupplier;
+import org.jfree.chart.renderer.category.GanttRenderer;
 import org.jfree.data.category.IntervalCategoryDataset;
 import org.jfree.data.gantt.Task;
 import org.jfree.data.gantt.TaskSeries;
@@ -35,6 +39,15 @@ public class GanttChartWindow extends JFrame{
         IntervalCategoryDataset dataset = createDataset();
         
         JFreeChart chart = createChart(dataset);
+        
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        
+        MyGanttRenderer renderer = new MyGanttRenderer();
+        plot.setRenderer(renderer);
+        
+        renderer.setMaximumBarWidth(0.1);
+        renderer.setMinimumBarLength(0.2);
+        
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setPreferredSize(new Dimension(800, 600));
         this.setContentPane(chartPanel);
@@ -62,6 +75,13 @@ public class GanttChartWindow extends JFrame{
             
             for(StudyTask task: assess.getTasks()){
                 Task studyTask = new Task(task.getTitle(), new SimpleTimePeriod(task.getStartDate(), task.getEndDate()));
+                int tally = 0;
+                for(Activity act: task.getActivities()){
+                    if(act.getIsFinished()){
+                        tally += act.getHours();
+                    }
+                }
+                studyTask.setPercentComplete(((double)tally)/((double)task.getHours()));
                 series.add(studyTask);
             }
             
@@ -84,4 +104,15 @@ public class GanttChartWindow extends JFrame{
         return chart;
     }
     
+}
+
+class MyGanttRenderer extends GanttRenderer {
+    public MyGanttRenderer() {
+        super();
+    }
+
+    @Override
+    public Paint getItemPaint(int row, int column) {
+        return Color.BLUE;
+    }
 }

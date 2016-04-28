@@ -6,12 +6,9 @@
 
 package softwareproject.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JFrame;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,50 +17,20 @@ import static org.junit.Assert.*;
  * @author gmj14gru
  */
 public class FormControllerTest {
-    
-    public FormControllerTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of closeWindow method, of class FormController.
-     */
-    @Test
-    public void testCloseWindow() {
-        System.out.println("closeWindow");
-        JFrame jf = null;
-        FormController.closeWindow(jf);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
     /**
      * Test of dateToString method, of class FormController.
      */
     @Test
     public void testDateToString() {
         System.out.println("dateToString");
-        Date date = null;
-        String expResult = "";
+        Date date = new Date();
+        StringBuilder sb = new StringBuilder();
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String dt = fmt.format(date);
+        
+        String expResult = dt;
         String result = FormController.dateToString(date);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -72,12 +39,15 @@ public class FormControllerTest {
     @Test
     public void testGetDateFromStrings() {
         System.out.println("getDateFromStrings");
-        String dateString = "";
+        String dateString = "16/08/2030";
         Date expResult = null;
+        SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            expResult = sd.parse(dateString);
+        } catch (ParseException ex) {
+        }
         Date result = FormController.getDateFromStrings(dateString);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

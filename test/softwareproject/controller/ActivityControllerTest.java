@@ -6,70 +6,45 @@
 
 package softwareproject.controller;
 
-import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 import softwareproject.model.Activity;
-import softwareproject.model.StudyTask;
 
 /**
  *
  * @author gmj14gru
  */
 public class ActivityControllerTest {
-    
-    public ActivityControllerTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    Activity act;
     
     @Before
-    public void setUp() {
+    public void setup(){
+        act = new Activity("test", "test desc", 10, null);
     }
     
-    @After
-    public void tearDown() {
-    }
-
     /**
-     * Test of createActivity method, of class ActivityController.
+     * Test of getActivityAsString method set to finished, of class ActivityController.
      */
     @Test
-    public void testCreateActivity() {
-        System.out.println("createActivity");
-        String name = "";
-        String description = "";
-        int hours = 0;
-        ArrayList<StudyTask> tasks = null;
-        Activity expResult = null;
-        Activity result = ActivityController.createActivity(name, description, hours, tasks);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getActivityAsString method, of class ActivityController.
-     */
-    @Test
-    public void testGetActivityAsString() {
+    public void testGetActivityAsStringComplete() {
         System.out.println("getActivityAsString");
-        Activity act = null;
-        String expResult = "";
+        act.setIsFinished(true);
+        String expResult = "test - Complete";
         String result = ActivityController.getActivityAsString(act);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test of getActivityAsString method set to not finished, of class ActivityController.
+     */
+    @Test
+    public void testGetActivityAsStringInProgress() {
+        System.out.println("getActivityAsString");
+        act.setIsFinished(false);
+        String expResult = "test - In progress";
+        String result = ActivityController.getActivityAsString(act);
+        assertEquals(expResult, result);
     }
     
 }

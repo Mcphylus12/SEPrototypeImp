@@ -5,6 +5,7 @@ import javax.swing.DefaultListModel;
 import softwareproject.controller.AssessmentController;
 import softwareproject.controller.FormController;
 import softwareproject.controller.ListPopulator;
+import softwareproject.model.Activity;
 import softwareproject.model.Assessment;
 import softwareproject.model.StudyTask;
 
@@ -47,6 +48,8 @@ public class deadlineListCell extends javax.swing.JPanel {
         lblAssessmentName2 = new javax.swing.JLabel();
         lblAssessmentName3 = new javax.swing.JLabel();
         lblDeadline = new javax.swing.JLabel();
+        lblHours = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         lblAssessmentName1.setText("Assessment Name");
 
@@ -71,6 +74,10 @@ public class deadlineListCell extends javax.swing.JPanel {
 
         lblDeadline.setText("DEADLINE");
 
+        lblHours.setText("HOURS");
+
+        jLabel3.setText("Time Spent:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,11 +90,6 @@ public class deadlineListCell extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(lblAssessmentName2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblDeadline))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblProgress))
@@ -95,7 +97,17 @@ public class deadlineListCell extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblAssessmentName3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblAssessmentName)))
+                                .addComponent(lblAssessmentName))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(lblAssessmentName2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblDeadline))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblHours)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -112,15 +124,19 @@ public class deadlineListCell extends javax.swing.JPanel {
                     .addComponent(lblDeadline))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblHours))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lblProgress))
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pbProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -129,6 +145,18 @@ public class deadlineListCell extends javax.swing.JPanel {
         lblProgress.setText(Integer.toString(progress)+"%");
         lblDeadline.setText(FormController.dateToString(assessment.getDueDate()));
         
+        int totalHours = 0;
+        int totalCompHours = 0;
+        for(StudyTask task: assessment.getTasks()){
+            totalHours += task.getHours();
+            for(Activity act: task.getActivities()){
+                if(act.getIsFinished()){
+                    totalCompHours += act.getHours();
+                }
+            }
+        }
+        
+        lblHours.setText(Integer.toString(totalCompHours)+"/"+Integer.toString(totalHours)+" Hrs");
         
         ListPopulator<StudyTask> tsk = new ListPopulator();
         tsk.populateJList(assessment.getTasks(), lstTask);
@@ -141,12 +169,14 @@ public class deadlineListCell extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAssessmentName;
     private javax.swing.JLabel lblAssessmentName1;
     private javax.swing.JLabel lblAssessmentName2;
     private javax.swing.JLabel lblAssessmentName3;
     private javax.swing.JLabel lblDeadline;
+    private javax.swing.JLabel lblHours;
     private javax.swing.JLabel lblProgress;
     private javax.swing.JList lstTask;
     private javax.swing.JProgressBar pbProgress;

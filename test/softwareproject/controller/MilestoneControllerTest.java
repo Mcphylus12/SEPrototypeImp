@@ -7,12 +7,9 @@
 package softwareproject.controller;
 
 import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.util.Date;
 import static org.junit.Assert.*;
+import org.junit.Test;
 import softwareproject.model.Milestone;
 import softwareproject.model.StudyTask;
 
@@ -22,54 +19,16 @@ import softwareproject.model.StudyTask;
  */
 public class MilestoneControllerTest {
     
-    public MilestoneControllerTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of createNewMilestone method, of class MilestoneController.
-     */
-    @Test
-    public void testCreateNewMilestone() {
-        System.out.println("createNewMilestone");
-        String title = "";
-        String description = "";
-        String dateString = "";
-        ArrayList<StudyTask> relatedTasks = null;
-        Milestone expResult = null;
-        Milestone result = MilestoneController.createNewMilestone(title, description, dateString, relatedTasks);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
     /**
      * Test of getStringFromTask method, of class MilestoneController.
      */
     @Test
     public void testGetStringFromTask() {
         System.out.println("getStringFromTask");
-        Milestone m = null;
-        String expResult = "";
-        String result = MilestoneController.getStringFromTask(m);
+        Milestone m = new Milestone("name", "desc", new Date(), new ArrayList<StudyTask>());
+        String expResult = "name";
+        String result = MilestoneController.getStringFromMilestone(m);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
