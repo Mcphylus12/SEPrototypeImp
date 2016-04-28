@@ -151,7 +151,7 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         SemesterProfile semp = null;
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "CSV files", "csv");
+        "Hub files", "hub");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
@@ -225,7 +225,7 @@ public class OverviewDash extends javax.swing.JPanel implements ListCellRenderer
         SemesterProfile semp = null;
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "CSV files", "csv");
+        "Hub files", "hub");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(this);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
