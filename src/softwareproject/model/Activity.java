@@ -104,7 +104,7 @@ public class Activity implements Notable, Serializable{
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.name).append(" - ").append(this.description).append(" - ").append(this.hours).append("Hr(s)");
+        sb.append(this.name).append(" - ").append(this.hours).append("Hr(s)").append(" - ");
         if(isFinished){
             sb.append(" Complete");
         }else

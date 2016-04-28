@@ -163,7 +163,7 @@ public class StudyTask implements Notable, Serializable{
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.title).append(" - ").append(this.description);
+        sb.append(this.title);
         return sb.toString();
     }
 }

@@ -15,7 +15,7 @@ public class MilestoneController {
         return new Milestone(title, description, date, relatedTasks);
     }
     
-    public static String getStringFromTask(Milestone m){
+    public static String getStringFromMilestone(Milestone m){
         StringBuilder sb = new StringBuilder();
         sb.append(m.getTitle());
         return sb.toString();
